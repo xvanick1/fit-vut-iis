@@ -55,5 +55,4 @@ class Gate
 
         return $this;
     }
-
 }
