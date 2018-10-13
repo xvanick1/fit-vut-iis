@@ -6,6 +6,6 @@ Navrhněte informační systém pro letiště, který bude schopen evidovat lety
 
 # Schéma z IDS
 
-![ER Diagram](readme_docs/ids_er_diagram.png?raw=true "Title")
-![UseCase Diagram](readme_docs/ids_use_case_diagram.png?raw=true "Title")
-![Schéma relační databáze](readme_docs/ids_schema_rel_db.png?raw=true "Title")
+![ER Diagram](readme_docs/ids_er_diagram.png?raw=true)
+![UseCase Diagram](readme_docs/ids_use_case_diagram.png?raw=true)
+![Schéma relační databáze](readme_docs/ids_schema_rel_db.png?raw=true)
