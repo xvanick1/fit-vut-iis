@@ -19,22 +19,23 @@ class Terminal
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nazev;
+    private $name;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNazev(): ?string
+    public function getName(): ?string
     {
-        return $this->nazev;
+        return $this->name;
     }
 
-    public function setNazev(string $nazev): self
+    public function setName(string $name): self
     {
-        $this->nazev = $nazev;
+        $this->name = $name;
 
         return $this;
     }
+
 }
