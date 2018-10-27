@@ -10,6 +10,18 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-.DS_Store
 .idea
 
+
+### OSX ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.Trashes
+.com.apple.timemachine.donotpresent
