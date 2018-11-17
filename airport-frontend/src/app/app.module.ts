@@ -6,13 +6,15 @@ import { HeaderComponent } from './header/header.component';
 import { TicketComponent } from './ticket/ticket.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import { FlightComponent } from './flight/flight.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    TicketComponent
+    TicketComponent,
+    FlightComponent
   ],
   imports: [
     BrowserModule,
