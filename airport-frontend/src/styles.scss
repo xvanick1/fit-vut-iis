@@ -7,3 +7,11 @@
 
 // Grids
 @include foundation-xy-grid-classes;
+
+@include foundation-forms;
+
+@include foundation-float-classes;
+
+.grid-container {
+  padding-top: 15px;
+}
