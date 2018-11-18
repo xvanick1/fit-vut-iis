@@ -12,37 +12,15 @@
     </div>
     <div class="cell">
       <form>
-        <div class="grid-x grid-margin-x">
-          <div class="large-2 medium-3 cell">
-            <label>Datum odletu
-              <input type="text" placeholder="YYYY-MM-DD" value="{{selectedDate | date: 'yyyy-MM-dd'}}">
+        <div class="large-2 medium-2">
+          <div class="large-2 medium-2 small-2 cell">
+            <label><strong>Datum:</strong>
+              <input type="date" placeholder="yyyy-mm-dd">
             </label>
           </div>
-          <div class="large-1 medium-2 cell">
-            <label>Čas odletu
-              <input type="text" placeholder=".medium-6.cell">
-            </label>
-          </div>
-          <div class="large-1 medium-2 cell">
-            <label>Číslo letu
-              <input type="text" placeholder=".medium-6.cell">
-            </label>
-          </div>
-          <div class="large-1 medium-2 cell">
-            <label>Terminál
-              <input type="text" placeholder=".medium-6.cell">
-            </label>
-          </div>
-          <div class="large-1 medium-2 cell">
-            <label>Gate
-              <input type="text" placeholder=".medium-6.cell">
-            </label>
-          </div>
-          <div class="large-2 medium-3 cell">
-            <label>Destinace
-              <input type="text" placeholder=".medium-6.cell">
-            </label>
-          </div>
+        </div>
+        <div class="large-2 medium-2 small-2 grid-margin-x cell">
+          <a href="/lety/vytvorit" class="button float-right">Vytvořit let</a>
         </div>
       </form>
     </div>
@@ -50,12 +28,12 @@
       <table>
         <thead>
         <tr>
-          <th>Číslo letu</th>
-          <th>Čas odletu</th>
-          <th>Terminál</th>
-          <th>Gate</th>
-          <th>Destinace</th>
-          <th width="100"></th>
+          <th>Číslo letu<input type="text" placeholder=".medium-3.cell"></th>
+          <th>Čas odletu<input type="text" placeholder=".medium-1.cell"></th>
+          <th>Terminál<input type="text" placeholder=".medium-2.cell"></th>
+          <th>Gate<input type="text" placeholder=".medium-1.cell"></th>
+          <th>Destinace<input type="text" placeholder=".medium-2.cell"></th>
+          <th width="150"></th>
         </tr>
         </thead>
         <tbody>

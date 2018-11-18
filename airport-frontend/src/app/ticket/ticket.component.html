@@ -1,3 +1,51 @@
-<p>
-  ticket works!
-</p>
+<div class="grid-container fluid">
+  <div class="grid-x grid-margin-x">
+    <div class="cell">
+      <h2>Seznam letenek</h2>
+    </div>
+    <div class="cell">
+      <form>
+        <div class="grid-x grid-margin-x">
+          <div class="large-2 cell">
+            <label><strong>Datum:</strong>
+              <input type="date" placeholder="yyyy-mm-dd">
+            </label>
+          </div>
+          <div class="large-2 cell">
+            <label><strong>Čas:</strong>
+              <input type="time" placeholder="hh:mm">
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="cell">
+      <table>
+        <thead>
+        <tr>
+          <th>Číslo letenky<input type="text" placeholder=".medium-3.cell"></th>
+          <th>Číslo letu<input type="text" placeholder=".medium-1.cell"></th>
+          <th>Příjmení<input type="text" placeholder=".medium-2.cell"></th>
+          <th>Jméno<input type="text" placeholder=".medium-1.cell"></th>
+          <th>Třída<input type="text" placeholder=".medium-2.cell"></th>
+          <th>Destinace<input type="text" placeholder=".medium-2.cell"></th>
+          <th width="125">Odbaveno <input type="checkbox" title="Zobrazit odbavené"></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>25423</td>
+          <td>1023</td>
+          <td>Mrožny</td>
+          <td>Jan</td>
+          <td>Business</td>
+          <td>LAX</td>
+          <td class="table-right"><a class="button inline">Odbavit</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
