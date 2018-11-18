@@ -24,7 +24,7 @@ class Gate
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\terminal")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Terminal")
      * @ORM\JoinColumn(nullable=false)
      */
     private $terminal;

@@ -29,7 +29,7 @@ class Flight
     /**
      * @ORM\Column(type="time")
      */
-    private $fightLength;
+    private $flightLength;
 
     /**
      * @ORM\Column(type="string", length=200)
@@ -40,12 +40,12 @@ class Flight
      * @ORM\ManyToOne(targetEntity="App\Entity\Airplane")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $airplaneID;
+    private $airplane;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Gate")
      */
-    private $gateID;
+    private $gate;
 
     public function getId(): ?int
     {
@@ -78,12 +78,12 @@ class Flight
 
     public function getFightLength(): ?\DateTimeInterface
     {
-        return $this->fightLength;
+        return $this->flightLength;
     }
 
-    public function setFightLength(\DateTimeInterface $fightLength): self
+    public function setFightLength(\DateTimeInterface $flightLength): self
     {
-        $this->fightLength = $fightLength;
+        $this->flightLength = $flightLength;
 
         return $this;
     }
@@ -100,26 +100,26 @@ class Flight
         return $this;
     }
 
-    public function getAirplaneID(): ?Airplane
+    public function getAirplane(): ?Airplane
     {
-        return $this->airplaneID;
+        return $this->airplane;
     }
 
-    public function setAirplaneID(?Airplane $airplaneID): self
+    public function setAirplane(?Airplane $airplane): self
     {
-        $this->airplaneID = $airplaneID;
+        $this->airplane = $airplane;
 
         return $this;
     }
 
-    public function getGateID(): ?Gate
+    public function getGate(): ?Gate
     {
-        return $this->gateID;
+        return $this->gate;
     }
 
-    public function setGateID(?Gate $gateID): self
+    public function setGate(?Gate $gate): self
     {
-        $this->gateID = $gateID;
+        $this->gate = $gate;
 
         return $this;
     }

@@ -9,7 +9,7 @@ import { Flight } from "./flight";
 })
 
 export class FlightService {
-  private flightsURL = '/api/flights'; // URL to API flights
+  private flightsURL = 'http://localhost:8000/api/flights'; // URL to API flights
 
   constructor(private http: HttpClient) { }
 
