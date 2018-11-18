@@ -7,6 +7,7 @@ import { TicketComponent } from './ticket/ticket.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FlightComponent } from './flight/flight.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FlightComponent } from './flight/flight.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

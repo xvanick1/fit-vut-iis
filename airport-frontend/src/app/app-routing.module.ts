@@ -6,7 +6,9 @@ import { FlightComponent } from "./flight/flight.component";
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
   { path: 'letenky', component: TicketComponent },
-  { path: 'lety', component: FlightComponent }
+  { path: 'lety', component: FlightComponent },
+  { path: 'lety/vytvorit', component: FlightComponent },
+  { path: 'lety/:id', component: FlightComponent }
 ];
 
 @NgModule({
