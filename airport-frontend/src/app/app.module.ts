@@ -7,6 +7,9 @@ import { TicketComponent } from './ticket/ticket.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FlightComponent } from './flight/flight.component';
+import { TerminalComponent } from './terminal/terminal.component';
+import { AirplaneTypeComponent } from './airplane-type/airplane-type.component';
+import { AirplaneComponent } from './airplane/airplane.component';
 
 
 @NgModule({
@@ -14,7 +17,10 @@ import { FlightComponent } from './flight/flight.component';
     AppComponent,
     HeaderComponent,
     TicketComponent,
-    FlightComponent
+    FlightComponent,
+    TerminalComponent,
+    AirplaneTypeComponent,
+    AirplaneComponent
   ],
   imports: [
     BrowserModule,
