@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,16 @@ class Gate
      * @ORM\JoinColumn(nullable=false)
      */
     private $terminal;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\AirplaneType")
+     */
+    private $airplaneTypes;
+
+    public function __construct()
+    {
+        $this->airplaneTypes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,6 +64,32 @@ class Gate
     public function setTerminal(?terminal $terminal): self
     {
         $this->terminal = $terminal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AirplaneType[]
+     */
+    public function getAirplaneTypes(): Collection
+    {
+        return $this->airplaneTypes;
+    }
+
+    public function addAirplaneType(AirplaneType $airplaneType): self
+    {
+        if (!$this->airplaneTypes->contains($airplaneType)) {
+            $this->airplaneTypes[] = $airplaneType;
+        }
+
+        return $this;
+    }
+
+    public function removeAirplaneType(AirplaneType $airplaneType): self
+    {
+        if ($this->airplaneTypes->contains($airplaneType)) {
+            $this->airplaneTypes->removeElement($airplaneType);
+        }
 
         return $this;
     }
