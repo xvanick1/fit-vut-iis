@@ -27,13 +27,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>1023</td>
-          <td>11:20</td>
-          <td>Nazev</td>
-          <td>Nazev</td>
-          <td>Destinace</td>
-          <td class="table-right"><a class="alert button inline">Zrušit let</a></td>
+        <tr *ngFor="let flight of flights">
+          <td>{{flight.id}}</td>
+          <td>{{flight.departureTime.hours+':'+flight.departureTime.minutes}}</td>
+          <td>{{flight.terminal}}</td>
+          <td>{{flight.gate}}</td>
+          <td>{{flight.destination}}</td>
+          <td class="table-right"><a class="alert button inline" (click)="cancelFlight(flight)">Zrušit let</a></td>
         </tr>
         </tbody>
       </table>
