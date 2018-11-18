@@ -13,6 +13,8 @@ const routes: Routes = [
   { path: 'terminaly', component: TerminalComponent },
   { path: 'typyLetadel', component: AirplaneTypeComponent },
   { path: 'letadla', component: AirplaneComponent }
+  { path: 'lety/vytvorit', component: FlightComponent },
+  { path: 'lety/:id', component: FlightComponent }
 ];
 
 @NgModule({
