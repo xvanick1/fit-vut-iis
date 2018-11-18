@@ -5,24 +5,19 @@
         <div class="large-6 medium-6 small-6 cell">
           <h2>Seznam letů</h2>
         </div>
-        <div class="large-6 medium-6 small-6 cell">
-          <a routerLink="/lety/vytvorit" class="button float-right">Vytvořit let</a>
-        </div>
       </div>
     </div>
     <div class="cell">
-      <form>
-        <div class="large-2 medium-2">
-          <div class="large-2 medium-2 small-2 cell">
-            <label><strong>Datum:</strong>
-              <input type="date" placeholder="yyyy-mm-dd">
-            </label>
-          </div>
+      <div class="grid-x grid-padding-x">
+        <div class="cell shrink grid-margin-x">
+          <label><strong>Datum:</strong>
+            <input type="date" placeholder="dd-mm-yyyy">
+          </label>
         </div>
-        <div class="large-2 medium-2 small-2 grid-margin-x cell">
-          <a href="/lety/vytvorit" class="button float-right">Vytvořit let</a>
+        <div class="cell auto grid-margin-x">
+          <a routerLink="/lety/vytvorit" class="button float-right">Vytvořit let</a>
         </div>
-      </form>
+      </div>
     </div>
     <div class="cell">
       <table>
