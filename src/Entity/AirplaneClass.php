@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AirplaneClassRepository")
@@ -18,6 +19,8 @@ class AirplaneClass
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $name;
 

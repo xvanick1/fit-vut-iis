@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username")
  */
 class User implements UserInterface, \Serializable
 {
@@ -20,20 +23,26 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $password;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
+     * @Assert\NotNull()
      */
     private $isActive;
 
-    private function __construct()
+    public function __construct()
     {
         $this->isActive = true;
     }
@@ -127,7 +136,7 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         //TODO
-        return ['ROLE_USER'];
+        return ['ROLE_USER', 'ROLE_MANAGER'];
     }
 
     /**

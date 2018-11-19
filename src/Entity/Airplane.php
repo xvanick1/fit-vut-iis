@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AirplaneRepository")
@@ -18,22 +19,30 @@ class Airplane
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $crewNumber;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $dateOfProduction;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     * @Assert\GreaterThanOrEqual(propertyPath="$dateOfProduction")
      */
     private $dateOfRevision;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AirplaneType")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $airplaneType;
 

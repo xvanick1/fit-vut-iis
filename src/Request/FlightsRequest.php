@@ -3,7 +3,6 @@
 namespace App\Request;
 
 
-use AppBundle\Request\AbstractRequest;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FlightsRequest extends AbstractRequest
@@ -20,8 +19,6 @@ class FlightsRequest extends AbstractRequest
      */
     protected function setDefaultOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setDefined(
             [
                 'departureDate',

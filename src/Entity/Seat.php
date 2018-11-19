@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeatRepository")
@@ -18,24 +19,33 @@ class Seat
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThan(value="0")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $seatNumber;
 
     /**
      * @ORM\Column(type="string", length=6)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="1", max="6")
+     * @Assert\Type(type="string")
      */
     private $location;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Airplane")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
-    private $airplaneID;
+    private $airplane;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AirplaneClass")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
-    private $airplaneClassID;
+    private $airplaneClass;
 
     public function getId(): ?int
     {
@@ -66,26 +76,26 @@ class Seat
         return $this;
     }
 
-    public function getAirplaneID(): ?Airplane
+    public function getAirplane(): ?Airplane
     {
-        return $this->airplaneID;
+        return $this->airplane;
     }
 
-    public function setAirplaneID(?Airplane $airplaneID): self
+    public function setAirplane(?Airplane $airplane): self
     {
-        $this->airplaneID = $airplaneID;
+        $this->airplane = $airplane;
 
         return $this;
     }
 
-    public function getAirplaneClassID(): ?AirplaneClass
+    public function getAirplaneClass(): ?AirplaneClass
     {
-        return $this->airplaneClassID;
+        return $this->airplaneClass;
     }
 
-    public function setAirplaneClassID(?AirplaneClass $airplaneClassID): self
+    public function setAirplaneClass(?AirplaneClass $airplaneClass): self
     {
-        $this->airplaneClassID = $airplaneClassID;
+        $this->airplaneClass = $airplaneClass;
 
         return $this;
     }

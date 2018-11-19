@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FlightRepository")
@@ -18,27 +19,36 @@ class Flight
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $dateOfDeparture;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\NotBlank()
+     * @Assert\Time()
      */
     private $timeOfDeparture;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\NotBlank()
+     * @Assert\Time()
      */
     private $flightLength;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $destination;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Airplane")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $airplane;
 
@@ -76,12 +86,12 @@ class Flight
         return $this;
     }
 
-    public function getFightLength(): ?\DateTimeInterface
+    public function getFlightLength(): ?\DateTimeInterface
     {
         return $this->flightLength;
     }
 
-    public function setFightLength(\DateTimeInterface $flightLength): self
+    public function setFlightLength(\DateTimeInterface $flightLength): self
     {
         $this->flightLength = $flightLength;
 

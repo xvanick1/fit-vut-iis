@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GateRepository")
@@ -20,12 +21,15 @@ class Gate
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Terminal")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $terminal;
 

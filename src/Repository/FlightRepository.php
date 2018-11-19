@@ -21,12 +21,12 @@ class FlightRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param FlightsRequest $params
      * @return Flight[] Returns an array of Flight objects
      */
     public function findFlighs(FlightsRequest $params)
     {
         $query = $this->createQueryBuilder('f')
-
             ->orderBy('f.id', 'ASC')
             ->setMaxResults(10)
         ;

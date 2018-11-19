@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FlightTicketRepository")
@@ -18,25 +19,31 @@ class FlightTicket
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $surname;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Flight")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
-    private $flightID;
+    private $flight;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AirplaneClass")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
-    private $airplaneClassID;
+    private $airplaneClass;
 
     public function getId(): ?int
     {
@@ -67,26 +74,26 @@ class FlightTicket
         return $this;
     }
 
-    public function getFlightID(): ?Flight
+    public function getFlight(): ?Flight
     {
-        return $this->flightID;
+        return $this->flight;
     }
 
-    public function setFlightID(?Flight $flightID): self
+    public function setFlight(?Flight $flight): self
     {
-        $this->flightID = $flightID;
+        $this->flight = $flight;
 
         return $this;
     }
 
-    public function getAirplaneClassID(): ?AirplaneClass
+    public function getAirplaneClass(): ?AirplaneClass
     {
-        return $this->airplaneClassID;
+        return $this->airplaneClass;
     }
 
-    public function setAirplaneClassID(?AirplaneClass $airplaneClassID): self
+    public function setAirplaneClass(?AirplaneClass $airplaneClass): self
     {
-        $this->airplaneClassID = $airplaneClassID;
+        $this->airplaneClass = $airplaneClass;
 
         return $this;
     }

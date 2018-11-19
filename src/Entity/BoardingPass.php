@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BoardingPassRepository")
@@ -18,24 +19,31 @@ class BoardingPass
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      */
     private $surname;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Seat")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
-    private $seatID;
+    private $seat;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\FlightTicket", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
-    private $flightTicketID;
+    private $flightTicket;
 
     public function getId(): ?int
     {
@@ -66,26 +74,26 @@ class BoardingPass
         return $this;
     }
 
-    public function getSeatID(): ?Seat
+    public function getSeat(): ?Seat
     {
-        return $this->seatID;
+        return $this->seat;
     }
 
-    public function setSeatID(?Seat $seatID): self
+    public function setSeat(?Seat $seat): self
     {
-        $this->seatID = $seatID;
+        $this->seat = $seat;
 
         return $this;
     }
 
-    public function getFlightTicketID(): ?FlightTicket
+    public function getFlightTicket(): ?FlightTicket
     {
-        return $this->flightTicketID;
+        return $this->flightTicket;
     }
 
-    public function setFlightTicketID(?FlightTicket $flightTicketID): self
+    public function setFlightTicket(?FlightTicket $flightTicket): self
     {
-        $this->flightTicketID = $flightTicketID;
+        $this->flightTicket = $flightTicket;
 
         return $this;
     }
