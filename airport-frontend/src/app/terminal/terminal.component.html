@@ -1,3 +1,42 @@
-<p>
-  terminal works!
-</p>
+<div class="grid-container fluid">
+  <div class="grid-x grid-margin-x">
+    <div class="cell">
+      <div class="grid-x">
+        <div class="large-6 medium-6 small-6 cell">
+          <h2>Seznam terminálů</h2>
+        </div>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="grid-x grid-padding-x">
+        <div class="cell auto grid-margin-x">
+          <a routerLink="/lety/vytvorit" class="button float-right">Vytvořit terminál</a>
+        </div>
+      </div>
+    </div>
+    <div class="cell">
+      <table>
+        <thead>
+        <tr>
+          <th>ID terminálu<input type="text" placeholder=".medium-3.cell"></th>
+          <th>Název<input type="text" placeholder=".medium-1.cell"></th>
+          <th>Počet Gate<input type="text" placeholder=".medium-2.cell"></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <!-- TODO
+        <tr *ngFor="let flight of flights">
+          <td>{{flight.id}}</td>
+          <td>{{flight.departureTime.hours+':'+flight.departureTime.minutes}}</td>
+          <td>{{flight.terminal}}</td>
+          <td>{{flight.gate}}</td>
+          <td>{{flight.destination}}</td>
+          <td class="table-right"><a class="alert button inline" (click)="cancelFlight(flight)">Zrušit terminál</a></td>
+        </tr>
+        -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
