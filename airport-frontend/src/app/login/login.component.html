@@ -1,0 +1,32 @@
+<div class="grid-y grid-frame">
+  <div class="cell large-3 medium-2 small-3"></div>
+  <div class="cell shrink">
+    <div class="grid-x">
+      <div class="cell auto"></div>
+      <div class="cell medium-3 small-9">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="grid-y text-center">
+            <div class="cell">
+              <h1>Přihlášení</h1>
+            </div>
+            <div class="cell text-left">
+              <label>Uživatelské jméno
+                <input type="text" formControlName="username">
+              </label>
+            </div>
+            <div class="cell text-left">
+              <label>Uživatelské heslo
+                <input type="password" formControlName="password">
+              </label>
+            </div>
+            <div class="cell">
+              <input type="submit" class="button expanded" value="Přihlásit">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="cell auto"></div>
+    </div>
+  </div>
+  <div class="cell auto"></div>
+</div>

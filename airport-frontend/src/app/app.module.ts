@@ -3,8 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import {HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { BasicAuthInterceptor } from "./_helper/basic-auth.interceptor";
+import { ErrorInterceptor } from "./_helper/auth-error.interceptor";
 
 import { HeaderComponent } from './header/header.component';
 import { TicketComponent } from './ticket/ticket.component';
@@ -13,6 +16,8 @@ import { FlightComponent } from './flight/flight.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { AirplaneTypeComponent } from './airplane-type/airplane-type.component';
 import { AirplaneComponent } from './airplane/airplane.component';
+import { LoginComponent } from './login/login.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -22,14 +27,21 @@ import { AirplaneComponent } from './airplane/airplane.component';
     FlightComponent,
     TerminalComponent,
     AirplaneTypeComponent,
-    AirplaneComponent
+    AirplaneComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

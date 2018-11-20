@@ -2,27 +2,22 @@
   <div class="grid-x grid-margin-x">
     <div class="cell">
       <div class="grid-x">
-        <div class="large-6 medium-6 small-6 cell">
+        <div class="large-12 medium-12 small-12 cell">
           <h2>Seznam letů</h2>
-        </div>
-        <div class="large-6 medium-6 small-6 cell">
-          <a routerLink="/lety/vytvorit" class="button float-right">Vytvořit let</a>
         </div>
       </div>
     </div>
     <div class="cell">
-      <form>
-        <div class="large-2 medium-2">
+        <div class="grid-x">
           <div class="large-2 medium-2 small-2 cell">
             <label><strong>Datum:</strong>
               <input type="date" placeholder="yyyy-mm-dd">
             </label>
           </div>
+          <div class="large-10 medium-10 small-10 grid-margin-x cell">
+            <a routerLink="/lety/vytvorit" class="button float-right">Vytvořit let</a>
+          </div>
         </div>
-        <div class="large-2 medium-2 small-2 grid-margin-x cell">
-          <a href="/lety/vytvorit" class="button float-right">Vytvořit let</a>
-        </div>
-      </form>
     </div>
     <div class="cell">
       <table>
@@ -39,7 +34,7 @@
         <tbody>
         <tr *ngFor="let flight of flights">
           <td>{{flight.id}}</td>
-          <td>{{flight.departureTime.hours+':'+flight.departureTime.minutes}}</td>
+          <td>{{flight.timeOfDeparture.hours + ':' + flight.timeOfDeparture.minutes }}</td>
           <td>{{flight.terminal}}</td>
           <td>{{flight.gate}}</td>
           <td>{{flight.destination}}</td>

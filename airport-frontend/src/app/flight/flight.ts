@@ -2,9 +2,9 @@ import { Time } from "@angular/common";
 
 export class Flight {
   id: number;
-  departureTime: Time;
-  departureDate: Date;
+  destination: string;
+  timeOfDeparture: Time;
+  dateOfDeparture: Date;
   terminal: string;
   gate: string;
-  destination: string;
 }
