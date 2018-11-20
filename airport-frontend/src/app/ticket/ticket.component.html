@@ -23,13 +23,22 @@
       <table>
         <thead>
         <tr>
-          <th>Číslo letenky<input type="text" placeholder=".medium-3.cell"></th>
-          <th>Číslo letu<input type="text" placeholder=".medium-1.cell"></th>
-          <th>Příjmení<input type="text" placeholder=".medium-2.cell"></th>
-          <th>Jméno<input type="text" placeholder=".medium-1.cell"></th>
-          <th>Třída<input type="text" placeholder=".medium-2.cell"></th>
-          <th>Destinace<input type="text" placeholder=".medium-2.cell"></th>
-          <th width="125">Odbaveno <input type="checkbox" title="Zobrazit odbavené"></th>
+          <th>Číslo letenky<input type="text"></th>
+          <th>Číslo letu<input type="text"></th>
+          <th>Příjmení<input type="text"></th>
+          <th>Jméno<input type="text"></th>
+          <th>Třída<input type="text"></th>
+          <th>Destinace<input type="text"></th>
+          <th width="125" class="table-right">
+            <span>Odbaven</span>
+            <div class="switch small float-right">
+              <input class="switch-input" id="yes-no" type="checkbox">
+              <label class="switch-paddle" for="yes-no">
+                <span class="switch-active" aria-hidden="true">Ano</span>
+                <span class="switch-inactive" aria-hidden="true">Ne</span>
+              </label>
+            </div>
+          </th>
 
         </tr>
         </thead>

@@ -21,3 +21,7 @@
 :host input.ng-invalid.ng-touched {
   @include form-input-error($alert-color, 0%);
 }
+
+:host a.button.float-right {
+  margin: 1rem 0 0 0;
+}

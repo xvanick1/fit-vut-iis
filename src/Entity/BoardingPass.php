@@ -39,8 +39,7 @@ class BoardingPass
     private $seat;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\FlightTicket", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\FlightTicket", mappedBy="boardingPass")
      * @Assert\NotBlank()
      */
     private $flightTicket;
@@ -94,6 +93,12 @@ class BoardingPass
     public function setFlightTicket(?FlightTicket $flightTicket): self
     {
         $this->flightTicket = $flightTicket;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newBoardingPass = $flightTicket === null ? null : $this;
+        if ($newBoardingPass !== $flightTicket->getBoardingPass()) {
+            $flightTicket->setBoardingPass($newBoardingPass);
+        }
 
         return $this;
     }

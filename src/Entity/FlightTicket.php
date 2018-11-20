@@ -45,6 +45,12 @@ class FlightTicket
      */
     private $airplaneClass;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\BoardingPass", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $boardingPass;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,4 +103,17 @@ class FlightTicket
 
         return $this;
     }
+
+    public function getBoardingPass(): ?BoardingPass
+    {
+        return $this->boardingPass;
+    }
+
+    public function setBoardingPass(BoardingPass $boardingPass): self
+    {
+        $this->boardingPass = $boardingPass;
+
+        return $this;
+    }
+
 }

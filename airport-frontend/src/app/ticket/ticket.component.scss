@@ -3,6 +3,7 @@
 
 @include foundation-table;
 @include foundation-button;
+@include foundation-switch;
 
 :host .button.inline {
   display: inline;
@@ -20,4 +21,8 @@
 
 :host input.ng-invalid.ng-touched {
   @include form-input-error($alert-color, 0%);
+}
+
+:host table th div.switch {
+  margin: 0.3rem 0 0 0;
 }
