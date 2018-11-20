@@ -7,6 +7,7 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { AirplaneTypeComponent } from './airplane-type/airplane-type.component';
 import { AirplaneComponent } from './airplane/airplane.component';
 import { LoginComponent } from "./login/login.component";
+import { CreateFlightComponent } from './flight/create-flight/create-flight.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'terminaly', component: TerminalComponent, canActivate: [AuthGuard] },
   { path: 'typyLetadel', component: AirplaneTypeComponent, canActivate: [AuthGuard] },
   { path: 'letadla', component: AirplaneComponent, canActivate: [AuthGuard] },
-  { path: 'lety/vytvorit', component: FlightComponent, canActivate: [AuthGuard] },
+  { path: 'lety/vytvorit', component: CreateFlightComponent, canActivate: [AuthGuard] },
   { path: 'lety/:id', component: FlightComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent }
 ];

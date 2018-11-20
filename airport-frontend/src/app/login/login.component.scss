@@ -3,10 +3,10 @@
 
 @include foundation-button;
 
-div[_ngcontent-c2].grid-frame {
+:host .grid-frame {
   background-color: $light-gray;
 }
 
-input.ng-invalid[_ngcontent-c2].ng-touched[_ngcontent-c2] {
+:host input.ng-invalid.ng-touched {
   @include form-input-error($alert-color, 0%);
 }
