@@ -2,12 +2,12 @@
   <div class="top-bar">
     <div class="top-bar-left">
       <ul class="menu">
-        <li><a routerLink="/letenky">Letenky</a></li>
-        <li><a routerLink="/lety">Lety</a></li>
-        <li><a routerLink="/terminaly">Terminály</a></li>
-        <li><a routerLink="/typyLetadel">Typy Letadel</a></li>
-        <li><a routerLink="/letadla">Letadla</a></li>
-        <li><a routerLink="/uzivatele">Uživatelé</a></li>
+        <li><a routerLink="/letenky" class="{{router.url == '/letenky' ? 'is-active' : ''}}"><span>Letenky</span></a></li>
+        <li><a routerLink="/lety" class="{{router.url == '/lety' ? 'is-active' : ''}}"><span>Lety</span></a></li>
+        <li><a routerLink="/terminaly" class="{{router.url == '/terminaly' ? 'is-active' : ''}}"><span>Terminály</span></a></li>
+        <li><a routerLink="/typyLetadel" class="{{router.url == '/typyLetadel' ? 'is-active' : ''}}"><span>Typy Letadel</span></a></li>
+        <li><a routerLink="/letadla" class="{{router.url == '/letadla' ? 'is-active' : ''}}"><span>Letadla</span></a></li>
+        <li><a routerLink="/uzivatele" class="{{router.url == '/uzivatele' ? 'is-active' : ''}}"><span>Uživatelé</span></a></li>
       </ul>
     </div>
     <div class="top-bar-right">

@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FlightTicketRepository")
+ * @UniqueEntity("boardingPass")
  */
 class FlightTicket
 {
@@ -47,7 +49,7 @@ class FlightTicket
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\BoardingPass", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, unique=true)
      */
     private $boardingPass;
 
