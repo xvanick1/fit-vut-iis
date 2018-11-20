@@ -6,3 +6,7 @@
 div[_ngcontent-c2].grid-frame {
   background-color: $light-gray;
 }
+
+input.ng-invalid[_ngcontent-c2].ng-touched[_ngcontent-c2] {
+  @include form-input-error($alert-color, 0%);
+}

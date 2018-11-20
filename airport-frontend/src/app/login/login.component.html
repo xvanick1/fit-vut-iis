@@ -4,23 +4,36 @@
     <div class="grid-x">
       <div class="cell auto"></div>
       <div class="cell medium-3 small-9">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
           <div class="grid-y text-center">
             <div class="cell">
               <h1>Přihlášení</h1>
             </div>
+            <div *ngIf="authFailed" class="cell">
+              <div class="callout alert text-left">
+                <p>Neplatné uživatelské jméno nebo heslo.</p>
+              </div>
+            </div>
             <div class="cell text-left">
-              <label>Uživatelské jméno
-                <input type="text" formControlName="username">
+              <label class="{{(username.valid || username.untouched) ? '' : 'is-invalid-label'}}">Uživatelské jméno
+                <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel">
+                <div [hidden]="username.valid || username.untouched">
+                  <span class="form-error is-visible">Uživatelské jméno je vyžadováno</span>
+                </div>
               </label>
             </div>
             <div class="cell text-left">
-              <label>Uživatelské heslo
-                <input type="password" formControlName="password">
+              <label class="{{(password.valid || password.untouched) ? '' : 'is-invalid-label'}}">Uživatelské heslo
+                <input type="password" required name="password" [(ngModel)]="user.password" #password="ngModel">
+                <div [hidden]="password.valid || password.untouched">
+                  <span class="form-error is-visible">Uživatelské heslo je vyžadováno</span>
+                </div>
               </label>
             </div>
             <div class="cell">
-              <input type="submit" class="button expanded" value="Přihlásit">
+              <input type="button" class="button expanded"
+                     value="{{submitted ? 'Přihlašování ...' : 'Přihlásit'}}"
+                     [disabled]="!loginForm.form.valid || submitted" (click)="onSubmit();false">
             </div>
           </div>
         </form>

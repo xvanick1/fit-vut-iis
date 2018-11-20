@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Flight } from "./flight";
+import { Flight } from "../_model/flight";
 import { FlightService } from "../_service/flight.service";
 import * as moment from 'moment';
 
@@ -23,7 +23,7 @@ export class FlightComponent implements OnInit {
     this.flightService.getFlights().subscribe(flights => {
       this.flights = flights;
       for (let flight of this.flights) {
-        let time = moment(flight.timeOfDeparture.date);
+        let time = moment(flight.timeOfDeparture);//object .date
         flight.timeOfDeparture.hours = <number>time.hour();
         flight.timeOfDeparture.minutes = time.minutes();
       }

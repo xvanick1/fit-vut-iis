@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from "rxjs";
-import { HttpClient, HttpHeaders }    from '@angular/common/http';
+import { Observable } from "rxjs";
+import { HttpClient }    from '@angular/common/http';
 
-import { Flight } from "../flight/flight";
+import { Flight } from "../_model/flight";
 
 @Injectable({
   providedIn: 'root'

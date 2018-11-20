@@ -7,7 +7,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { BasicAuthInterceptor } from "./_helper/basic-auth.interceptor";
-import { ErrorInterceptor } from "./_helper/auth-error.interceptor";
 
 import { HeaderComponent } from './header/header.component';
 import { TicketComponent } from './ticket/ticket.component';
@@ -39,7 +38,6 @@ import {DatePipe} from "@angular/common";
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     DatePipe,
   ],
   bootstrap: [AppComponent]

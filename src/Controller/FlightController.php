@@ -29,7 +29,7 @@ class FlightController extends AbstractController
     {
         $params = new FlightsRequest($request->query->all());
         $response = new JsonResponse();
-        $response->headers->set('Access-Control-Allow-Origin', '*');
+        //$response->headers->set('Access-Control-Allow-Origin', '*');
 
         $flights = $this->getDoctrine()->getRepository(Flight::class)->findFlighs($params);
         $response->setData($flights);

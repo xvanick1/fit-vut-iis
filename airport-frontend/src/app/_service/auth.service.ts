@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,14 @@ export class AuthService {
     this.success = true;
   }
 
-  login(username: string, password: string): Boolean {
-    this.http.get<any>('http://localhost:8000/api/flights', {
+  login(username: string, password: string) {
+    return this.http.get<any>('http://localhost:8000/api/flights', {
       observe: 'response',
       headers: new HttpHeaders().set('Authorization', 'Basic '+window.btoa(username + ':' + password)),
-    }).subscribe(resp => {
+    });
+
+    /*
+    .subscribe(resp => {
       if (resp.status !== 200) {
         this.success = false;
       }
@@ -27,6 +31,11 @@ export class AuthService {
     }
 
     return this.success;
+    */
+  }
+
+  static setBasiAuth(username: string, password: string) {
+    localStorage.setItem('loggedUser', window.btoa(username + ':' + password));
   }
 
   static logout() {
