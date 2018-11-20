@@ -26,6 +26,7 @@ class FlightRepository extends ServiceEntityRepository
      */
     public function findFlighs(FlightsRequest $params)
     {
+
         $query = $this->createQueryBuilder('f')
             ->select('f.id, f.destination, f.timeOfDeparture, g.name as gate, t.name as terminal')
             ->orderBy('f.id', 'ASC')
@@ -34,31 +35,33 @@ class FlightRepository extends ServiceEntityRepository
             ->innerJoin('g.terminal', 't');
 
         if ($params->departureDate != null) {
-            $query->andWhere('f.dateOfDeparture = :val')
-                ->setParameter('val', $params->departureDate);
+            $query->andWhere('f.dateOfDeparture = :val1')
+                ->setParameter('val1', $params->departureDate);
         }
 
         if ($params->departureTime != null) {
-            $query->andWhere('f.timeOfDeparture = :val')
-                ->setParameter('val', $params->departureTime);
+            $query->andWhere('f.timeOfDeparture = :val2')
+                ->setParameter('val2', $params->departureTime);
         }
 
         if ($params->destination != null) {
-            $query->andWhere('f.destination = :val')
-                ->setParameter('val', $params->destination);
+            $query->andWhere('f.destination LIKE :val3')
+                ->setParameter('val3', '%'.$params->destination.'%');
         }
 
-        if ($params->gateID != null) {
-            $query->andWhere('f.gate = :val')
-                ->setParameter('val', $params->gateID);
+        if ($params->gate != null) {
+            $query->andWhere('g.name LIKE :val4')
+                ->setParameter('val4', '%'.$params->gate.'%');
         }
 
-        if ($params->terminalID != null) {
-            // TBD
+        if ($params->terminal != null) {
+            $query->andWhere('t.name LIKE :val5')
+                ->setParameter('val5', '%'.$params->terminal.'%');
         }
 
         if ($params->flightID != null) {
-            // TBD
+            $query->andWhere('f.id LIKE :val6')
+                ->setParameter('val6', '%'.$params->flightID.'%');
         }
 
         return $query->getQuery()->getArrayResult();

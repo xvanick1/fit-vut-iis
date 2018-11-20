@@ -22,9 +22,9 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $flight->setAirplane($this->getReference("B747"));
         $flight->setDateOfDeparture(new \DateTime());
         $flight->setDestination("Prague");
-        $flight->setFlightLength(new \DateTime("11:30"));
+        $flight->setFlightLength(new \DateTime("11:30:00"));
         $flight->setGate($this->getReference("G1"));
-        $flight->setTimeOfDeparture(new \DateTime());
+        $flight->setTimeOfDeparture(new \DateTime('12:00:00'));
         $manager->persist($flight);
 
         $manager->flush();

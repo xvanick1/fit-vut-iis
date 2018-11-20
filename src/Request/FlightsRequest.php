@@ -10,8 +10,8 @@ class FlightsRequest extends AbstractRequest
     public $departureDate;
     public $departureTime;
     public $flightID;
-    public $terminalID;
-    public $gateID;
+    public $terminal;
+    public $gate;
     public $destination;
 
     /**
@@ -24,20 +24,20 @@ class FlightsRequest extends AbstractRequest
                 'departureDate',
                 'departureTime',
                 'flightID',
-                'terminalID',
-                'gateID',
+                'terminal',
+                'gate',
                 'destination'
             ]
         );
 
-        $resolver->addAllowedTypes('departureDate', 'DateTime');
+        $resolver->addAllowedTypes('departureDate', 'string');
+        $resolver->addAllowedValues('departureDate', $this->isDate);
         $resolver->addAllowedTypes('departureTime', 'string');
+        $resolver->addAllowedValues('departureTime', $this->isTime);
         $resolver->addAllowedTypes('flightID', 'numeric');
         $resolver->addAllowedValues('flightID', $this->isPositive);
-        $resolver->addAllowedTypes('terminalID', 'numeric');
-        $resolver->addAllowedValues('terminalID', $this->isPositive);
-        $resolver->addAllowedTypes('gateID', 'numeric');
-        $resolver->addAllowedValues('gateID', $this->isPositive);
+        $resolver->addAllowedTypes('terminal', 'string');
+        $resolver->addAllowedTypes('gate', 'string');
         $resolver->addAllowedTypes('destination', 'string');
     }
 }

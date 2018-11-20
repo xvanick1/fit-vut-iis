@@ -1,4 +1,5 @@
-<div class="grid-container fluid">
+<form [formGroup]="myForm" (ngSubmit)="false" >
+  <div class="grid-container fluid">
   <div class="grid-x grid-margin-x">
     <div class="cell">
       <div class="grid-x">
@@ -10,8 +11,11 @@
     <div class="cell">
         <div class="grid-x">
           <div class="large-2 medium-2 small-2 cell">
-            <label><strong>Datum:</strong>
-              <input type="date" placeholder="yyyy-mm-dd">
+            <label class="{{(myForm.get('dateInput').valid || myForm.get('dateInput').untouched) ? '' : 'is-invalid-label'}}"><strong>Datum:</strong>
+              <input type="date" placeholder="yyyy-mm-dd" formControlName="dateInput">
+              <div [hidden]="myForm.get('dateInput').valid || myForm.get('dateInput').untouched">
+                <span class="form-error is-visible">Datum nemá platný formát</span>
+              </div>
             </label>
           </div>
           <div class="large-10 medium-10 small-10 grid-margin-x cell">
@@ -23,11 +27,26 @@
       <table>
         <thead>
         <tr>
-          <th>Číslo letu<input type="text" placeholder=".medium-3.cell"></th>
-          <th>Čas odletu<input type="text" placeholder=".medium-1.cell"></th>
-          <th>Terminál<input type="text" placeholder=".medium-2.cell"></th>
-          <th>Gate<input type="text" placeholder=".medium-1.cell"></th>
-          <th>Destinace<input type="text" placeholder=".medium-2.cell"></th>
+          <th class="{{(myForm.get('flightInput').valid || myForm.get('flightInput').untouched) ? '' : 'is-invalid-label'}}">
+            Číslo letu
+            <input type="text" formControlName="flightInput">
+          </th>
+          <th class="{{(myForm.get('timeInput').valid || myForm.get('timeInput').untouched) ? '' : 'is-invalid-label'}}">
+            Čas odletu
+            <input type="text" formControlName="timeInput">
+          </th>
+          <th class="{{(myForm.get('terminalInput').valid || myForm.get('terminalInput').untouched) ? '' : 'is-invalid-label'}}">
+            Terminál
+            <input type="text" formControlName="terminalInput">
+          </th>
+          <th class="{{(myForm.get('gateInput').valid || myForm.get('gateInput').untouched) ? '' : 'is-invalid-label'}}">
+            Gate
+            <input type="text" formControlName="gateInput">
+          </th>
+          <th class="{{(myForm.get('destinationInput').valid || myForm.get('destinationInput').untouched) ? '' : 'is-invalid-label'}}">
+            Destinace
+            <input type="text" formControlName="destinationInput">
+          </th>
           <th width="150"></th>
         </tr>
         </thead>
@@ -45,3 +64,4 @@
     </div>
   </div>
 </div>
+</form>

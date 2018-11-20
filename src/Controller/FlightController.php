@@ -28,10 +28,14 @@ class FlightController extends AbstractController
     public function getFlights(Request $request)
     {
         $params = new FlightsRequest($request->query->all());
-        $response = new JsonResponse();
-        //$response->headers->set('Access-Control-Allow-Origin', '*');
 
-        $flights = $this->getDoctrine()->getRepository(Flight::class)->findFlighs($params);
+        try {
+            $flights = $this->getDoctrine()->getRepository(Flight::class)->findFlighs($params);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+
+        $response = new JsonResponse();
         $response->setData($flights);
 
         return $response;
@@ -45,14 +49,13 @@ class FlightController extends AbstractController
      */
     public function getFlight($id)
     {
-        $response = new JsonResponse();
-        $response->headers->set('Access-Control-Allow-Origin', '*');
         try {
             $flights = $this->getDoctrine()->getRepository(Flight::class)->findOneBy(["id" => $id]);
         } catch (\Exception $e) {
-            throw new HttpException(500, $e->getMessage());
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
+        $response = new JsonResponse();
         if ($flights == null) {
             $response->setStatusCode(404);
         } else {
