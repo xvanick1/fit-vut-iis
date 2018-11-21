@@ -16,7 +16,7 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { AirplaneTypeComponent } from './airplane-type/airplane-type.component';
 import { AirplaneComponent } from './airplane/airplane.component';
 import { LoginComponent } from './login/login.component';
-import {DatePipe} from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { CreateFlightComponent } from './flight/create-flight/create-flight.component';
 
 @NgModule({
