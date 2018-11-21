@@ -1,9 +1,9 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-import { Flight } from "../_model/flight";
+import { Flight, ApiFlight } from "../_model/flight";
 import { FlightService } from "../_service/flight.service";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
-import {DatePipe} from "@angular/common";
+import {DatePipe, Time} from "@angular/common";
 
 @Component({
   selector: 'app-flight',
@@ -15,14 +15,6 @@ import {DatePipe} from "@angular/common";
 export class FlightComponent implements OnInit {
   myForm: FormGroup;
   flights: Flight[];
-  /*
-  dateInput: FormControl;
-  flightInput: FormControl;
-  terminalInput: FormControl;
-  gateInput: FormControl;
-  destinationInput: FormControl;
-  timeInput: FormControl;
-  */
 
   constructor(
     private flightService: FlightService,
@@ -70,13 +62,17 @@ export class FlightComponent implements OnInit {
     params.set('terminal', this.myForm.get('terminalInput').value);
     params.set('destination', this.myForm.get('destinationInput').value);
 
-    this.flights = null;
+    this.flights = [];
     this.flightService.getFlights(params).subscribe(flights => {
-      this.flights = flights;
-      for (let flight of this.flights) {
-        let time = moment(flight.timeOfDeparture);//object .date
-        flight.timeOfDeparture.hours = <number>time.hour();
-        flight.timeOfDeparture.minutes = time.minutes();
+      for (let apiFlight of flights) {
+        let flight = new Flight();
+        flight.terminal = apiFlight.terminal;
+        flight.gate = apiFlight.gate;
+        flight.destination = apiFlight.destination;
+        flight.id = apiFlight.id;
+        let time = moment(apiFlight.timeOfDeparture.date);
+        flight.time = {hours: time.hours(), minutes: time.minutes()};
+        this.flights.push(flight);
       }
     });
   }

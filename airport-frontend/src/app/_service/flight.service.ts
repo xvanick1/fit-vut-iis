@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient }    from '@angular/common/http';
 import * as moment from 'moment';
-import { Flight } from "../_model/flight";
+import { ApiFlight } from "../_model/flight";
 import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable({
@@ -14,7 +14,7 @@ export class FlightService {
 
   constructor(private http: HttpClient) { }
 
-  getFlights(params: Map<string, string>): Observable<Flight[]> {
+  getFlights(params: Map<string, string>): Observable<ApiFlight[]> {
     let urlParams: String = '?';
     if (params) {
       params.forEach(((value, key) => {
@@ -37,6 +37,6 @@ export class FlightService {
         }
       }));
     }
-    return this.http.get<Flight[]>(this.flightsURL+urlParams);
+    return this.http.get<ApiFlight[]>(this.flightsURL+urlParams);
   }
 }

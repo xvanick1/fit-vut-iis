@@ -53,7 +53,7 @@
         <tbody>
         <tr *ngFor="let flight of flights">
           <td>{{flight.id}}</td>
-          <td>{{flight.timeOfDeparture.hours + ':' + flight.timeOfDeparture.minutes }}</td>
+          <td>{{(flight.time.hours | number: '2.0-0')+':'+(flight.time.minutes | number: '2.0-0')}}</td>
           <td>{{flight.terminal}}</td>
           <td>{{flight.gate}}</td>
           <td>{{flight.destination}}</td>
