@@ -18,6 +18,7 @@ import { AirplaneComponent } from './airplane/airplane.component';
 import { LoginComponent } from './login/login.component';
 import { DatePipe } from "@angular/common";
 import { CreateFlightComponent } from './flight/create-flight/create-flight.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CreateFlightComponent } from './flight/create-flight/create-flight.comp
     AirplaneTypeComponent,
     AirplaneComponent,
     LoginComponent,
-    CreateFlightComponent
+    CreateFlightComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

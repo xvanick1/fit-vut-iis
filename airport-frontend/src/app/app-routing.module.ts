@@ -8,6 +8,7 @@ import { AirplaneTypeComponent } from './airplane-type/airplane-type.component';
 import { AirplaneComponent } from './airplane/airplane.component';
 import { LoginComponent } from "./login/login.component";
 import { CreateFlightComponent } from './flight/create-flight/create-flight.component';
+import {NotFoundComponent} from "./not-found/not-found.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'letadla', component: AirplaneComponent, canActivate: [AuthGuard] },
   { path: 'lety/vytvorit', component: CreateFlightComponent, canActivate: [AuthGuard] },
   { path: 'lety/:id', component: FlightComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
