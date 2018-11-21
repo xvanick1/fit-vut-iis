@@ -12,7 +12,7 @@
         <div class="grid-x">
           <div class="large-2 medium-2 small-2 cell">
             <label class="{{(myForm.get('dateInput').valid || myForm.get('dateInput').untouched) ? '' : 'is-invalid-label'}}"><strong>Datum:</strong>
-              <input type="date" placeholder="yyyy-mm-dd" formControlName="dateInput">
+              <input type="date" placeholder="yyyy-mm-dd" formControlName="dateInput" appDate>
               <div [hidden]="myForm.get('dateInput').valid || myForm.get('dateInput').untouched">
                 <span class="form-error is-visible">Datum nemá platný formát</span>
               </div>
@@ -33,7 +33,7 @@
           </th>
           <th class="{{(myForm.get('timeInput').valid || myForm.get('timeInput').untouched) ? '' : 'is-invalid-label'}}">
             Čas odletu
-            <input type="text" formControlName="timeInput">
+            <input type="text" formControlName="timeInput" appTime>
           </th>
           <th class="{{(myForm.get('terminalInput').valid || myForm.get('terminalInput').untouched) ? '' : 'is-invalid-label'}}">
             Terminál

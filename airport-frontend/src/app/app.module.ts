@@ -19,6 +19,8 @@ import { LoginComponent } from './login/login.component';
 import { DatePipe } from "@angular/common";
 import { CreateFlightComponent } from './flight/create-flight/create-flight.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DateValidatorDirective } from './_helper/date-validator.directive';
+import { TimeValidatorDirective } from './_helper/time-validator.directive';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AirplaneComponent,
     LoginComponent,
     CreateFlightComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    DateValidatorDirective,
+    TimeValidatorDirective
   ],
   imports: [
     BrowserModule,

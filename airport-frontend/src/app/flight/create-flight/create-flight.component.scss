@@ -2,3 +2,22 @@
 @import "~foundation-sites/scss/foundation";
 
 @include foundation-button;
+@include foundation-button-group;
+
+:host .cell-center {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+:host .margin-top-3 {
+  margin-top: 30px;
+}
+
+:host .label-required {
+  font-weight: bold;
+}
+
+:host input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+  @include form-input-error($alert-color, 0%);
+}

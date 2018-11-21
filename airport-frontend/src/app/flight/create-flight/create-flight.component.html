@@ -1,16 +1,75 @@
-<form>
+<form #flightForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="grid-container fluid">
     <div class="grid-x grid-margin-x">
-      <div class="cell">
-        <div class="grid-x">
-          <div class="large-8 medium-8 small-8 cell">
+      <div class="cell medium-2"></div>
+      <div class="cell auto">
+        <div class="grid-x grid-padding-x">
+          <div class="small-12 cell">
             <h2>Vytvořit let</h2>
           </div>
-          <div class="small-4">
-            <a class="hollow button float-right" routerLink="/lety">Zpět na lety</a>
+        </div>
+        <div class="grid-x grid-padding-x margin-top-3">
+          <div class="cell medium-4 small-6">
+            <label class="{{(date.valid || date.untouched) ? '' : 'is-invalid-label'}}">
+              Datum odletu
+              <input type="text" placeholder="yyyy-mm-dd" required name="date" [(ngModel)]="flight.date" #date="ngModel" appDate>
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="{{(time.valid || time.untouched) ? '' : 'is-invalid-label'}}">
+              Čas odletu
+              <input type="text" placeholder="hh:mm" required name="time" [(ngModel)]="flight.time" #time="ngModel" appTime>
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="{{(flightLength.valid || flightLength.untouched) ? '' : 'is-invalid-label'}}">
+              Délka letu
+              <input type="text" placeholder="hh:mm" required name="flightLength" [(ngModel)]="flight.flightLength" #flightLength="ngModel" appTime>
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="{{(destination.valid || destination.untouched) ? '' : 'is-invalid-label'}}">
+              Destinace
+              <input type="text" required name="destination" [(ngModel)]="flight.destination" #destination="ngModel">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="{{(airplaneID.valid || airplaneID.untouched) ? '' : 'is-invalid-label'}}">
+              Letadlo
+              <select required name="airplaneID" [(ngModel)]="flight.airplaineID" #airplaneID="ngModel" (change)="getTerminals()">
+                <option *ngFor="let air of airplanes" [value]="air.id">{{air.type.name+'-'+air.id}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="{{(terminalID.valid || terminalID.untouched) ? '' : 'is-invalid-label'}}">
+              Terminál
+              <select required name="terminalID" [(ngModel)]="flight.terminalID" #terminalID="ngModel" (change)="getGates()">
+                <option *ngFor="let term of terminals" [value]="term.id">{{term.name}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="{{(gateID.valid || gateID.untouched) ? '' : 'is-invalid-label'}}">
+              Gate
+              <select required name="gateID" [(ngModel)]="flight.gateID" #gateID="ngModel">
+                <option *ngFor="let gate of gates" [value]="gate.id">{{gate.name}}</option>
+              </select>
+            </label>
           </div>
         </div>
-      </div>
+        <div class="grid-x grid-padding-x">
+          <div class="cell medium-8 cell-center">
+            <div class="button-group expanded">
+              <a class="clear button text-right" routerLink="/lety">Zpět na lety</a>
+              <input type="submit" class="button"
+                     value="{{submitted ? 'Vytváření ...' : 'Vytvořit'}}"
+                     [disabled]="!flightForm.form.valid || submitted" (click)="onSubmit();false">
+            </div>
+          </div>
+        </div>
+        </div>
+      <div class="cell medium-2"></div>
     </div>
   </div>
 </form>

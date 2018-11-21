@@ -4,6 +4,7 @@ import { FlightService } from "../_service/flight.service";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {DatePipe} from "@angular/common";
+import {timeValidator} from "../_helper/time-validator.directive";
 
 @Component({
   selector: 'app-flight',
@@ -23,12 +24,8 @@ export class FlightComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = new FormGroup({
-      'dateInput': new FormControl('', [
-          Validators.pattern('([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))')
-        ]),
-      'timeInput': new FormControl('', [
-         Validators.pattern('(([01][0-9])|(2[0-3])):[0-5][0-9]')
-        ]),
+      'dateInput': new FormControl(),
+      'timeInput': new FormControl(),
       'flightInput': new FormControl('', [
           Validators.pattern('[1-9][0-9]*')
         ]),
