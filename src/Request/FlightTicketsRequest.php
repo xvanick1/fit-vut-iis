@@ -9,11 +9,13 @@ class FlightTicketsRequest extends AbstractRequest
 {
     public $ticketID;
     public $flightID;
-    public $airplaneClassID;
+    public $airplaneClass;
     public $surname;
     public $name;
     public $destination;
-    public $checkout;
+    public $checkout = false;
+    public $departureDate;
+    public $departureTime;
 
     /**
      * @param OptionsResolver $resolver
@@ -24,11 +26,13 @@ class FlightTicketsRequest extends AbstractRequest
             [
                 'ticketID',
                 'flightID',
-                'airplaneClassID',
+                'airplaneClass',
                 'surname',
                 'name',
                 'destination',
-                'checkout'
+                'checkout',
+                'departureDate',
+                'departureTime'
             ]
         );
 
@@ -36,11 +40,15 @@ class FlightTicketsRequest extends AbstractRequest
         $resolver->addAllowedValues('ticketID', $this->isPositive);
         $resolver->addAllowedTypes('flightID', 'numeric');
         $resolver->addAllowedValues('flightID', $this->isPositive);
-        $resolver->addAllowedTypes('airplaneClassID', 'numeric');
-        $resolver->addAllowedValues('airplaneClassID', $this->isPositive);
+        $resolver->addAllowedTypes('airplaneClass', 'string');
         $resolver->addAllowedTypes('surname', 'string');
         $resolver->addAllowedTypes('name', 'string');
         $resolver->addAllowedTypes('destination', 'string');
-        $resolver->addAllowedTypes('checkout', 'bool');
+        $resolver->addAllowedTypes('checkout', 'string');
+        $resolver->addAllowedValues('checkout', ['true','false']);
+        $resolver->addAllowedTypes('departureDate', 'string');
+        $resolver->addAllowedValues('departureDate', $this->isDate);
+        $resolver->addAllowedTypes('departureTime', 'string');
+        $resolver->addAllowedValues('departureTime', $this->isTime);
     }
 }

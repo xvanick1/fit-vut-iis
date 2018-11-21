@@ -1,60 +1,84 @@
-<div class="grid-container fluid">
-  <div class="grid-x grid-margin-x">
-    <div class="cell">
-      <h2>Seznam letenek</h2>
-    </div>
-    <div class="cell">
-      <form>
+<form [formGroup]="myForm" (ngSubmit)="false" >
+  <div class="grid-container fluid">
+    <div class="grid-x grid-margin-x">
+      <div class="cell">
+        <h2>Seznam letenek</h2>
+      </div>
+      <div class="cell">
         <div class="grid-x grid-margin-x">
           <div class="large-2 cell">
-            <label><strong>Datum:</strong>
-              <input type="date" placeholder="yyyy-mm-dd">
+            <label class="{{(myForm.get('dateInput').valid || myForm.get('dateInput').untouched) ? '' : 'is-invalid-label'}}">
+              <strong>Datum:</strong>
+              <input type="date" placeholder="yyyy-mm-dd" formControlName="dateInput">
+              <div [hidden]="myForm.get('dateInput').valid || myForm.get('dateInput').untouched">
+                <span class="form-error is-visible">Datum nemá platný formát</span>
+              </div>
             </label>
           </div>
           <div class="large-2 cell">
-            <label><strong>Čas:</strong>
-              <input type="time" placeholder="hh:mm">
+            <label class="{{(myForm.get('timeInput').valid || myForm.get('timeInput').untouched) ? '' : 'is-invalid-label'}}">
+              <strong>Čas:</strong>
+              <input type="time" placeholder="hh:mm" formControlName="timeInput">
             </label>
+            <div [hidden]="myForm.get('timeInput').valid || myForm.get('timeInput').untouched">
+              <span class="form-error is-visible">Čas nemá platný formát</span>
+            </div>
           </div>
         </div>
-      </form>
-    </div>
-    <div class="cell">
-      <table>
-        <thead>
-        <tr>
-          <th>Číslo letenky<input type="text"></th>
-          <th>Číslo letu<input type="text"></th>
-          <th>Příjmení<input type="text"></th>
-          <th>Jméno<input type="text"></th>
-          <th>Třída<input type="text"></th>
-          <th>Destinace<input type="text"></th>
-          <th width="125" class="table-right">
-            <span>Odbaven</span>
-            <div class="switch small float-right">
-              <input class="switch-input" id="yes-no" type="checkbox">
-              <label class="switch-paddle" for="yes-no">
-                <span class="switch-active" aria-hidden="true">Ano</span>
-                <span class="switch-inactive" aria-hidden="true">Ne</span>
-              </label>
-            </div>
-          </th>
+      </div>
+      <div class="cell">
+        <table>
+          <thead>
+          <tr>
+            <th class="{{(myForm.get('ticketInput').valid || myForm.get('ticketInput').untouched) ? '' : 'is-invalid-label'}}">
+              Číslo letenky
+              <input type="text" formControlName="ticketInput">
+            </th>
+            <th class="{{(myForm.get('flightInput').valid || myForm.get('flightInput').untouched) ? '' : 'is-invalid-label'}}">
+              Číslo letu
+              <input type="text" formControlName="flightInput">
+            </th>
+            <th class="{{(myForm.get('surnameInput').valid || myForm.get('surnameInput').untouched) ? '' : 'is-invalid-label'}}">
+              Příjmení
+              <input type="text" formControlName="surnameInput">
+            </th>
+            <th class="{{(myForm.get('nameInput').valid || myForm.get('nameInput').untouched) ? '' : 'is-invalid-label'}}">
+              Jméno
+              <input type="text" formControlName="nameInput">
+            </th>
+            <th class="{{(myForm.get('classInput').valid || myForm.get('classInput').untouched) ? '' : 'is-invalid-label'}}">
+              Třída<input type="text" formControlName="classInput">
+            </th>
+            <th class="{{(myForm.get('destinationInput').valid || myForm.get('destinationInput').untouched) ? '' : 'is-invalid-label'}}">
+              Destinace
+              <input type="text" formControlName="destinationInput">
+            </th>
+            <th width="125" class="table-right {{(myForm.get('checkoutInput').valid || myForm.get('checkoutInput').untouched) ? '' : 'is-invalid-label'}}">
+              <span>Odbaven</span>
+              <div class="switch small float-right">
+                <input class="switch-input" id="yes-no" type="checkbox"  formControlName="checkoutInput">
+                <label class="switch-paddle" for="yes-no">
+                  <span class="switch-active" aria-hidden="true">Ano</span>
+                  <span class="switch-inactive" aria-hidden="true">Ne</span>
+                </label>
+              </div>
+            </th>
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>25423</td>
-          <td>1023</td>
-          <td>Mrožny</td>
-          <td>Jan</td>
-          <td>Business</td>
-          <td>LAX</td>
-          <td class="table-right"><a class="button inline">Odbavit</a></td>
-        </tr>
-        </tbody>
-      </table>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let ticket of tickets">
+            <td>{{ticket.id}}</td>
+            <td>{{ticket.flight}}</td>
+            <td>{{ticket.surname}}</td>
+            <td>{{ticket.name}}</td>
+            <td>{{ticket.airplaneClass}}</td>
+            <td>{{ticket.destination}}</td>
+            <td class="table-right"><a class="button inline" (click)="checkoutTicket(ticket)">Odbavit</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
-
+</form>

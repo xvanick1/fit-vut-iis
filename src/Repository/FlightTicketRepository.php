@@ -27,9 +27,9 @@ class FlightTicketRepository extends ServiceEntityRepository
     public function findTickets(FlightTicketsRequest $params)
     {
         $query = $this->createQueryBuilder('ft')
-            ->select('ft.id, f.id as flight, ft.surname, ft.name, c.name, f.destination')
+            ->select('ft.id, f.id as flight, ft.surname, ft.name, c.name as airplaneClass, f.destination')
             ->orderBy('ft.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(100)
             ->innerJoin('ft.flight', 'f')
             ->innerJoin('ft.airplaneClass', 'c');
 
@@ -53,9 +53,9 @@ class FlightTicketRepository extends ServiceEntityRepository
                 ->setParameter('sur', $params->surname.'%');
         }
 
-        if ($params->airplaneClassID != null) {
-            $query->andWhere('ft.airplaneClass = :cls')
-                ->setParameter('cls', $params->airplaneClassID);
+        if ($params->airplaneClass != null) {
+            $query->andWhere('c.name LIKE :cls')
+                ->setParameter('cls', '%'.$params->airplaneClass.'%');
         }
 
         if ($params->ticketID != null) {
@@ -63,11 +63,21 @@ class FlightTicketRepository extends ServiceEntityRepository
                 ->setParameter('ftid', $params->ticketID);
         }
 
-        if ($params->checkout == false) {
+        if (filter_var($params->checkout, FILTER_VALIDATE_BOOLEAN) == false) {
             $query->andWhere('ft.boardingPass is NULL');
         } else {
             $query->andWhere('ft.boardingPass is not NULL');
 
+        }
+
+        if ($params->departureDate != null) {
+            $query->andWhere('f.dateOfDeparture = :val1')
+                ->setParameter('val1', $params->departureDate);
+        }
+
+        if ($params->departureTime != null) {
+            $query->andWhere('f.timeOfDeparture = :val2')
+                ->setParameter('val2', $params->departureTime);
         }
 
         return $query->getQuery()->getArrayResult();

@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { HttpClient }    from '@angular/common/http';
-import * as moment from 'moment';
 import { ApiFlight } from "../_model/flight";
-import {forEach} from "@angular/router/src/utils/collection";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class FlightService {
-  private flightsURL = 'http://localhost:8000/api/flights'; // URL to API flights
+  private flightsURL = environment.apiUrl+'/api/flights'; // URL to API flights
 
   constructor(private http: HttpClient) { }
 

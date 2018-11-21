@@ -1,9 +1,9 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-import { Flight, ApiFlight } from "../_model/flight";
+import {Component, OnInit } from '@angular/core';
+import { Flight } from "../_model/flight";
 import { FlightService } from "../_service/flight.service";
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
-import {DatePipe, Time} from "@angular/common";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-flight',
@@ -37,7 +37,7 @@ export class FlightComponent implements OnInit {
       'destinationInput': new FormControl()
     });
 
-    this.myForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    //this.myForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
 
     this.onChanges();
     this.getFlights();

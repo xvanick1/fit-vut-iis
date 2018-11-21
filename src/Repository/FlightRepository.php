@@ -30,7 +30,7 @@ class FlightRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('f')
             ->select('f.id, f.destination, f.timeOfDeparture, g.name as gate, t.name as terminal')
             ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(100)
             ->innerJoin('f.gate', 'g')
             ->innerJoin('g.terminal', 't');
 
