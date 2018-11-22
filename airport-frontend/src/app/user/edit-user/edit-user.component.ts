@@ -13,6 +13,7 @@ export class EditUserComponent implements OnInit {
   title = 'Upravit uživatele';
   submitted: boolean = false;
   isLoading: boolean = true;
+  created: boolean = false;
   message: Message;
   user: User;
   roles: Role[];
@@ -57,6 +58,19 @@ export class EditUserComponent implements OnInit {
       this.message = new Message();
       this.message.type = 'alert';
       this.message.text = 'Při ukládání uživatele nastala chyba';
+      this.submitted = false;
+    });
+  }
+
+  deleteUser() {
+    this.submitted = true;
+    this.message = null;
+    this.userService.deleteUser(this.user.id).subscribe(resp => {
+      this.router.navigate(['uzivatele']);
+    }, error1 => {
+      this.message = new Message();
+      this.message.type = 'alert';
+      this.message.text = 'Při mazání uživatele nastala chyba';
       this.submitted = false;
     });
   }

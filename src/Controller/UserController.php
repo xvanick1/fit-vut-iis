@@ -91,7 +91,7 @@ class UserController extends AbstractController
         $params = new UserPostRequest($data, true);
 
         $user = new User();
-        $this->setParams($params, $user);
+        $this->setParams($params, $user, $encoder);
 
         $response = new JsonResponse();
         $errors = $validator->validate($user);
@@ -115,7 +115,7 @@ class UserController extends AbstractController
             return $response;
         }
 
-        $response->setData();
+        $response->setData(['id'=>$user->getId()]);
         return $response;
     }
 
@@ -138,7 +138,7 @@ class UserController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
-        $response = new JsonResponse('', 204);
+        $response = new JsonResponse('', 201);
         if ($user == null) {
             $response->setStatusCode(404);
             return $response;
@@ -146,7 +146,7 @@ class UserController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         $params = new UserPostRequest($data, false);
-        $this->setParams($params, $user);
+        $this->setParams($params, $user, $encoder);
 
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
@@ -171,7 +171,12 @@ class UserController extends AbstractController
         return $response;
     }
 
-    private function setParams(UserPostRequest $params, User $user)
+    /**
+     * @param UserPostRequest $params
+     * @param User $user
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    private function setParams(UserPostRequest $params, User $user, UserPasswordEncoderInterface $encoder)
     {
         if ($params->isActive !== null) {
             $user->setIsActive($params->isActive);
@@ -197,5 +202,37 @@ class UserController extends AbstractController
             $password = $encoder->encodePassword($user, $params->password);
             $user->setPassword($password);
         }
+    }
+
+    /**
+     * @Route("/api/users/{id}", name="delete_user", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @param $id
+     * @return JsonResponse
+     */
+    public function deleteUser($id){
+        $entityManager = $this->getDoctrine()->getManager();
+
+        try {
+            $user = $entityManager->getRepository(User::class)->find($id);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+
+        if (!$user) {
+            return new JsonResponse(null, 404);
+        }
+
+        $response = new JsonResponse(null, 204);
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            $response->setStatusCode(500);
+            $response->setData($exception->getMessage());
+            return $response;
+        }
+
+        return $response;
     }
 }
