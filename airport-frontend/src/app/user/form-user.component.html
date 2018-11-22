@@ -4,13 +4,26 @@
       <div class="cell medium-2"></div>
       <div class="cell auto">
         <div class="grid-x grid-padding-x">
-          <div class="small-12 cell">
+          <div class="small-6 cell">
             <h2>{{title}}</h2>
+          </div>
+          <div class="small-6 cell">
+            <button class="float-right button hollow alert" (click)="false" *ngIf="user.id && !isLoading">Smazat</button>
           </div>
         </div>
         <div class="grid-x grid-padding-x margin-top-3 margin-bottom-3" *ngIf="isLoading">
           <div class="cell text-center">
             <h3>Načítání ...</h3>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x margin-top-3 margin-bottom-3" *ngIf="message">
+          <div class="cell text-center">
+            <div class="callout {{message.type}} text-left" data-closable>
+              <p>{{message.text}}</p>
+              <!--<button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+              </button>-->
+            </div>
           </div>
         </div>
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading">

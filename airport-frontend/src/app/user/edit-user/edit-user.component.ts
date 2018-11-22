@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Role, User} from "../../_model/user";
 import {UserService} from "../../_service/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Message} from "../../_model/message";
 
 @Component({
   selector: 'app-edit-user',
@@ -12,6 +13,7 @@ export class EditUserComponent implements OnInit {
   title = 'Upravit uživatele';
   submitted: boolean = false;
   isLoading: boolean = true;
+  message: Message;
   user: User;
   roles: Role[];
 
@@ -45,9 +47,16 @@ export class EditUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.message = null;
     this.userService.updateUser(this.user).subscribe(resp => {
+      this.message = new Message();
+      this.message.type = 'success';
+      this.message.text = 'Uživatel byl úspěšně uložen';
       this.submitted = false;
     }, error1 => {
+      this.message = new Message();
+      this.message.type = 'alert';
+      this.message.text = 'Při ukládání uživatele nastala chyba';
       this.submitted = false;
     });
   }

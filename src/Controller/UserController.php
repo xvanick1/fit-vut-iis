@@ -78,6 +78,48 @@ class UserController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param UserPasswordEncoderInterface $encoder
+     * @return JsonResponse
+     *
+     * @Route("/api/users", name="create_user", methods={"POST"})
+     */
+    public function createUser(Request $request, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder)
+    {
+        $data = json_decode($request->getContent(), true);
+        $params = new UserPostRequest($data, true);
+
+        $user = new User();
+        $this->setParams($params, $user);
+
+        $response = new JsonResponse();
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            $apiErrors = [];
+            foreach ($errors as $error) {
+                $apiErrors[$error->getPropertyPath()] = $error->getMessage();
+            }
+            $response->setStatusCode(409);
+            $response->setData(['errors'=>$apiErrors]);
+            return $response;
+        }
+
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            $response->setStatusCode(409);
+            $response->setData($exception->getMessage());
+            return $response;
+        }
+
+        $response->setData();
+        return $response;
+    }
+
+    /**
      * @param User $id
      * @param Request $request
      * @param ValidatorInterface $validator
@@ -96,7 +138,7 @@ class UserController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
-        $response = new JsonResponse('', 200);
+        $response = new JsonResponse('', 204);
         if ($user == null) {
             $response->setStatusCode(404);
             return $response;
@@ -104,7 +146,33 @@ class UserController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         $params = new UserPostRequest($data, false);
+        $this->setParams($params, $user);
 
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            $apiErrors = [];
+            foreach ($errors as $error) {
+                $apiErrors[$error->getPropertyPath()] = $error->getMessage();
+            }
+            $response->setStatusCode(409);
+            $response->setData(['errors'=>$apiErrors]);
+            return $response;
+        }
+
+        try {
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            $response->setStatusCode(409);
+            $response->setData($exception->getMessage());
+            return $response;
+        }
+
+        $response->setData();
+        return $response;
+    }
+
+    private function setParams(UserPostRequest $params, User $user)
+    {
         if ($params->isActive !== null) {
             $user->setIsActive($params->isActive);
         }
@@ -129,25 +197,5 @@ class UserController extends AbstractController
             $password = $encoder->encodePassword($user, $params->password);
             $user->setPassword($password);
         }
-
-        $errors = $validator->validate($user);
-        if (count($errors) > 0) {
-
-
-            $response->setStatusCode(409);
-            //$response->setData($apiErrors);
-            return $response;
-        }
-
-        try {
-            $entityManager->flush();
-        } catch (\Exception $exception) {
-            $response->setStatusCode(409);
-            $response->setData($exception->getMessage());
-            return $response;
-        }
-
-        $response->setData(['status' => $params->isActive]);
-        return $response;
     }
 }

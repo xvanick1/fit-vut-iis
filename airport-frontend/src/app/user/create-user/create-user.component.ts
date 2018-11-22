@@ -11,6 +11,7 @@ export class CreateUserComponent implements OnInit {
   title = 'Vytvořit uživatele';
   submitted: boolean = false;
   isLoading: boolean = false;
+  hasMessage: boolean = false;
   user: User;
   roles: Role[];
 

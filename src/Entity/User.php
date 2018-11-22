@@ -24,6 +24,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/\s/", match=false)
      * @Assert\Type(type="string")
      */
     private $username;
