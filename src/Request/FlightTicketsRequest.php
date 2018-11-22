@@ -51,4 +51,9 @@ class FlightTicketsRequest extends AbstractRequest
         $resolver->addAllowedTypes('departureTime', 'string');
         $resolver->addAllowedValues('departureTime', $this->isTime);
     }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    protected function setRequiredOptions(OptionsResolver $resolver) {}
 }

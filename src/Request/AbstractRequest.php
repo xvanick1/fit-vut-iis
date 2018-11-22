@@ -20,12 +20,16 @@ abstract class AbstractRequest
     /**
      * AbstractRequest constructor.
      * @param array $options
+     * @param bool $required
      */
-    public function __construct(array $options = [])
+    public function __construct(array $options = [], bool $required = false)
     {
         $resolver = new OptionsResolver();
         $this->setUpMethods();
         $this->setDefaultOptions($resolver);
+        if ($required) {
+            $this->setRequiredOptions($resolver);
+        }
 
         try {
             $this->options = $resolver->resolve($options);
@@ -55,4 +59,10 @@ abstract class AbstractRequest
      * @param OptionsResolver $resolver
      */
     abstract protected function setDefaultOptions(OptionsResolver $resolver);
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    abstract protected function setRequiredOptions(OptionsResolver $resolver);
+
 }

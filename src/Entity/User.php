@@ -42,6 +42,25 @@ class User implements UserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     */
+    private $role;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type(type="string")
+     */
+    private $surname;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -135,8 +154,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        //TODO
-        return ['ROLE_USER', 'ROLE_MANAGER'];
+        return [$this->role];
     }
 
     /**
@@ -157,6 +175,42 @@ class User implements UserInterface, \Serializable
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(?string $surname): self
+    {
+        $this->surname = $surname;
 
         return $this;
     }

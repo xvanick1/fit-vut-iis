@@ -40,4 +40,9 @@ class FlightsRequest extends AbstractRequest
         $resolver->addAllowedTypes('gate', 'string');
         $resolver->addAllowedTypes('destination', 'string');
     }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    protected function setRequiredOptions(OptionsResolver $resolver) {}
 }

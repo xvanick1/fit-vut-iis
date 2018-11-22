@@ -38,4 +38,8 @@ export class FlightService {
     }
     return this.http.get<ApiFlight[]>(this.flightsURL+urlParams);
   }
+
+  getFlight(id: number): Observable<any> {
+    return this.http.get<ApiFlight>(this.flightsURL+'/'+id, {observe: 'response'});
+  }
 }

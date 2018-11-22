@@ -5,7 +5,7 @@
       <div class="cell auto">
         <div class="grid-x grid-padding-x">
           <div class="small-12 cell">
-            <h2>Vytvořit let</h2>
+            <h2>{{title}}</h2>
           </div>
         </div>
         <div class="grid-x grid-padding-x margin-top-3">
@@ -63,7 +63,7 @@
             <div class="button-group expanded">
               <a class="clear button text-right" routerLink="/lety">Zpět na lety</a>
               <input type="submit" class="button"
-                     value="{{submitted ? 'Vytváření ...' : 'Vytvořit'}}"
+                     value="{{submitted ? 'Odesílání ...' : title}}"
                      [disabled]="!flightForm.form.valid || submitted" (click)="onSubmit();false">
             </div>
           </div>

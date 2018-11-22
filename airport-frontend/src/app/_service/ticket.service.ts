@@ -8,7 +8,7 @@ import { Ticket } from "../_model/ticket";
   providedIn: 'root'
 })
 export class TicketService {
-  private flightsURL = environment.apiUrl+'/api/tickets'; // URL to API tickets
+  private ticketsURL = environment.apiUrl+'/api/tickets'; // URL to API tickets
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +26,6 @@ export class TicketService {
         }
       }));
     }
-    return this.http.get<Ticket[]>(this.flightsURL+urlParams);
+    return this.http.get<Ticket[]>(this.ticketsURL+urlParams);
   }
 }

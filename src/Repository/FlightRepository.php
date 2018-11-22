@@ -67,15 +67,16 @@ class FlightRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?Flight
+    public function findById($id)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('f, g, t')
+            ->andWhere('f.id = :val')
+            ->setParameter('val', $id)
+            ->innerJoin('f.gate', 'g')
+            ->innerJoin('g.terminal', 't')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
         ;
     }
-    */
 }

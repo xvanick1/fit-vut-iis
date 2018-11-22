@@ -25,10 +25,19 @@ class UserFixture extends Fixture
     {
         $user = new User();
         $user->setIsActive(true);
+        $user->setRole("ROLE_ADMIN");
         $user->setUsername("pavel.witassek");
         $password = $this->encoder->encodePassword($user, 'admin');
         $user->setPassword($password);
         $manager->persist($user);
+
+        $user2 = new User();
+        $user2->setIsActive(true);
+        $user2->setRole("ROLE_ADMIN");
+        $user2->setUsername("test");
+        $password2 = $this->encoder->encodePassword($user, 'test');
+        $user2->setPassword($password2);
+        $manager->persist($user2);
 
         $manager->flush();
     }

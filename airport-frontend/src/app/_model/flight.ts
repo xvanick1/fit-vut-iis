@@ -23,6 +23,7 @@ export class Flight {
 }
 
 export class formFlight {
+  id: number;
   destination: string;
   time: Time;
   date: Date;

@@ -21,6 +21,10 @@ import { CreateFlightComponent } from './flight/create-flight/create-flight.comp
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DateValidatorDirective } from './_helper/date-validator.directive';
 import { TimeValidatorDirective } from './_helper/time-validator.directive';
+import { EditFlightComponent } from './flight/edit-flight/edit-flight.component';
+import { UserComponent } from './user/user.component';
+import { CreateUserComponent } from './user/create-user/create-user.component';
+import { EditUserComponent } from './user/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,11 @@ import { TimeValidatorDirective } from './_helper/time-validator.directive';
     CreateFlightComponent,
     NotFoundComponent,
     DateValidatorDirective,
-    TimeValidatorDirective
+    TimeValidatorDirective,
+    EditFlightComponent,
+    UserComponent,
+    CreateUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

@@ -7,10 +7,11 @@ import {FlightService} from "../../_service/flight.service";
 
 @Component({
   selector: 'app-create-flight',
-  templateUrl: './create-flight.component.html',
-  styleUrls: ['./create-flight.component.scss']
+  templateUrl: '../form-flight.component.html',
+  styleUrls: ['../form-flight.component.scss']
 })
 export class CreateFlightComponent implements OnInit {
+  title: string = 'Vytvořit let';
   flight: formFlight;
   submitted: boolean = false;
   airplanes: Airplane[];

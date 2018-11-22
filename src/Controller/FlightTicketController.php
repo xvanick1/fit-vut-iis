@@ -16,7 +16,7 @@ class FlightTicketController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      *
-     * @Route("/api/tickets", name="get_tickets")
+     * @Route("/api/tickets", name="get_tickets", methods={"GET"})
      */
     public function getTickets(Request $request)
     {

@@ -19,32 +19,28 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findUsers()
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('u.id, u.username, u.name, u.surname, u.isActive, u.role')
             ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?User
+
+    public function findById($id)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('u.id, u.isActive, u.username, u.name, u.surname, u.role')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
+            ;
     }
-    */
 }

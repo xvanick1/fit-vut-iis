@@ -15,7 +15,8 @@
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "*",
         "symfony/validator": "*",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

@@ -1,0 +1,72 @@
+<form #userForm="ngForm" (submit)="onSubmit()">
+  <div class="grid-container fluid">
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-2"></div>
+      <div class="cell auto">
+        <div class="grid-x grid-padding-x">
+          <div class="small-12 cell">
+            <h2>{{title}}</h2>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x margin-top-3 margin-bottom-3" *ngIf="isLoading">
+          <div class="cell text-center">
+            <h3>Načítání ...</h3>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading">
+          <div class="cell medium-4 small-6">
+            <label class="label-required">Uživatelské jméno
+              <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label>Heslo
+              <input type="password" name="password" [(ngModel)]="user.password" #password="ngModel">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="label-required">Role
+              <select required name="role" [(ngModel)]="user.role" #role="ngModel">
+                <option *ngIf="!role.id"></option>
+                <option *ngFor="let role of roles" [value]="role.id" [selected]="role.id==user.role">{{getRoleName(role.id)}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label>Jméno
+              <input type="text" name="name" [(ngModel)]="user.name" #name="ngModel">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label>Přijmení
+              <input type="text" name="surname" [(ngModel)]="user.surname" #surname="ngModel">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="label-required">Aktivní
+              <div class="switch large">
+                <input class="switch-input" id="yes-no" type="checkbox" name="exampleSwitch" [checked]="user.isActive"
+                       name="isActive" [(ngModel)]="user.isActive" #isActive="ngModel">
+                <label class="switch-paddle" for="yes-no">
+                  <span class="switch-active" aria-hidden="true">Ano</span>
+                  <span class="switch-inactive" aria-hidden="true">Ne</span>
+                </label>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+          <div class="cell medium-8 cell-center">
+            <div class="button-group expanded">
+              <a class="clear button text-right" routerLink="/uzivatele">Zpět na uživatele</a>
+              <input type="submit" class="button"
+                     value="{{submitted ? 'Odesílání ...' : title}}"
+                     [disabled]="!userForm.form.valid || submitted || isLoading">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cell medium-2"></div>
+    </div>
+  </div>
+</form>

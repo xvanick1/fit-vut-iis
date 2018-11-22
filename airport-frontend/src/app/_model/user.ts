@@ -1,5 +1,15 @@
+
+export class Role {
+  id: string;
+}
+
 export class User {
-  id: number;
   username: string;
   password: string;
+  isActive: boolean;
+  role: string;
+  name: string;
+  surname: string;
+  id: number;
+  _submitted: boolean;
 }
