@@ -1,40 +1,59 @@
-<div class="grid-container fluid">
+<form [formGroup]="myForm" (ngSubmit)="false" >
+  <div class="grid-container fluid">
   <div class="grid-x grid-margin-x">
     <div class="cell">
       <div class="grid-x">
-        <div class="large-6 medium-6 small-6 cell">
+        <div class="large-12 medium-12 small-12 cell">
           <h2>Seznam letů</h2>
         </div>
       </div>
     </div>
     <div class="cell">
-      <div class="grid-x grid-padding-x">
-        <div class="small-2 cell shrink grid-margin-x">
-          <label><strong>Datum:</strong>
-            <input type="date" placeholder="dd-mm-yyyy">
-          </label>
+        <div class="grid-x">
+          <div class="large-2 medium-2 small-2 cell">
+            <label class="{{(myForm.get('dateInput').valid || myForm.get('dateInput').untouched) ? '' : 'is-invalid-label'}}"><strong>Datum:</strong>
+              <input type="date" placeholder="yyyy-mm-dd" formControlName="dateInput" appDate>
+              <div [hidden]="myForm.get('dateInput').valid || myForm.get('dateInput').untouched">
+                <span class="form-error is-visible">Datum nemá platný formát</span>
+              </div>
+            </label>
+          </div>
+          <div class="large-10 medium-10 small-10 grid-margin-x cell">
+            <a routerLink="/lety/vytvorit" class="button float-right">Vytvořit let</a>
+          </div>
         </div>
-        <div class="cell auto grid-margin-x">
-          <a routerLink="/lety/vytvorit" class="button float-right">Vytvořit let</a>
-        </div>
-      </div>
     </div>
     <div class="cell">
       <table>
         <thead>
         <tr>
-          <th>Číslo letu<input type="text" placeholder=".medium-3.cell"></th>
-          <th>Čas odletu<input type="text" placeholder=".medium-1.cell"></th>
-          <th>Terminál<input type="text" placeholder=".medium-2.cell"></th>
-          <th>Gate<input type="text" placeholder=".medium-1.cell"></th>
-          <th>Destinace<input type="text" placeholder=".medium-2.cell"></th>
-
+          <th class="{{(myForm.get('flightInput').valid || myForm.get('flightInput').untouched) ? '' : 'is-invalid-label'}}">
+            Číslo letu
+            <input type="text" formControlName="flightInput">
+          </th>
+          <th class="{{(myForm.get('timeInput').valid || myForm.get('timeInput').untouched) ? '' : 'is-invalid-label'}}">
+            Čas odletu
+            <input type="text" formControlName="timeInput" appTime>
+          </th>
+          <th class="{{(myForm.get('terminalInput').valid || myForm.get('terminalInput').untouched) ? '' : 'is-invalid-label'}}">
+            Terminál
+            <input type="text" formControlName="terminalInput">
+          </th>
+          <th class="{{(myForm.get('gateInput').valid || myForm.get('gateInput').untouched) ? '' : 'is-invalid-label'}}">
+            Gate
+            <input type="text" formControlName="gateInput">
+          </th>
+          <th class="{{(myForm.get('destinationInput').valid || myForm.get('destinationInput').untouched) ? '' : 'is-invalid-label'}}">
+            Destinace
+            <input type="text" formControlName="destinationInput">
+          </th>
+          <th width="150"></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let flight of flights">
-          <td>{{flight.id}}</td>
-          <td>{{flight.departureTime.hours+':'+flight.departureTime.minutes}}</td>
+          <td><a routerLink="/lety/{{flight.id}}">{{flight.id}}</a></td>
+          <td>{{(flight.time.hours | number: '2.0-0')+':'+(flight.time.minutes | number: '2.0-0')}}</td>
           <td>{{flight.terminal}}</td>
           <td>{{flight.gate}}</td>
           <td>{{flight.destination}}</td>
@@ -45,3 +64,4 @@
     </div>
   </div>
 </div>
+</form>

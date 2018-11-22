@@ -3,13 +3,26 @@
 
 @include foundation-table;
 @include foundation-button;
+@include foundation-switch;
 
-.button.inline[_ngcontent-c2] {
+:host .button.inline {
   display: inline;
   font-size: $global-font-size*0.8;
   padding: 0.6em 0.8em;
 }
 
-.table-right[_ngcontent-c2] {
+:host .table-right {
   text-align: right;
+}
+
+:host table input {
+  margin-bottom: 0;
+}
+
+:host input.ng-invalid.ng-touched {
+  @include form-input-error($alert-color, 0%);
+}
+
+:host table th div.switch {
+  margin: 0.3rem 0 0 0;
 }

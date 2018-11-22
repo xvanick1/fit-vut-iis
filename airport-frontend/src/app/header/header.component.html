@@ -1,18 +1,18 @@
-<nav>
-    <!-- Sub Navigation -->
+<nav *ngIf="router.url.slice(0,6) !== '/login'">
   <div class="top-bar">
     <div class="top-bar-left">
       <ul class="menu">
-        <li><a routerLink="/letenky">Letenky</a></li>
-        <li><a routerLink="/lety">Lety</a></li>
-        <li><a routerLink="/terminaly">Terminály</a></li>
-        <li><a routerLink="/typyLetadel">Typy Letadel</a></li>
-        <li><a routerLink="/letadla">Letadla</a></li>
+        <li><a routerLink="/letenky" routerLinkActive="is-active"><span>Letenky</span></a></li>
+        <li><a routerLink="/lety" routerLinkActive="is-active"><span>Lety</span></a></li>
+        <li><a routerLink="/terminaly" routerLinkActive="is-active"><span>Terminály</span></a></li>
+        <li><a routerLink="/typyLetadel" routerLinkActive="is-active"><span>Typy Letadel</span></a></li>
+        <li><a routerLink="/letadla" routerLinkActive="is-active"><span>Letadla</span></a></li>
+        <li><a routerLink="/uzivatele" routerLinkActive="is-active"><span>Uživatelé</span></a></li>
       </ul>
     </div>
     <div class="top-bar-right">
       <ul class="menu">
-        <li><a href="#">Odhlásit se</a></li>
+        <li><a (click)="logout()">Odhlásit se</a></li>
       </ul>
     </div>
   </div>

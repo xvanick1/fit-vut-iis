@@ -1,6 +1,15 @@
 @import "../../global";
 @import "~foundation-sites/scss/foundation";
 
-
+$topbar-background: darken($dark-gray, 8%);
 @include foundation-top-bar;
 @include foundation-menu;
+
+:host .top-bar a {
+  color: $white;
+
+  &.is-active span:first-child {
+    border-bottom: 1px solid $white;
+    padding-bottom: 7px;
+  }
+}

@@ -1,0 +1,45 @@
+<div class="grid-y grid-frame">
+  <div class="cell large-3 medium-2 small-3"></div>
+  <div class="cell shrink">
+    <div class="grid-x">
+      <div class="cell auto"></div>
+      <div class="cell large-3 medium-5 small-9">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="grid-y text-center">
+            <div class="cell">
+              <h1>Přihlášení</h1>
+            </div>
+            <div *ngIf="authFailed" class="cell">
+              <div class="callout alert text-left">
+                <p>Neplatné uživatelské jméno nebo heslo.</p>
+              </div>
+            </div>
+            <div class="cell text-left">
+              <label class="{{(username.valid || username.untouched) ? '' : 'is-invalid-label'}}">Uživatelské jméno
+                <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel">
+                <div [hidden]="username.valid || username.untouched">
+                  <span class="form-error is-visible">Uživatelské jméno je vyžadováno</span>
+                </div>
+              </label>
+            </div>
+            <div class="cell text-left">
+              <label class="{{(password.valid || password.untouched) ? '' : 'is-invalid-label'}}">Uživatelské heslo
+                <input type="password" required name="password" [(ngModel)]="user.password" #password="ngModel">
+                <div [hidden]="password.valid || password.untouched">
+                  <span class="form-error is-visible">Uživatelské heslo je vyžadováno</span>
+                </div>
+              </label>
+            </div>
+            <div class="cell">
+              <input type="submit" class="button expanded"
+                     value="{{submitted ? 'Přihlašování ...' : 'Přihlásit'}}"
+                     [disabled]="!loginForm.form.valid || submitted" (click)="onSubmit();false">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="cell auto"></div>
+    </div>
+  </div>
+  <div class="cell auto"></div>
+</div>

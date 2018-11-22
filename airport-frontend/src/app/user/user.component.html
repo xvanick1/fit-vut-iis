@@ -1,0 +1,45 @@
+<div class="grid-container fluid">
+  <div class="grid-x grid-margin-x">
+    <div class="cell">
+      <div class="grid-x">
+        <div class="large-12 medium-12 small-12 cell">
+          <h2>Seznam uživatelů</h2>
+        </div>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="grid-x">
+        <div class="small-12 grid-margin-x cell">
+          <a routerLink="/uzivatele/vytvorit" class="button float-right">Vytvořit uživatele</a>
+        </div>
+      </div>
+    </div>
+    <div class="cell">
+      <table>
+        <thead>
+        <tr>
+          <th>Přihlašovací jméno</th>
+          <th>Přijmení</th>
+          <th>Jméno</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th width="150"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users">
+          <td><a routerLink="/uzivatele/{{user.id}}">{{user.username}}</a></td>
+          <td>{{user?.surname}}</td>
+          <td>{{user?.name}}</td>
+          <td>{{getRoleName(user.role)}}</td>
+          <td>{{user.isActive ? 'Aktivní' : 'Neaktivní' }}</td>
+          <td class="table-right">
+            <a class="alert button inline {{user._submitted ? 'disabled':''}}" (click)="deactivateUser(user)" *ngIf="user.isActive">Deaktivovat</a>
+            <a class="alert button inline {{user._submitted ? 'disabled':''}}" (click)="activateUser(user)" *ngIf="!user.isActive">Aktivovat</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

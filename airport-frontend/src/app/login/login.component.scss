@@ -1,0 +1,12 @@
+@import "../../global";
+@import "~foundation-sites/scss/foundation";
+
+@include foundation-button;
+
+:host .grid-frame {
+  background-color: $light-gray;
+}
+
+:host input.ng-invalid.ng-touched {
+  @include form-input-error($alert-color, 0%);
+}
