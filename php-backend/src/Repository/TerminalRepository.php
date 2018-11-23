@@ -52,15 +52,14 @@ class TerminalRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?Terminal
+    public function findById($id)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('t.id, t.name')
+            ->andWhere('t.id = :val')
+            ->setParameter('val', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
+            ;
     }
-    */
 }
