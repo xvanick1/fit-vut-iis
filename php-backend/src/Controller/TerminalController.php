@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Gate;
 use App\Entity\Terminal;
 use App\Request\TerminalsRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +39,27 @@ class TerminalController extends AbstractController
      */
     public function getTerminal($id)
     {
-        return new JsonResponse();
+        try {
+            $terminal = $this->getDoctrine()->getRepository(Terminal::class)->findById($id);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+
+        $response = new JsonResponse();
+        if ($terminal == null) {
+            $response->setStatusCode(404);
+            return $response;
+        }
+
+        try {
+            $gates = $this->getDoctrine()->getRepository(Gate::class)->findByTerminal($id);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+
+        $terminal['gates'] = $gates;
+        $response->setData($terminal);
+
+        return $response;
     }
 }
