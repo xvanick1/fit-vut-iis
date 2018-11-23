@@ -27,16 +27,16 @@ class Gate
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Terminal")
+     * @ORM\ManyToMany(targetEntity="App\Entity\AirplaneType")
+     */
+    private $airplaneTypes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Terminal", inversedBy="gates")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
     private $terminal;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\AirplaneType")
-     */
-    private $airplaneTypes;
 
     public function __construct()
     {

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Terminal;
+use App\Request\TerminalsRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,32 +20,46 @@ class TerminalRepository extends ServiceEntityRepository
         parent::__construct($registry, Terminal::class);
     }
 
-//    /**
-//     * @return Terminal[] Returns an array of Terminal objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param TerminalsRequest $params
+     * @return Flight[] Returns an array of Flight objects
+     */
+    public function findTerminals(TerminalsRequest $params)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Terminal
+        $query = $this->createQueryBuilder('t')
+            ->select('t.id, t.name, count(g.id) as countOfGates')
+            ->orderBy('t.id', 'ASC')
+            ->setMaxResults(100)
+            ->leftJoin('t.gates', 'g')
+            ->groupBy('t.id', 't.name');
+
+        if ($params->id !== null) {
+            $query->andWhere('t.id = :id')
+                ->setParameter(':id', $params->id);
+        }
+
+        if ($params->name !== null) {
+            $query->andWhere('t.name LIKE :name')
+                ->setParameter(':name', '%'.$params->name.'%');
+        }
+
+        if ($params->countOfGates !== null) {
+            $query->andHaving('countOfGates = :cnt')
+                ->setParameter(':cnt', $params->countOfGates);
+        }
+
+        return $query->getQuery()->getArrayResult();
+    }
+
+    public function findById($id)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('t.id, t.name')
+            ->andWhere('t.id = :val')
+            ->setParameter('val', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
+            ;
     }
-    */
 }

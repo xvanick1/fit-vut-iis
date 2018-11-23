@@ -25,6 +25,11 @@ class TerminalFixture extends Fixture
             $this->addReference("T".$i, $terminal);
         }
 
+        $terminal = new Terminal();
+        $terminal->setName("T6");
+        $manager->persist($terminal);
+        $this->addReference("T6", $terminal);
+
         $manager->flush();
     }
 }

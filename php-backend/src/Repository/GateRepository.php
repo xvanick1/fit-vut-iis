@@ -19,32 +19,14 @@ class GateRepository extends ServiceEntityRepository
         parent::__construct($registry, Gate::class);
     }
 
-//    /**
-//     * @return Gate[] Returns an array of Gate objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function findByTerminal($id)
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('g.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('g.id, g.name')
+            ->andWhere('g.terminal = :val')
+            ->setParameter('val', $id)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getArrayResult()
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Gate
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
