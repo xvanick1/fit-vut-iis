@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -31,6 +33,16 @@ class AirplaneType
      */
     private $name;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Gate", inversedBy="airplaneTypes")
+     */
+    private $gates;
+
+    public function __construct()
+    {
+        $this->gates = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,4 +71,31 @@ class AirplaneType
 
         return $this;
     }
+
+    /**
+     * @return Collection|Gate[]
+     */
+    public function getGates(): Collection
+    {
+        return $this->gates;
+    }
+
+    public function addGate(Gate $gate): self
+    {
+        if (!$this->gates->contains($gate)) {
+            $this->gates[] = $gate;
+        }
+
+        return $this;
+    }
+
+    public function removeGate(Gate $gate): self
+    {
+        if ($this->gates->contains($gate)) {
+            $this->gates->removeElement($gate);
+        }
+
+        return $this;
+    }
+
 }

@@ -34,14 +34,14 @@ class Gate
     private $terminal;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\AirplaneType", cascade={"remove"})
-     */
-    private $airplaneTypes;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="gate", orphanRemoval=true)
      */
     private $flights;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\AirplaneType", mappedBy="gates")
+     */
+    private $airplaneTypes;
 
 
     public function __construct()
@@ -80,32 +80,6 @@ class Gate
     }
 
     /**
-     * @return Collection|AirplaneType[]
-     */
-    public function getAirplaneTypes(): Collection
-    {
-        return $this->airplaneTypes;
-    }
-
-    public function addAirplaneType(AirplaneType $airplaneType): self
-    {
-        if (!$this->airplaneTypes->contains($airplaneType)) {
-            $this->airplaneTypes[] = $airplaneType;
-        }
-
-        return $this;
-    }
-
-    public function removeAirplaneType(AirplaneType $airplaneType): self
-    {
-        if ($this->airplaneTypes->contains($airplaneType)) {
-            $this->airplaneTypes->removeElement($airplaneType);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Flight[]
      */
     public function getFlights(): Collection
@@ -131,6 +105,34 @@ class Gate
             if ($flight->getGate() === $this) {
                 $flight->setGate(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AirplaneType[]
+     */
+    public function getAirplaneTypes(): Collection
+    {
+        return $this->airplaneTypes;
+    }
+
+    public function addAirplaneType(AirplaneType $airplaneType): self
+    {
+        if (!$this->airplaneTypes->contains($airplaneType)) {
+            $this->airplaneTypes[] = $airplaneType;
+            $airplaneType->addGate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAirplaneType(AirplaneType $airplaneType): self
+    {
+        if ($this->airplaneTypes->contains($airplaneType)) {
+            $this->airplaneTypes->removeElement($airplaneType);
+            $airplaneType->removeGate($this);
         }
 
         return $this;
