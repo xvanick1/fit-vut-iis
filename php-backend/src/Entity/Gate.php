@@ -27,20 +27,27 @@ class Gate
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\AirplaneType")
-     */
-    private $airplaneTypes;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Terminal", inversedBy="gates")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
     private $terminal;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\AirplaneType", cascade={"remove"})
+     */
+    private $airplaneTypes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="gate", orphanRemoval=true)
+     */
+    private $flights;
+
+
     public function __construct()
     {
         $this->airplaneTypes = new ArrayCollection();
+        $this->flights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,4 +104,36 @@ class Gate
 
         return $this;
     }
+
+    /**
+     * @return Collection|Flight[]
+     */
+    public function getFlights(): Collection
+    {
+        return $this->flights;
+    }
+
+    public function addFlight(Flight $flight): self
+    {
+        if (!$this->flights->contains($flight)) {
+            $this->flights[] = $flight;
+            $flight->setGate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFlight(Flight $flight): self
+    {
+        if ($this->flights->contains($flight)) {
+            $this->flights->removeElement($flight);
+            // set the owning side to null (unless already changed)
+            if ($flight->getGate() === $this) {
+                $flight->setGate(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

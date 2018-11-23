@@ -48,14 +48,17 @@ class Flight
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Airplane")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $airplane;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Gate")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Gate", inversedBy="flights")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $gate;
+
 
     public function getId(): ?int
     {
@@ -133,4 +136,5 @@ class Flight
 
         return $this;
     }
+
 }

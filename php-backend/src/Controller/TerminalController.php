@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Gate;
 use App\Entity\Terminal;
+use App\Request\TerminalPostRequest;
 use App\Request\TerminalsRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TerminalController extends AbstractController
 {
@@ -96,6 +99,74 @@ class TerminalController extends AbstractController
             return $response;
         }
 
+        return $response;
+    }
+
+    /**
+     * @param TerminalPostRequest $params
+     * @param Terminal $user
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    private function setParams(TerminalPostRequest $params, Terminal $user, UserPasswordEncoderInterface $encoder)
+    {
+        if ($params->name !== null) {
+            $user->setName($params->name);
+        }
+
+        if ($params->gates !== null && empty($params->gates)) {
+            //TBD
+        }
+    }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param UserPasswordEncoderInterface $encoder
+     * @return JsonResponse
+     *
+     * @Route("/api/terminals/{id}", name="post_terminal", methods={"PATCH"}, requirements={"id"="\d+"})
+     */
+    public function postTerminal($id, Request $request, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        try {
+            $terminal = $entityManager->getRepository(Terminal::class)->find($id);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+
+        $response = new JsonResponse('', 201);
+        if ($terminal == null) {
+            $response->setStatusCode(404);
+            return $response;
+        }
+
+        $data = json_decode($request->getContent(), true);
+        $params = new TerminalPostRequest($data, false);
+        $this->setParams($params, $terminal, $encoder);
+
+        $errors = $validator->validate($terminal);
+        if (count($errors) > 0) {
+            $apiErrors = [];
+            foreach ($errors as $error) {
+                $apiErrors[$error->getPropertyPath()] = $error->getMessage();
+            }
+            $response->setStatusCode(409);
+            $response->setData(['errors'=>$apiErrors]);
+            return $response;
+        }
+
+        try {
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            $response->setStatusCode(409);
+            $response->setData($exception->getMessage());
+            return $response;
+        }
+
+        $response->setData();
         return $response;
     }
 }
