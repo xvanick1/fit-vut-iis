@@ -39,7 +39,7 @@
             <td><a routerLink="/terminaly/{{terminal.id}}">{{terminal.id}}</a></td>
             <td>{{terminal.name}}</td>
             <td>{{terminal.countOfGates}}</td>
-            <td class="table-right"><a class="alert button inline" (click)="deleteTerminal(terminal)">Smazat terminál</a></td>
+            <td class="table-right"><a class="alert button inline {{terminal._submitted ? 'disabled':''}}" (click)="deleteTerminal(terminal)">Smazat terminál</a></td>
           </tr>
           </tbody>
         </table>

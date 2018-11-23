@@ -10,6 +10,7 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
+/php-backend/.env
 .idea
 
 
@@ -25,3 +26,5 @@
 .Spotlight-V100
 .Trashes
 .com.apple.timemachine.donotpresent
+
+php-backend/.env
