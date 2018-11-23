@@ -32,7 +32,7 @@ export class UserComponent implements OnInit {
     if (user._submitted) {
       return;
     }
-    user._submitted= true;
+    user._submitted = true;
 
     this.userService.setUserStatus(user.id, !user.isActive).subscribe(
       resp => {

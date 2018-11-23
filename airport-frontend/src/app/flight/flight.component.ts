@@ -1,6 +1,6 @@
 import {Component, OnInit } from '@angular/core';
-import { Flight } from "../_model/flight";
-import { FlightService } from "../_service/flight.service";
+import { Flight } from '../_model/flight';
+import { FlightService } from '../_service/flight.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {DatePipe} from "@angular/common";
