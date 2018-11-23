@@ -35,6 +35,9 @@ class TerminalController extends AbstractController
     }
 
     /**
+     * @param $id
+     * @return JsonResponse
+     *
      * @Route("/api/terminals/{id}", name="get_terminal", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function getTerminal($id)
@@ -59,6 +62,39 @@ class TerminalController extends AbstractController
 
         $terminal['gates'] = $gates;
         $response->setData($terminal);
+
+        return $response;
+    }
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     *
+     * @Route("/api/terminals/{id}", name="delete_terminal", methods={"DELETE"}, requirements={"id"="\d+"})
+     */
+    public function deleteTerminal($id){
+        $entityManager = $this->getDoctrine()->getManager();
+
+        try {
+            $terminal = $entityManager->getRepository(Terminal::class)->find($id);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+
+        if (!$terminal) {
+            return new JsonResponse(null, 404);
+        }
+
+        $response = new JsonResponse(null, 204);
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($terminal);
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            $response->setStatusCode(500);
+            $response->setData($exception->getMessage());
+            return $response;
+        }
 
         return $response;
     }
