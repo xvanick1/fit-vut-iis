@@ -1,4 +1,4 @@
-import {AirplaneType} from "./airplane-type";
+import {AirplaneType} from './airplane-type';
 
 export class Airplane {
   id: number;

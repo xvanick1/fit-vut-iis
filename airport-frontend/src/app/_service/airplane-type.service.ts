@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {AirplaneType} from "../_model/airplane";
+import {AirplaneType} from "../_model/airplane-type";
 
 @Injectable({
   providedIn: 'root'
