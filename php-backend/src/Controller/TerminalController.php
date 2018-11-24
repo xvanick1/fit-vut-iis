@@ -104,17 +104,12 @@ class TerminalController extends AbstractController
 
     /**
      * @param TerminalPostRequest $params
-     * @param Terminal $user
-     * @param UserPasswordEncoderInterface $encoder
+     * @param Terminal $terminal
      */
-    private function setParams(TerminalPostRequest $params, Terminal $user, UserPasswordEncoderInterface $encoder)
+    private function setParams(TerminalPostRequest $params, Terminal $terminal)
     {
         if ($params->name !== null) {
-            $user->setName($params->name);
-        }
-
-        if ($params->gates !== null && empty($params->gates)) {
-            //TBD
+            $terminal->setName($params->name);
         }
     }
 
@@ -122,12 +117,11 @@ class TerminalController extends AbstractController
      * @param $id
      * @param Request $request
      * @param ValidatorInterface $validator
-     * @param UserPasswordEncoderInterface $encoder
      * @return JsonResponse
      *
      * @Route("/api/terminals/{id}", name="post_terminal", methods={"PATCH"}, requirements={"id"="\d+"})
      */
-    public function postTerminal($id, Request $request, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder)
+    public function postTerminal($id, Request $request, ValidatorInterface $validator)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -145,7 +139,7 @@ class TerminalController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         $params = new TerminalPostRequest($data, false);
-        $this->setParams($params, $terminal, $encoder);
+        $this->setParams($params, $terminal);
 
         $errors = $validator->validate($terminal);
         if (count($errors) > 0) {
