@@ -6,4 +6,5 @@ export class Terminal {
     countOfGates: number;
     _submitted: boolean;
     gates: Gate[];
+    deletedGates: Gate[];
 }

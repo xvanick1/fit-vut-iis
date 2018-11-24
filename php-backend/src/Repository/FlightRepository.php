@@ -79,4 +79,16 @@ class FlightRepository extends ServiceEntityRepository
             ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
         ;
     }
+
+    public function findByGateId($id)
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.id')
+            ->andWhere('g.id = :val')
+            ->setParameter('val', $id)
+            ->innerJoin('f.gate', 'g')
+            ->getQuery()
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
+            ;
+    }
 }

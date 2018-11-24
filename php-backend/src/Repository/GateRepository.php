@@ -29,4 +29,15 @@ class GateRepository extends ServiceEntityRepository
             ->getArrayResult()
             ;
     }
+
+    public function findById($id)
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g')
+            ->andWhere('g.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_SIMPLEOBJECT)
+            ;
+    }
 }

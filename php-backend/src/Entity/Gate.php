@@ -34,7 +34,7 @@ class Gate
     private $terminal;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="gate", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="gate")
      */
     private $flights;
 

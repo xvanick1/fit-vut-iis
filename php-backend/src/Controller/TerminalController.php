@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Flight;
 use App\Entity\Gate;
 use App\Entity\Terminal;
 use App\Request\TerminalPostRequest;
@@ -105,13 +106,31 @@ class TerminalController extends AbstractController
     /**
      * @param TerminalPostRequest $params
      * @param Terminal $terminal
+     * @throws \Exception
      */
     private function setParams(TerminalPostRequest $params, Terminal $terminal)
     {
         if ($params->name !== null) {
             $terminal->setName($params->name);
         }
-    }
+
+        if ($params->deletedGates !== null) {
+            foreach ($params->deletedGates as $gate) {
+                $tmp = $this->getDoctrine()->getRepository(Gate::class)->findById($gate['id']);
+                $flights = $this->getDoctrine()->getRepository(Flight::class)->findByGateId($gate['id']);
+
+                if ($tmp != null && empty($flights)) {
+                    $this->getDoctrine()->getManager()->remove($tmp);
+                } elseif (!empty($flights)) {
+                    throw new \Exception('Exists flights on gate, could not delete.');
+                }
+            }
+        }
+
+        if ($params->gates !== null && !empty($params->gates)) {
+            // TBD
+        }
+     }
 
     /**
      * @param $id
@@ -131,7 +150,7 @@ class TerminalController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
-        $response = new JsonResponse('', 201);
+        $response = new JsonResponse('', 204);
         if ($terminal == null) {
             $response->setStatusCode(404);
             return $response;
@@ -139,7 +158,13 @@ class TerminalController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         $params = new TerminalPostRequest($data, false);
-        $this->setParams($params, $terminal);
+        try {
+            $this->setParams($params, $terminal);
+        } catch (\Exception $exception) {
+            $response->setStatusCode(409);
+            $response->setData($exception->getMessage());
+            return $response;
+        }
 
         $errors = $validator->validate($terminal);
         if (count($errors) > 0) {

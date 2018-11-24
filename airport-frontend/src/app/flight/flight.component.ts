@@ -4,7 +4,6 @@ import { FlightService } from '../_service/flight.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {DatePipe} from "@angular/common";
-import {timeValidator} from "../_helper/time-validator.directive";
 
 @Component({
   selector: 'app-flight',

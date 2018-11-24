@@ -16,6 +16,7 @@ class TerminalPostRequest extends AbstractRequest
     public $id;
     public $name;
     public $gates;
+    public $deletedGates;
 
     /**
      * @param OptionsResolver $resolver
@@ -23,15 +24,17 @@ class TerminalPostRequest extends AbstractRequest
     protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined([
-           'id',
-           'name',
-           'gates'
+            'id',
+            'name',
+            'gates',
+            'deletedGates'
         ]);
 
         $resolver->addAllowedTypes('id', 'numeric');
         $resolver->addAllowedValues('id', $this->isPositive);
         $resolver->addAllowedTypes('name', 'string');
         $resolver->addAllowedTypes('gates', 'array');
+        $resolver->addAllowedTypes('deletedGates', 'array');
     }
 
     /**

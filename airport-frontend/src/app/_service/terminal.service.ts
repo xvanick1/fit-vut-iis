@@ -40,8 +40,8 @@ export class TerminalService {
     return this.http.delete(this.terminalsURL+'/'+id);
   }
 
-  updateTerminal(id: number): Observable<any> {
-    return this.http.patch(this.terminalsURL+'/'+id, name);
+  updateTerminal(terminal: Terminal): Observable<any> {
+    return this.http.patch(this.terminalsURL+'/'+terminal.id, terminal);
   }
 
   createTerminal(id: number): Observable<any> {
