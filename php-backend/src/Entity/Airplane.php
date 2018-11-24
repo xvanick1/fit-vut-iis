@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,11 +42,21 @@ class Airplane
     private $dateOfRevision;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AirplaneType")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AirplaneType", inversedBy="airplanes")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
     private $airplaneType;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="airplane")
+     */
+    private $flights;
+
+    public function __construct()
+    {
+        $this->flights = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,6 +107,37 @@ class Airplane
     public function setAirplaneType(?AirplaneType $airplaneType): self
     {
         $this->airplaneType = $airplaneType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Flight[]
+     */
+    public function getFlights(): Collection
+    {
+        return $this->flights;
+    }
+
+    public function addFlight(Flight $flight): self
+    {
+        if (!$this->flights->contains($flight)) {
+            $this->flights[] = $flight;
+            $flight->setAirplane($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFlight(Flight $flight): self
+    {
+        if ($this->flights->contains($flight)) {
+            $this->flights->removeElement($flight);
+            // set the owning side to null (unless already changed)
+            if ($flight->getAirplane() === $this) {
+                $flight->setAirplane(null);
+            }
+        }
 
         return $this;
     }

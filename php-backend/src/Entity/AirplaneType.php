@@ -38,9 +38,15 @@ class AirplaneType
      */
     private $gates;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Airplane", mappedBy="airplaneType", orphanRemoval=true)
+     */
+    private $airplanes;
+
     public function __construct()
     {
         $this->gates = new ArrayCollection();
+        $this->airplanes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +102,14 @@ class AirplaneType
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Airplane[]
+     */
+    public function getAirplanes(): Collection
+    {
+        return $this->airplanes;
     }
 
 }
