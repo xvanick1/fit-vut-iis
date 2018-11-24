@@ -1,3 +1,50 @@
-<p>
-  airplane-type works!
-</p>
+<!--<form [formGroup]="myForm" (ngSubmit)="false" >
+  <div class="grid-container fluid">
+    <div class="grid-x grid-margin-x">
+      <div class="cell">
+        <div class="grid-x">
+          <div class="large-12 medium-12 small-12 cell">
+            <h2>Seznam typů letadel</h2>
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="grid-x">
+          <div class="small-12 grid-margin-x cell">
+            <a routerLink="/terminaly/vytvorit" class="button float-right">Vytvořit typ letadla</a>
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <table>
+          <thead>
+          <tr>
+            <th class="{{(myForm.get('idInput').valid || myForm.get('idInput').untouched) ? '' : 'is-invalid-label'}}">
+              Název
+              <input type="text" formControlName="idInput">
+            </th>
+            <th class="{{(myForm.get('nameInput').valid || myForm.get('nameInput').untouched) ? '' : 'is-invalid-label'}}">
+              Výrobce
+              <input type="text" formControlName="nameInput">
+            </th>
+            <th class="{{(myForm.get('countOfGatesInput').valid || myForm.get('countOfGatesInput').untouched) ? '' : 'is-invalid-label'}}">
+              Počet Letadel
+              <input type="text" formControlName="countOfGatesInput">
+            </th>
+            <th width="175"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let terminal of terminals">
+            <td><a routerLink="/terminaly/{{terminal.id}}">{{terminal.id}}</a></td>
+            <td>{{terminal.name}}</td>
+            <td>{{terminal.countOfGates}}</td>
+            <td class="table-right"><a class="alert button inline {{terminal._submitted ? 'disabled':''}}" (click)="deleteTerminal(terminal)">Smazat typ letadla</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>
+-->

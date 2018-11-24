@@ -13,6 +13,7 @@ import {EditFlightComponent} from "./flight/edit-flight/edit-flight.component";
 import {EditUserComponent} from "./user/edit-user/edit-user.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {UserComponent} from "./user/user.component";
+import {EditTerminalComponent} from "./terminal/edit-terminal/edit-terminal.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'lety/:id', component: EditFlightComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_MANAGER','ROLE_ADMIN'] } },
 
   { path: 'terminaly', component: TerminalComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+  { path: 'terminaly/:id', component: EditTerminalComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
   { path: 'typyLetadel', component: AirplaneTypeComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
   { path: 'letadla', component: AirplaneComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
 

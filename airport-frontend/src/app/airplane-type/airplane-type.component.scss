@@ -1,0 +1,33 @@
+@import "../../global";
+@import "~foundation-sites/scss/foundation";
+
+@include foundation-table;
+@include foundation-button;
+
+:host .button.inline {
+  display: inline;
+  font-size: $global-font-size*0.8;
+  padding: 0.6em 0.8em;
+}
+
+:host .table-right {
+  text-align: right;
+}
+
+:host table input {
+  margin-bottom: 0;
+}
+
+.button.inline[_ngcontent-c2] {
+  display: inline;
+  font-size: $global-font-size*0.8;
+  padding: 0.6em 0.8em;
+}
+
+:host input.ng-invalid.ng-touched {
+  @include form-input-error($alert-color, 0%);
+}
+
+.table-right[_ngcontent-c2] {
+  text-align: right;
+}

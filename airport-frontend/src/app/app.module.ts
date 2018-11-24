@@ -25,6 +25,7 @@ import { EditFlightComponent } from './flight/edit-flight/edit-flight.component'
 import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './user/create-user/create-user.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
+import { EditTerminalComponent } from './terminal/edit-terminal/edit-terminal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
     EditFlightComponent,
     UserComponent,
     CreateUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    EditTerminalComponent
   ],
   imports: [
     BrowserModule,
