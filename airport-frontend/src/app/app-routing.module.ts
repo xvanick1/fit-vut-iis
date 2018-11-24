@@ -16,17 +16,20 @@ import {UserComponent} from "./user/user.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
-  { path: 'letenky', component: TicketComponent, canActivate: [AuthGuard] },
-  { path: 'lety', component: FlightComponent, canActivate: [AuthGuard] },
-  { path: 'terminaly', component: TerminalComponent, canActivate: [AuthGuard] },
-  { path: 'typyLetadel', component: AirplaneTypeComponent, canActivate: [AuthGuard] },
-  { path: 'letadla', component: AirplaneComponent, canActivate: [AuthGuard] },
-  { path: 'lety/vytvorit', component: CreateFlightComponent, canActivate: [AuthGuard] },
-  { path: 'lety/:id', component: EditFlightComponent, canActivate: [AuthGuard] },
+  { path: 'letenky', component: TicketComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_USER','ROLE_MANAGER','ROLE_ADMIN'] } },
+  { path: 'lety', component: FlightComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_MANAGER','ROLE_ADMIN'] } },
+  { path: 'lety/vytvorit', component: CreateFlightComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_MANAGER','ROLE_ADMIN'] } },
+  { path: 'lety/:id', component: EditFlightComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_MANAGER','ROLE_ADMIN'] } },
+
+  { path: 'terminaly', component: TerminalComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+  { path: 'typyLetadel', component: AirplaneTypeComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+  { path: 'letadla', component: AirplaneComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+
+  { path: 'uzivatele', component: UserComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+  { path: 'uzivatele/vytvorit', component: CreateUserComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+  { path: 'uzivatele/:id', component: EditUserComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+
   { path: 'login', component: LoginComponent },
-  { path: 'uzivatele', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'uzivatele/vytvorit', component: CreateUserComponent, canActivate: [AuthGuard] },
-  { path: 'uzivatele/:id', component: EditUserComponent, canActivate: [AuthGuard] },
   { path: '404', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }
 ];

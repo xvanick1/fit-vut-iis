@@ -13,6 +13,7 @@ class AuthController extends AbstractController
      */
     public function index()
     {
-        return new JsonResponse([], 200);
+        $user = $this->getUser();
+        return new JsonResponse(['role'=>$user->getRole()], 200);
     }
 }

@@ -24,4 +24,19 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  isRole(role: string): boolean {
+    if (!AuthService.loggedIn) {
+      return false;
+    }
+    const currentRole = atob(localStorage.getItem('role'));
+    if (currentRole == role) {
+      return true;
+    } else if (currentRole == 'ROLE_MANAGER' && role == 'ROLE_USER') {
+      return true;
+    } else if (currentRole == 'ROLE_ADMIN' && (role == 'ROLE_USER' || role == 'ROLE_MANAGER')) {
+      return true;
+    }
+
+    return false;
+  }
 }

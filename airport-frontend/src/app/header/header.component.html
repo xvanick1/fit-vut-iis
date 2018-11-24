@@ -2,12 +2,12 @@
   <div class="top-bar">
     <div class="top-bar-left">
       <ul class="menu">
-        <li><a routerLink="/letenky" routerLinkActive="is-active"><span>Letenky</span></a></li>
-        <li><a routerLink="/lety" routerLinkActive="is-active"><span>Lety</span></a></li>
-        <li><a routerLink="/terminaly" routerLinkActive="is-active"><span>Terminály</span></a></li>
-        <li><a routerLink="/typyLetadel" routerLinkActive="is-active"><span>Typy Letadel</span></a></li>
-        <li><a routerLink="/letadla" routerLinkActive="is-active"><span>Letadla</span></a></li>
-        <li><a routerLink="/uzivatele" routerLinkActive="is-active"><span>Uživatelé</span></a></li>
+        <li *ngIf="isRole('ROLE_USER')"><a routerLink="/letenky" routerLinkActive="is-active"><span>Letenky</span></a></li>
+        <li *ngIf="isRole('ROLE_MANAGER')"><a routerLink="/lety" routerLinkActive="is-active"><span>Lety</span></a></li>
+        <li *ngIf="isRole('ROLE_ADMIN')"><a routerLink="/terminaly" routerLinkActive="is-active"><span>Terminály</span></a></li>
+        <li *ngIf="isRole('ROLE_ADMIN')"><a routerLink="/typyLetadel" routerLinkActive="is-active"><span>Typy Letadel</span></a></li>
+        <li *ngIf="isRole('ROLE_ADMIN')"><a routerLink="/letadla" routerLinkActive="is-active"><span>Letadla</span></a></li>
+        <li *ngIf="isRole('ROLE_ADMIN')"><a routerLink="/uzivatele" routerLinkActive="is-active"><span>Uživatelé</span></a></li>
       </ul>
     </div>
     <div class="top-bar-right">

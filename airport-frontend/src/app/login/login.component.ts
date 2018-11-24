@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       resp => {
         if (resp.status == 200) {
           AuthService.setBasiAuth(this.user.username, this.user.password);
+          AuthService.setRole(resp.body.role);
           this.router.navigate([this.returnUrl]);
         } else {
           this.submitted = false;
