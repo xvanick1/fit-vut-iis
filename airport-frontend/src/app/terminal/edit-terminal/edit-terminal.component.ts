@@ -119,4 +119,8 @@ export class EditTerminalComponent implements OnInit {
     this.gateName.setValue(gate.name);
     this.tmpGate = gate;
   }
+
+  closeModal(id: string) {
+    modal.closeModal(id);
+  }
 }

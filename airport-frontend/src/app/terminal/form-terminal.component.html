@@ -41,10 +41,10 @@
           <div class="cell small-12">
             <div class="cell">
               <div class="grid-x">
-                <div class="large-6 cell">
+                <div class="small-6 cell">
                   <h3>Seznam Gate</h3>
                 </div>
-                <div class="large-6 cell">
+                <div class="small-6 cell">
                   <a (click)="createGate('exampleModal1')" class="button float-right">Vytvořit gate</a>
                 </div>
               </div>
@@ -95,7 +95,7 @@
       <input type="text" required name="name" [formControl]="gateName">
     </label>
     <div class="button-group">
-      <a class="clear button text-right" (click)="modal.closeModal('exampleModal1')">Zavřít</a>
+      <a class="clear button text-right" (click)="closeModal('exampleModal1')">Zavřít</a>
       <input type="submit" class="button" value="Uložit" [disabled]="!gateName.valid" (click)="saveButon('exampleModal1', gate)">
     </div>
   </div>
