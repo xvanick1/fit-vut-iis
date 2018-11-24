@@ -25,9 +25,6 @@ export class HeaderComponent implements OnInit {
   }
 
   isRole(role: string): boolean {
-    if (!AuthService.loggedIn) {
-      return false;
-    }
     const currentRole = atob(localStorage.getItem('role'));
     if (currentRole == role) {
       return true;
