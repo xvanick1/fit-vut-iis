@@ -25,7 +25,6 @@ export class AuthService {
   }
 
   static setRole(role: string) {
-    //localStorage.setItem('role', role);
     localStorage.setItem('role', btoa(role));
   }
 
@@ -33,5 +32,18 @@ export class AuthService {
     localStorage.removeItem('loggedUser')
     localStorage.removeItem('role')
     AuthService.loggedIn = false;
+  }
+
+  static hasRole(role: string): boolean {
+    const currentRole = atob(localStorage.getItem('role'));
+    if (currentRole == role) {
+      return true;
+    } else if (currentRole == 'ROLE_MANAGER' && role == 'ROLE_USER') {
+      return true;
+    } else if (currentRole == 'ROLE_ADMIN' && (role == 'ROLE_USER' || role == 'ROLE_MANAGER')) {
+      return true;
+    }
+
+    return false;
   }
 }
