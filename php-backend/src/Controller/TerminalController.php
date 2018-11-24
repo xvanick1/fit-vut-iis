@@ -114,7 +114,7 @@ class TerminalController extends AbstractController
             $terminal->setName($params->name);
         }
 
-        if ($params->deletedGates !== null) {
+        if ($params->deletedGates !== null) { // gate to delete
             foreach ($params->deletedGates as $gate) {
                 $tmp = $this->getDoctrine()->getRepository(Gate::class)->findById($gate['id']);
                 $flights = $this->getDoctrine()->getRepository(Flight::class)->findByGateId($gate['id']);
@@ -127,8 +127,18 @@ class TerminalController extends AbstractController
             }
         }
 
-        if ($params->gates !== null && !empty($params->gates)) {
+        if ($params->gates !== null && !empty($params->gates)) { // check gates (new, changed and unchanged)
             // TBD
+            $gates = $terminal->getGates();
+            foreach ($params->gates as $gate) {
+                if (key_exists('id', $gate)) {
+                    // TBD
+                } else {
+                    $tmp = new Gate();
+                    $tmp->setName($gate['name']);
+                    $terminal->addGate($tmp);
+                }
+            }
         }
      }
 

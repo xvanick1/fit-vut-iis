@@ -27,7 +27,7 @@ class Terminal
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Gate", mappedBy="terminal", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Gate", mappedBy="terminal", orphanRemoval=true, cascade={"persist"})
      */
     private $gates;
 
