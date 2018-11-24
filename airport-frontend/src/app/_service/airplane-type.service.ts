@@ -8,7 +8,7 @@ import {AirplaneType} from "../_model/airplane";
   providedIn: 'root'
 })
 export class AirplaneTypeService {
-  private airplaneTypesURL = environment.apiUrl+'/api/terminals'; // URL to API tickets
+  private airplaneTypesURL = environment.apiUrl+'/api/airplane-types'; // URL to API tickets
 
   constructor(
     private http: HttpClient
@@ -32,18 +32,18 @@ export class AirplaneTypeService {
   }
 
   getAirplaneType(id: number): Observable<any> {
-    return this.http.get<AirplaneType>(this.AirplaneTypesURL+'/'+id, {observe: 'response'});
+    return this.http.get<AirplaneType>(this.airplaneTypesURL+'/'+id, {observe: 'response'});
   }
 
   deleteAirplaneType(id: number): Observable<any> {
-    return this.http.delete(this.AirplaneTypesURL+'/'+id);
+    return this.http.delete(this.airplaneTypesURL+'/'+id);
   }
 
   updateAirplaneType(id: number): Observable<any> {
-    return this.http.patch(this.AirplaneTypesURL+'/'+id, name);
+    return this.http.patch(this.airplaneTypesURL+'/'+id, name);
   }
 
   createAirplaneType(id: number): Observable<any> {
-    return this.http.post(this.AirplaneTypesURL, id);
+    return this.http.post(this.airplaneTypesURL, id);
   }
 }
