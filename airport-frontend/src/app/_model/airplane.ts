@@ -1,8 +1,4 @@
-export class AirplaneType {
-  id: number;
-  manufacturer: string;
-  name: string;
-}
+import {AirplaneType} from "./airplane-type";
 
 export class Airplane {
   id: number;

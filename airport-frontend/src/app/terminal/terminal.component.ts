@@ -3,7 +3,6 @@ import {Terminal} from '../_model/terminal';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TerminalService} from '../_service/terminal.service';
 import * as moment from 'moment';
-import {User} from "../_model/user";
 
 @Component({
   selector: 'app-terminal',

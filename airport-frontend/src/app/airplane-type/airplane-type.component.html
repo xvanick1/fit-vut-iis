@@ -1,4 +1,4 @@
-<!--<form [formGroup]="myForm" (ngSubmit)="false" >
+<form [formGroup]="myForm" (ngSubmit)="false" >
   <div class="grid-container fluid">
     <div class="grid-x grid-margin-x">
       <div class="cell">
@@ -11,7 +11,7 @@
       <div class="cell">
         <div class="grid-x">
           <div class="small-12 grid-margin-x cell">
-            <a routerLink="/terminaly/vytvorit" class="button float-right">Vytvořit typ letadla</a>
+            <a routerLink="/typyLetadel/vytvorit" class="button float-right">Přidat typ letadla</a>
           </div>
         </div>
       </div>
@@ -19,27 +19,33 @@
         <table>
           <thead>
           <tr>
-            <th class="{{(myForm.get('idInput').valid || myForm.get('idInput').untouched) ? '' : 'is-invalid-label'}}">
-              Název
-              <input type="text" formControlName="idInput">
-            </th>
             <th class="{{(myForm.get('nameInput').valid || myForm.get('nameInput').untouched) ? '' : 'is-invalid-label'}}">
-              Výrobce
-              <input type="text" formControlName="nameInput">
+              Název
+              <label>
+                <input type="text" formControlName="nameInput">
+              </label>
             </th>
-            <th class="{{(myForm.get('countOfGatesInput').valid || myForm.get('countOfGatesInput').untouched) ? '' : 'is-invalid-label'}}">
-              Počet Letadel
-              <input type="text" formControlName="countOfGatesInput">
+            <th class="{{(myForm.get('manufacturerInput').valid || myForm.get('manufacturerInput').untouched) ? '' : 'is-invalid-label'}}">
+              Výrobce
+              <label>
+                <input type="text" formControlName="manufacturerInput">
+              </label>
+            </th>
+            <th class="{{(myForm.get('countOfAirplaneTypesInput').valid || myForm.get('countOfAirplaneTypesInput').untouched) ? '' : 'is-invalid-label'}}">
+              Počet letadel
+              <label>
+                <input type="text" formControlName="countOfAirplaneTypesInput">
+              </label>
             </th>
             <th width="175"></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let terminal of terminals">
-            <td><a routerLink="/terminaly/{{terminal.id}}">{{terminal.id}}</a></td>
-            <td>{{terminal.name}}</td>
-            <td>{{terminal.countOfGates}}</td>
-            <td class="table-right"><a class="alert button inline {{terminal._submitted ? 'disabled':''}}" (click)="deleteTerminal(terminal)">Smazat typ letadla</a></td>
+          <tr *ngFor="let airplaneType of airplaneTypes">
+            <td><a routerLink="/typyLetadel/{{airplaneType.name}}">{{airplaneType.name}}</a></td>
+            <td>{{airplaneType.manufacturer}}</td>
+            <td>{{airplaneType.countOfAirplaneTypes}}</td>
+            <td class="table-right"><a class="alert button inline {{airplaneType._submitted ? 'disabled':''}}" (click)="deleteAirplaneType(airplaneType)">Smazat typ letadla</a></td>
           </tr>
           </tbody>
         </table>
@@ -47,4 +53,3 @@
     </div>
   </div>
 </form>
--->
