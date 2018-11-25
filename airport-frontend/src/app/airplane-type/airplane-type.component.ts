@@ -21,7 +21,7 @@ export class AirplaneTypeComponent implements OnInit {
       'nameInput': new FormControl('', [
         Validators.pattern('[1-9][0-9]*')
       ]),
-      'manufactureInput': new FormControl(),
+      'manufacturerInput': new FormControl(),
     });
 
     this.onChanges();

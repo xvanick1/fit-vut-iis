@@ -8,7 +8,7 @@ import {AirplaneType} from "../_model/airplane-type";
   providedIn: 'root'
 })
 export class AirplaneTypeService {
-  private airplaneTypesURL = environment.apiUrl+'/api/airplane-types'; // URL to API tickets
+  private airplaneTypesURL = environment.apiUrl+'/api/airplanes/types'; // URL to API tickets
 
   constructor(
     private http: HttpClient

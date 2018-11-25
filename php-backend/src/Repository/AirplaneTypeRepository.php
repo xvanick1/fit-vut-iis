@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\AirplaneType;
+use App\Request\AirplaneTypesRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,22 +20,37 @@ class AirplaneTypeRepository extends ServiceEntityRepository
         parent::__construct($registry, AirplaneType::class);
     }
 
-//    /**
-//     * @return AirplaneType[] Returns an array of AirplaneType objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param AirplaneTypesRequest $params
+     * @return AirplaneType[] Returns an array of Flight objects
+     */
+    public function findAirplaneTypes(AirplaneTypesRequest $params)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+
+        $query = $this->createQueryBuilder('at')
+            ->select('at.id, at.name, at.manufacturer, count(a.id) as countOfAirplanes')
+            ->orderBy('at.id', 'ASC')
+            ->setMaxResults(100)
+            ->leftJoin('at.airplanes', 'a')
+            ->groupBy('at.id', 'at.name');
+
+        if ($params->countOfAirplanes != null) {
+            $query->andHaving('countOfAirplanes = :val2')
+                ->setParameter('val2', $params->countOfAirplanes);
+        }
+
+        if ($params->name != null) {
+            $query->andWhere('at.name LIKE :val3')
+                ->setParameter('val3', '%'.$params->name.'%');
+        }
+
+        if ($params->manufacturer != null) {
+            $query->andWhere('at.manufacturer LIKE :val4')
+                ->setParameter('val4', '%'.$params->manufacturer.'%');
+        }
+
+        return $query->getQuery()->getArrayResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?AirplaneType
