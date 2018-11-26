@@ -43,7 +43,7 @@ export class TerminalService {
     return this.http.patch(this.terminalsURL+'/'+terminal.id, terminal);
   }
 
-  createTerminal(id: number): Observable<any> {
-    return this.http.post(this.terminalsURL, id);
+  createTerminal(terminal: Terminal): Observable<any> {
+    return this.http.post(this.terminalsURL, terminal);
   }
 }

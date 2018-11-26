@@ -210,4 +210,50 @@ class TerminalController extends AbstractController
         $response->setData(['gates'=>$apiGates]);
         return $response;
     }
+
+    /**
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     *
+     * @Route("/api/terminals", name="create_terminal", methods={"POST"})
+     */
+    public function createTerminal(Request $request, ValidatorInterface $validator)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $terminal = new Terminal();
+
+        $data = json_decode($request->getContent(), true);
+        $params = new TerminalPostRequest($data, true);
+        try {
+            $this->setParams($params, $terminal);
+        } catch (\Exception $exception) {
+            return new JsonResponse(['errors'=>$exception->getMessage()], 409);
+        }
+
+        $errors = $validator->validate($terminal);
+        if (count($errors) > 0) {
+            $apiErrors = [];
+            foreach ($errors as $error) {
+                $apiErrors[$error->getPropertyPath()] = $error->getMessage();
+            }
+            return new JsonResponse(['errors'=>$apiErrors], 409);
+        }
+
+        try {
+            $entityManager->persist($terminal);
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            return new JsonResponse(['errors'=>$exception->getMessage()], 409);
+        }
+
+        $apiGates = [];
+        $gates = $terminal->getGates();
+        foreach ($gates as $gate) {
+            $apiGates[] = ['id' => $gate->getId(), 'name'=>$gate->getName()];
+        }
+
+        return new JsonResponse('', 204);
+    }
+
 }

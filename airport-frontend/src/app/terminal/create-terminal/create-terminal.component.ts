@@ -75,7 +75,41 @@ export class CreateTerminalComponent implements OnInit {
     this.tmpGate = gate;
   }
 
+  saveButton(id: string) {
+    if (!this.tmpGate.id) {
+      let newGate = new Gate();
+      newGate.name = this.gateName.value;
+      this.terminal.gates.push(newGate);
+    } else {
+      this.tmpGate.name = this.gateName.value;
+      this.terminal.updatedGates.push(this.tmpGate);
+    }
+    modal.closeModal(id);
+  }
+
   closeModal(id: string) {
     modal.closeModal(id);
+  }
+
+  onSubmit() {
+    if (this.created) {
+      this.router.navigate(['terminaly/vytvorit']);
+      return;
+    }
+
+    this.submitted = true;
+    this.message = null;
+    this.terminalService.createTerminal(this.terminal).subscribe(resp => {
+      this.message = new Message();
+      this.message.type = 'success';
+      this.message.text = 'Terminál byl úspěšně vytvořen';
+      this.submitted = false;
+      this.created = true;
+    }, error1 => {
+      this.message = new Message();
+      this.message.type = 'alert';
+      this.message.text = 'Při vytváření terminálu nastala chyba';
+      this.submitted = false;
+    });
   }
 }
