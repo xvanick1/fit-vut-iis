@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import {Message} from "../../_model/message";
-import {AirplaneType} from "../../_model/airplane-type";
 import {AirplaneTypeService} from "../../_service/airplane-type.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Message} from "../../_model/message";
+import {AirplaneType} from "../../_model/airplane-type";
+
 
 @Component({
   selector: 'app-edit-airplane-type',
@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['../form-airplane-type.component.scss']
 })
 export class EditAirplaneTypeComponent implements OnInit {
-  title = 'Upravit Typ letadla';
+  title = 'Upravit typ letadla';
   submitted: boolean = false;
   isLoading: boolean = true;
   created: boolean = false;
@@ -27,12 +27,11 @@ export class EditAirplaneTypeComponent implements OnInit {
   ngOnInit() {
     this.airplaneType = new AirplaneType();
     this.route.params.subscribe(params => {
-      this.airplaneType.id = +params['id'];
+      this.airplaneType.id = +params['id']; //id should be name, right ?
       // In a real app: dispatch action to load the details here.
     });
 
-    this.airplaneTypeService.getAirplaneType(this.airplaneType.id).subscribe(
-      resp => {
+    this.airplaneTypeService.getAirplaneType(this.airplaneType.id).subscribe(resp => { //id should be name, right ?
         this.airplaneType = resp.body;
         this.isLoading = false;
       },
@@ -44,7 +43,7 @@ export class EditAirplaneTypeComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.message = null;
-    this.airplaneTypeService.updateAirplaneType(this.airplaneType.id).subscribe(resp => {
+    this.airplaneTypeService.updateAirplaneType(this.airplaneType).subscribe(resp => { //WTF error ?
       this.message = new Message();
       this.message.type = 'success';
       this.message.text = 'Typ letadla byl úspěšně uložen';
@@ -61,7 +60,7 @@ export class EditAirplaneTypeComponent implements OnInit {
     this.submitted = true;
     this.message = null;
     this.airplaneTypeService.deleteAirplaneType(this.airplaneType.id).subscribe(resp => {
-      this.router.navigate(['terminaly']);
+      this.router.navigate(['typyLetadel']);
     }, error1 => {
       this.message = new Message();
       this.message.type = 'alert';

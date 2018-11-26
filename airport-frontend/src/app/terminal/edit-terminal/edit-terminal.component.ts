@@ -41,8 +41,7 @@ export class EditTerminalComponent implements OnInit {
       // In a real app: dispatch action to load the details here.
     });
 
-    this.terminalService.getTerminal(this.terminal.id).subscribe(
-      resp => {
+    this.terminalService.getTerminal(this.terminal.id).subscribe(resp => {
         this.terminal = resp.body;
         this.terminal.deletedGates = [];
         this.isLoading = false;
