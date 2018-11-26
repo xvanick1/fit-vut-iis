@@ -52,15 +52,27 @@ class AirplaneTypeRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?AirplaneType
+    public function findById($id)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('at')
+            ->select('at.id, at.name, at.manufacturer')
+            ->andWhere('at.id = :val')
+            ->setParameter('val', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
+            ;
     }
-    */
+
+    public function findGatesByAirplaneType($id)
+    {
+        return $this->createQueryBuilder('at')
+            ->select('g.id, g.name, t.name as terminal')
+            ->andWhere('at.id = :val')
+            ->setParameter('val', $id)
+            ->leftJoin('at.gates', 'g')
+            ->innerJoin('g.terminal', 't')
+            ->getQuery()
+            ->getArrayResult()
+            ;
+    }
 }
