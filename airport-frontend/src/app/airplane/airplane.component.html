@@ -1,3 +1,42 @@
-<p>
-  airplane works!
-</p>
+<div class="grid-container fluid">
+  <div class="grid-x grid-margin-x">
+    <div class="cell">
+      <div class="grid-x">
+        <div class="large-12 medium-12 small-12 cell">
+          <h2>Seznam Letadel</h2>
+        </div>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="grid-x">
+        <div class="small-12 grid-margin-x cell">
+          <a routerLink="/letadla/vytvorit" class="button float-right">Přidat letadlo</a>
+        </div>
+      </div>
+    </div>
+    <div class="cell">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Typ letadla</th>
+          <th>Počet členů posádky</th>
+          <th>Datum výroby</th>
+          <th>Datum poslední revize</th>
+          <th width="150"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let airplane of airplanes">
+          <td><a routerLink="/letadla/{{airplane.id}}">{{airplane.id}}</a></td>
+          <td>{{airplane?.type}}</td>
+          <td>{{airplane?.crewNumber}}</td>
+          <td>{{airplane?.dateOfProduction}}</td>
+          <td>{{airplane?.dateOfRevision}}</td>
+          <td class="table-right"><a class="alert button inline" (click)="deleteAirplane(airplane)">Smazat letadlo</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

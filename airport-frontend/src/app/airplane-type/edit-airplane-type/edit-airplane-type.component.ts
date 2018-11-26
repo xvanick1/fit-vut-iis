@@ -16,7 +16,7 @@ export class EditAirplaneTypeComponent implements OnInit {
   isLoading: boolean = true;
   created: boolean = false;
   message: Message;
-  airplaneType: AirplaneType;
+  airplaneType: AirplaneType[];
 
   constructor(
     private airplaneTypeService: AirplaneTypeService,
