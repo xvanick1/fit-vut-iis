@@ -5,3 +5,7 @@ export class Gate {
   name: string;
   terminal: Terminal;
 }
+
+export class AirTypeGate extends Gate{
+  terminalName: string;
+}

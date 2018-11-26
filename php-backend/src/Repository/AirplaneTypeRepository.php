@@ -66,7 +66,7 @@ class AirplaneTypeRepository extends ServiceEntityRepository
     public function findGatesByAirplaneType($id)
     {
         return $this->createQueryBuilder('at')
-            ->select('g.id, g.name, t.name as terminal')
+            ->select('g.id, g.name, t.name as terminalName')
             ->andWhere('at.id = :val')
             ->setParameter('val', $id)
             ->leftJoin('at.gates', 'g')

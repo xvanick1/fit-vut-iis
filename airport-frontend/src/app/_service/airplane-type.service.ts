@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AirplaneType} from "../_model/airplane-type";
+import {Gate} from "../_model/gate";
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,10 @@ export class AirplaneTypeService {
 
   createAirplaneType(id: number): Observable<any> {
     return this.http.post(this.airplaneTypesURL, id);
+  }
+
+  getGates(): Observable<Gate[]> {
+    return this.http.get<Gate[]>(environment.apiUrl+'/api/gates');
+
   }
 }

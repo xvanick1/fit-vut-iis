@@ -1,4 +1,4 @@
-import {Gate} from "./gate";
+import {AirTypeGate} from "./gate";
 
 export class AirplaneType {
   id: number;
@@ -6,5 +6,5 @@ export class AirplaneType {
   manufacturer: string;
   _submitted: boolean;
   countOfAirplanes: AirplaneType[];
-  gates: Gate[];
+  gates: AirTypeGate[];
 }

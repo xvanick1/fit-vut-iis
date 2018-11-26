@@ -60,4 +60,11 @@ class GateRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_SIMPLEOBJECT);
     }
+
+    public function findGates() {
+        return $this->createQueryBuilder('g')
+            ->select('g.id, g.name, t.id as terminalId, t.name as terminalName')
+            ->innerJoin('g.terminal', 't')
+            ->getQuery()->getArrayResult();
+    }
 }
