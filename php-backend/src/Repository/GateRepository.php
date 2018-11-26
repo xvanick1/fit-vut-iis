@@ -40,4 +40,24 @@ class GateRepository extends ServiceEntityRepository
             ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_SIMPLEOBJECT)
             ;
     }
+
+    /**
+     * @param array $gates
+     * @return Gate[]|null
+     */
+    public function findByIds(array $gates) {
+        if (empty($gates)) {
+            return null;
+        }
+        $query = $this->createQueryBuilder('g');
+
+        $i = 0;
+        foreach ($gates as $gate) {
+            $query->orWhere('g.id = :gid'.$i)
+                ->setParameter('gid'.$i, $gate['id']);
+            $i++;
+        }
+
+        return $query->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_SIMPLEOBJECT);
+    }
 }

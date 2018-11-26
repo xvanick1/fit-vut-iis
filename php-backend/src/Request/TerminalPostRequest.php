@@ -17,6 +17,7 @@ class TerminalPostRequest extends AbstractRequest
     public $name;
     public $gates;
     public $deletedGates;
+    public $updatedGates;
 
     /**
      * @param OptionsResolver $resolver
@@ -27,7 +28,8 @@ class TerminalPostRequest extends AbstractRequest
             'id',
             'name',
             'gates',
-            'deletedGates'
+            'deletedGates',
+            'updatedGates'
         ]);
 
         $resolver->addAllowedTypes('id', 'numeric');
@@ -35,6 +37,7 @@ class TerminalPostRequest extends AbstractRequest
         $resolver->addAllowedTypes('name', 'string');
         $resolver->addAllowedTypes('gates', 'array');
         $resolver->addAllowedTypes('deletedGates', 'array');
+        $resolver->addAllowedTypes('updatedGates', 'array');
     }
 
     /**

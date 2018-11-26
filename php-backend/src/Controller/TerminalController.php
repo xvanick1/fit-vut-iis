@@ -126,20 +126,27 @@ class TerminalController extends AbstractController
             }
         }
 
-        if ($params->gates !== null && !empty($params->gates)) { // check gates (new, changed and unchanged)
-            // TBD
-            $gates = $terminal->getGates();
+        if ($params->gates !== null && !empty($params->gates)) { // add new gates
             foreach ($params->gates as $gate) {
-                if (key_exists('id', $gate)) {
-                    // TBD
-                } else {
+                if (!key_exists('id', $gate)) {
                     $tmp = new Gate();
                     $tmp->setName($gate['name']);
                     $terminal->addGate($tmp);
                 }
             }
         }
-     }
+
+        if ($params->updatedGates !== null && !empty($params->updatedGates)) { // add new gates
+            $upGates = [];
+            foreach ($params->updatedGates as $gate) {
+                $upGates[$gate['id']] = $gate['name'];
+            }
+            $gates = $this->getDoctrine()->getRepository(Gate::class)->findByIds($params->updatedGates);
+            foreach ($gates as $gate) {
+                $gate->setName($upGates[$gate->getId()]);
+            }
+        }
+    }
 
     /**
      * @param $id
@@ -159,7 +166,7 @@ class TerminalController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
-        $response = new JsonResponse('', 204);
+        $response = new JsonResponse('', 200);
         if ($terminal == null) {
             $response->setStatusCode(404);
             return $response;
@@ -171,7 +178,7 @@ class TerminalController extends AbstractController
             $this->setParams($params, $terminal);
         } catch (\Exception $exception) {
             $response->setStatusCode(409);
-            $response->setData($exception->getMessage());
+            $response->setData(['errors'=>$exception->getMessage()]);
             return $response;
         }
 
@@ -194,7 +201,13 @@ class TerminalController extends AbstractController
             return $response;
         }
 
-        $response->setData();
+        $apiGates = [];
+        $gates = $terminal->getGates();
+        foreach ($gates as $gate) {
+            $apiGates[] = ['id' => $gate->getId(), 'name'=>$gate->getName()];
+        }
+
+        $response->setData(['gates'=>$apiGates]);
         return $response;
     }
 }

@@ -44,6 +44,7 @@ export class EditTerminalComponent implements OnInit {
     this.terminalService.getTerminal(this.terminal.id).subscribe(resp => {
         this.terminal = resp.body;
         this.terminal.deletedGates = [];
+        this.terminal.updatedGates = [];
         this.isLoading = false;
       },
       error1 => {
@@ -58,14 +59,14 @@ export class EditTerminalComponent implements OnInit {
       this.message = new Message();
       this.message.type = 'success';
       this.message.text = 'Terminál byl úspěšně uložen';
+      this.terminal.deletedGates = [];
+      this.terminal.updatedGates = [];
+      this.terminal.gates = resp.gates;
       this.submitted = false;
     }, error1 => {
       this.message = new Message();
       this.message.type = 'alert';
       this.message.text = 'Při ukládání terminálu nastala chyba';
-      for (let gate of this.terminal.deletedGates) {
-        this.terminal.gates.push(gate);
-      }
       this.submitted = false;
     });
   }
@@ -102,13 +103,14 @@ export class EditTerminalComponent implements OnInit {
     this.tmpGate = new Gate();
   }
 
-  saveButon(id: string) {
+  saveButton(id: string) {
     if (!this.tmpGate.id) {
       let newGate = new Gate();
       newGate.name = this.gateName.value;
       this.terminal.gates.push(newGate);
     } else {
       this.tmpGate.name = this.gateName.value;
+      this.terminal.updatedGates.push(this.tmpGate);
     }
     modal.closeModal(id);
   }

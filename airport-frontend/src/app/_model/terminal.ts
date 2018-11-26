@@ -7,4 +7,5 @@ export class Terminal {
     _submitted: boolean;
     gates: Gate[];
     deletedGates: Gate[];
+    updatedGates: Gate[];
 }
