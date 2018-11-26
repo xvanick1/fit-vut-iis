@@ -39,8 +39,8 @@ export class AirplaneTypeService {
     return this.http.delete(this.airplaneTypesURL+'/'+id);
   }
 
-  updateAirplaneType(id: number): Observable<any> {
-    return this.http.patch(this.airplaneTypesURL+'/'+id, name);
+  updateAirplaneType(airplaneType: AirplaneType): Observable<any> {
+    return this.http.patch(this.airplaneTypesURL+'/'+airplaneType.id, airplaneType);
   }
 
   createAirplaneType(id: number): Observable<any> {
