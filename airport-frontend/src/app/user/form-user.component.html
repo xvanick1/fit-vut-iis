@@ -28,17 +28,17 @@
         </div>
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
           <div class="cell medium-4 small-6">
-            <label class="label-required">Uživatelské jméno
+            <label class="label-required {{(username.valid || username.untouched) ? '' : 'is-invalid-label'}}">Uživatelské jméno
               <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel">
             </label>
           </div>
           <div class="cell medium-4 small-6">
-            <label class="{{user.id ? 'label-required' : ''}}label-required">Heslo
+            <label class="{{!user.id ? 'label-required' : ''}} {{(password.valid || password.untouched) ? '' : 'is-invalid-label'}}">Heslo
               <input type="password" name="password" [required]="!user.id" [(ngModel)]="user.password" #password="ngModel">
             </label>
           </div>
           <div class="cell medium-4 small-6">
-            <label class="label-required">Role
+            <label class="label-required {{(role.valid || role.untouched) ? '' : 'is-invalid-label'}}">Role
               <select required name="role" [(ngModel)]="user.role" #role="ngModel">
                 <option *ngIf="!role.id"></option>
                 <option *ngFor="let role of roles" [value]="role.id" [selected]="role.id==user.role">{{getRoleName(role.id)}}</option>

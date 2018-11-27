@@ -56,7 +56,15 @@ export class AirplaneTypeComponent implements OnInit {
     airplaneType._submitted = true;
 
     this.airplaneTypeService.deleteAirplaneType(airplaneType.id).subscribe( //deleting by ID or name? not sure, but ID is unique so given ID
-      resp => {},
+      resp => {
+        let airplaneTypes = [];
+        for (let tmp of this.airplaneTypes) {
+          if (tmp != airplaneType) {
+            airplaneTypes.push(tmp);
+          }
+        }
+        this.airplaneTypes = airplaneTypes;
+      },
       error1 => {
         airplaneType._submitted = false;
       });

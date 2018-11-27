@@ -28,14 +28,15 @@
         </div>
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
           <div class="cell medium-4 small-6">
-            <label class="label-required">Název
+            <label class="label-required {{(name.valid || name.untouched) ? '' : 'is-invalid-label'}}">Název
               <input type="text" required name="name" [(ngModel)]="terminal.name" #name="ngModel">
             </label>
           </div>
-          <div class="cell medium-4 small-6">
-            <label class="large-text"><b>Počet Gate</b>
+          <div class="cell medium-3 small-4">
+            <label class="large-text text-right">
+              <b>Počet Gate</b>
               <br>
-              <span>{{terminal.gates.length}}</span>
+              <span class="h4">{{terminal.gates.length}}</span>
             </label>
           </div>
           <div class="cell small-12">

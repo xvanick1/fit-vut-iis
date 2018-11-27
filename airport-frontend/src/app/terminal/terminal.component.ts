@@ -63,7 +63,15 @@ export class TerminalComponent implements OnInit {
     terminal._submitted = true;
 
     this.terminalService.deleteTerminal(terminal.id).subscribe(
-      resp => {},
+      resp => {
+        let terminals = [];
+        for (let tmp of this.terminals) {
+          if (tmp != terminal) {
+            terminals.push(tmp);
+          }
+        }
+        this.terminals = terminals;
+      },
       error1 => {
         terminal._submitted = false;
       });
