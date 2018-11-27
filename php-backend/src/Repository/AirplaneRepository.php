@@ -19,6 +19,22 @@ class AirplaneRepository extends ServiceEntityRepository
         parent::__construct($registry, Airplane::class);
     }
 
+    /**
+     * @return Airplane[] Returns an array of Airplane objects
+     */
+    public function findAirplanes()
+    {
+
+        $query = $this->createQueryBuilder('a')
+            ->select('a.id, a.crewNumber, a.dateOfProduction, a.dateOfRevision, at.id as atID, at.name as atName')
+            ->orderBy('a.id', 'ASC')
+            ->innerJoin('a.airplaneType', 'at')
+            ->setMaxResults(100)
+            ->groupBy('a.id');
+
+        return $query->getQuery()->getArrayResult();
+    }
+
 //    /**
 //     * @return Airplane[] Returns an array of Airplane objects
 //     */
