@@ -34,7 +34,7 @@ class AirplaneController extends AbstractController
                 'crewNumber' => $airplane['crewNumber'],
                 'dateOfProduction' => $airplane['dateOfProduction'],
                 'dateOfRevision' => $airplane['dateOfRevision'],
-                'airplaneType' => [
+                'type' => [
                     'id' => $airplane['atID'],
                     'name' => $airplane['atName']
                 ]
