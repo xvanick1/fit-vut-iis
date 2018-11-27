@@ -29,7 +29,7 @@
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
           <div class="cell medium-4 small-6">
             <label class="label-required {{(username.valid || username.untouched) ? '' : 'is-invalid-label'}}">Uživatelské jméno
-              <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel">
+              <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel" pattern="^\S*$">
             </label>
           </div>
           <div class="cell medium-4 small-6">

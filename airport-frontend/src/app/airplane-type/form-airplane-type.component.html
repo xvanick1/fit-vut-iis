@@ -29,12 +29,12 @@
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
           <div class="cell medium-4 small-6">
             <label class="label-required {{(name.valid || name.untouched) ? '' : 'is-invalid-label'}}">Model
-              <input type="text" required name="name" [(ngModel)]="airplaneType.name" #name="ngModel">
+              <input type="text" required name="name" [(ngModel)]="airplaneType.name" #name="ngModel" pattern="^\S.*$">
             </label>
           </div>
           <div class="cell medium-4 small-6">
             <label class="label-required {{(manufacturer.valid || manufacturer.untouched) ? '' : 'is-invalid-label'}}">Výrobce
-              <input type="text" required name="manufacturer" [(ngModel)]="airplaneType.manufacturer" #manufacturer="ngModel">
+              <input type="text" required name="manufacturer" [(ngModel)]="airplaneType.manufacturer" #manufacturer="ngModel" pattern="^\S.*$">
             </label>
           </div>
           <div class="cell small-12">

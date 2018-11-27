@@ -9,6 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AirplaneTypeRepository")
+ * @ORM\Table(
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="airplane_type_manufacturer", columns={"name", "manufacturer"})}
+ * )
  */
 class AirplaneType
 {

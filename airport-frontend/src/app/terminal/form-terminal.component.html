@@ -29,12 +29,12 @@
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
           <div class="cell medium-4 small-6">
             <label class="label-required {{(name.valid || name.untouched) ? '' : 'is-invalid-label'}}">Název
-              <input type="text" required name="name" [(ngModel)]="terminal.name" #name="ngModel">
+              <input type="text" required name="name" [(ngModel)]="terminal.name" #name="ngModel" pattern="^\S.*$">
             </label>
           </div>
           <div class="cell medium-3 small-4">
             <label class="large-text text-right">
-              <b>Počet Gate</b>
+              <b>Počet gate</b>
               <br>
               <span class="h4">{{terminal.gates.length}}</span>
             </label>
@@ -43,7 +43,7 @@
             <div class="cell">
               <div class="grid-x">
                 <div class="small-6 cell">
-                  <h3>Seznam Gate</h3>
+                  <h3>Seznam gate</h3>
                 </div>
                 <div class="small-6 cell">
                   <a (click)="createGate('exampleModal1')" class="button float-right">Vytvořit gate</a>

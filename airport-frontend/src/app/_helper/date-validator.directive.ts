@@ -3,7 +3,7 @@ import { FormControl, NG_VALIDATORS } from "@angular/forms";
 
 export function dateValidator(control: FormControl) {
   let ok = /^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(control.value);
-  if (!ok && control.value == ''){
+  if (!ok && control.value === null){
     return null;
   }
   return !ok ? {'date': {value: control.value}} : null;

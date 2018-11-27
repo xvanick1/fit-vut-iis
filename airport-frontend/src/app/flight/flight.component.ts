@@ -60,6 +60,7 @@ export class FlightComponent implements OnInit {
 
     this.flights = [];
     this.flightService.getFlights(params).subscribe(flights => {
+      this.flights = [];
       for (let apiFlight of flights) {
         let flight = new Flight();
         flight.terminal = apiFlight.terminal;

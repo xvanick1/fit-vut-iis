@@ -9,6 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GateRepository")
+ * @ORM\Table(
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="terminal_gate_unique_name", columns={"name", "terminal_id"})}
+ * )
  */
 class Gate
 {

@@ -58,17 +58,6 @@ export class CreateTerminalComponent implements OnInit {
     this.tmpGate = new Gate();
   }
 
-  saveButon(id: string) {
-    if (!this.tmpGate.id) {
-      let newGate = new Gate();
-      newGate.name = this.gateName.value;
-      this.terminal.gates.push(newGate);
-    } else {
-      this.tmpGate.name = this.gateName.value;
-    }
-    modal.closeModal(id);
-  }
-
   updateGate(id: string, gate: Gate) {
     modal.openModal(id);
     this.gateName.setValue(gate.name);
@@ -79,8 +68,9 @@ export class CreateTerminalComponent implements OnInit {
     if (!this.tmpGate.id) {
       let newGate = new Gate();
       newGate.name = this.gateName.value;
-      this.terminal.gates.push(newGate);
-    } else {
+      if (!this.terminal.gates.some(g => g.name == newGate.name)) {
+        this.terminal.gates.push(newGate);
+      }    } else {
       this.tmpGate.name = this.gateName.value;
       this.terminal.updatedGates.push(this.tmpGate);
     }

@@ -19,10 +19,10 @@
         <table>
           <thead>
           <tr>
-            <th class="{{(myForm.get('idInput').valid || myForm.get('idInput').untouched) ? '' : 'is-invalid-label'}}">
+            <!--<th class="{{(myForm.get('idInput').valid || myForm.get('idInput').untouched) ? '' : 'is-invalid-label'}}">
               ID terminálu
               <input type="text" formControlName="idInput">
-            </th>
+            </th>-->
             <th class="{{(myForm.get('nameInput').valid || myForm.get('nameInput').untouched) ? '' : 'is-invalid-label'}}">
               Název
               <input type="text" formControlName="nameInput">
@@ -36,8 +36,8 @@
           </thead>
           <tbody>
           <tr *ngFor="let terminal of terminals">
-            <td><a routerLink="/terminaly/{{terminal.id}}">{{terminal.id}}</a></td>
-            <td>{{terminal.name}}</td>
+            <!--<td><a routerLink="/terminaly/{{terminal.id}}">{{terminal.id}}</a></td>-->
+            <td><a routerLink="/terminaly/{{terminal.id}}">{{terminal.name}}</a></td>
             <td>{{terminal.countOfGates}}</td>
             <td class="table-right"><a class="alert button inline {{terminal._submitted ? 'disabled':''}}" (click)="deleteTerminal(terminal)">Smazat terminál</a></td>
           </tr>

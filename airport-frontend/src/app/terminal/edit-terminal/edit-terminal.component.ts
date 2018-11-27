@@ -107,7 +107,9 @@ export class EditTerminalComponent implements OnInit {
     if (!this.tmpGate.id) {
       let newGate = new Gate();
       newGate.name = this.gateName.value;
-      this.terminal.gates.push(newGate);
+      if (!this.terminal.gates.some(g => g.name == newGate.name)) {
+        this.terminal.gates.push(newGate);
+      }
     } else {
       this.tmpGate.name = this.gateName.value;
       this.terminal.updatedGates.push(this.tmpGate);

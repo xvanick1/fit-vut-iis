@@ -197,7 +197,7 @@ class TerminalController extends AbstractController
             $entityManager->flush();
         } catch (\Exception $exception) {
             $response->setStatusCode(409);
-            $response->setData($exception->getMessage());
+            $response->setData(['errors'=>['orm'=>$exception->getMessage()]]);
             return $response;
         }
 
