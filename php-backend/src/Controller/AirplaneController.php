@@ -24,7 +24,7 @@ class AirplaneController extends AbstractController
         try {
             $airplanes = $this->getDoctrine()->getRepository(Airplane::class)->findAirplanes();
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $apiAirplanes = [];
@@ -56,7 +56,7 @@ class AirplaneController extends AbstractController
         try {
             $airplane = $entityManager->getRepository(Airplane::class)->find($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         if (!$airplane) {
@@ -69,9 +69,8 @@ class AirplaneController extends AbstractController
             $entityManager->remove($airplane);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            $response->setStatusCode(500);
-            $response->setData($exception->getMessage());
-            return $response;
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
+
         }
 
         return $response;

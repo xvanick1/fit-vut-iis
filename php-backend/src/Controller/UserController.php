@@ -26,9 +26,9 @@ class UserController extends AbstractController
     public function getAppUsers()
     {
         try {
-            $flights = $this->getDoctrine()->getRepository(User::class)->findUsers(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+            $flights = $this->getDoctrine()->getRepository(User::class)->findUsers();
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $response = new JsonResponse();
@@ -64,7 +64,7 @@ class UserController extends AbstractController
         try {
             $user = $this->getDoctrine()->getRepository(User::class)->findById($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $response = new JsonResponse();
@@ -88,21 +88,21 @@ class UserController extends AbstractController
     public function createUser(Request $request, ValidatorInterface $validator, UserPasswordEncoderInterface $encoder)
     {
         $data = json_decode($request->getContent(), true);
+        if ($data === null) {
+            return new JsonResponse(null, 400);
+        }
         $params = new UserPostRequest($data, true);
 
         $user = new User();
         $this->setParams($params, $user, $encoder);
 
-        $response = new JsonResponse();
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
             $apiErrors = [];
             foreach ($errors as $error) {
                 $apiErrors[$error->getPropertyPath()] = $error->getMessage();
             }
-            $response->setStatusCode(409);
-            $response->setData(['errors'=>$apiErrors]);
-            return $response;
+            return new JsonResponse(['errors'=>$apiErrors], 409);
         }
 
         try {
@@ -110,13 +110,10 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            $response->setStatusCode(409);
-            $response->setData($exception->getMessage());
-            return $response;
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
         }
 
-        $response->setData(['id'=>$user->getId()]);
-        return $response;
+        return new JsonResponse(['id'=>$user->getId()], 201);
     }
 
     /**
@@ -135,16 +132,18 @@ class UserController extends AbstractController
         try {
             $user = $entityManager->getRepository(User::class)->find($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
-        $response = new JsonResponse('', 201);
         if ($user == null) {
-            $response->setStatusCode(404);
-            return $response;
+            return new JsonResponse(['errors' => ['orm'=>'User not found']], 404);
         }
 
         $data = json_decode($request->getContent(), true);
+        if ($data === null) {
+            return new JsonResponse(null, 400);
+        }
+
         $params = new UserPostRequest($data, false);
         $this->setParams($params, $user, $encoder);
 
@@ -154,21 +153,16 @@ class UserController extends AbstractController
             foreach ($errors as $error) {
                 $apiErrors[$error->getPropertyPath()] = $error->getMessage();
             }
-            $response->setStatusCode(409);
-            $response->setData(['errors'=>$apiErrors]);
-            return $response;
+            return new JsonResponse(['errors'=>$apiErrors], 409);
         }
 
         try {
             $entityManager->flush();
         } catch (\Exception $exception) {
-            $response->setStatusCode(409);
-            $response->setData($exception->getMessage());
-            return $response;
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
         }
 
-        $response->setData();
-        return $response;
+        return new JsonResponse(null, 204);
     }
 
     /**
@@ -215,24 +209,21 @@ class UserController extends AbstractController
         try {
             $user = $entityManager->getRepository(User::class)->find($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         if (!$user) {
             return new JsonResponse(null, 404);
         }
 
-        $response = new JsonResponse(null, 204);
         try {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            $response->setStatusCode(500);
-            $response->setData($exception->getMessage());
-            return $response;
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 500);
         }
 
-        return $response;
+        return new JsonResponse(null, 204);
     }
 }

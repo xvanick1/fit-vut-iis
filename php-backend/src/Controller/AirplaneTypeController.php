@@ -27,7 +27,7 @@ class AirplaneTypeController extends AbstractController
         try {
             $types = $this->getDoctrine()->getRepository(AirplaneType::class)->findAirplaneTypes($params);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
         return new JsonResponse($types, 200);
     }
@@ -43,7 +43,7 @@ class AirplaneTypeController extends AbstractController
         try {
             $airplaneType = $this->getDoctrine()->getRepository(AirplaneType::class)->findById($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $response = new JsonResponse();
@@ -55,7 +55,7 @@ class AirplaneTypeController extends AbstractController
         try {
             $gates = $this->getDoctrine()->getRepository(AirplaneType::class)->findGatesByAirplaneType($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $airplaneType['gates'] = $gates;
@@ -67,7 +67,6 @@ class AirplaneTypeController extends AbstractController
     /**
      * @param AirplaneTypePostRequest $params
      * @param AirplaneType $airplaneType
-     * @throws \Exception
      */
     private function setParams(AirplaneTypePostRequest $params, AirplaneType $airplaneType)
     {
@@ -109,7 +108,7 @@ class AirplaneTypeController extends AbstractController
         try {
             $airplaneType = $entityManager->getRepository(AirplaneType::class)->find($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $response = new JsonResponse('', 204);
@@ -119,14 +118,12 @@ class AirplaneTypeController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
-        $params = new AirplaneTypePostRequest($data, false);
-        try {
-            $this->setParams($params, $airplaneType);
-        } catch (\Exception $exception) {
-            $response->setStatusCode(409);
-            $response->setData(['errors'=>$exception->getMessage()]);
-            return $response;
+        if ($data === null) {
+            return new JsonResponse(null, 400);
         }
+
+        $params = new AirplaneTypePostRequest($data, false);
+        $this->setParams($params, $airplaneType);
 
         $errors = $validator->validate($airplaneType);
         if (count($errors) > 0) {
@@ -143,7 +140,7 @@ class AirplaneTypeController extends AbstractController
             $entityManager->flush();
         } catch (\Exception $exception) {
             $response->setStatusCode(409);
-            $response->setData($exception->getMessage());
+            $response->setData(['errors'=>['orm'=>$exception->getMessage()]]);
             return $response;
         }
 
@@ -163,12 +160,13 @@ class AirplaneTypeController extends AbstractController
         $airplaneType = new AirplaneType();
 
         $data = json_decode($request->getContent(), true);
-        $params = new AirplaneTypePostRequest($data, true);
-        try {
-            $this->setParams($params, $airplaneType);
-        } catch (\Exception $exception) {
-            return new JsonResponse(['errors'=>$exception->getMessage()], 409);
+        if ($data === null) {
+            return new JsonResponse(null, 400);
         }
+
+        $params = new AirplaneTypePostRequest($data, true);
+        $this->setParams($params, $airplaneType);
+
 
         $errors = $validator->validate($airplaneType);
         if (count($errors) > 0) {
@@ -183,7 +181,7 @@ class AirplaneTypeController extends AbstractController
             $entityManager->persist($airplaneType);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            return new JsonResponse(['errors'=>$exception->getMessage()], 409);
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
         }
 
         return new JsonResponse('', 204);
@@ -201,7 +199,7 @@ class AirplaneTypeController extends AbstractController
         try {
             $airplaneType = $entityManager->getRepository(AirplaneType::class)->find($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         if (!$airplaneType) {
@@ -214,8 +212,8 @@ class AirplaneTypeController extends AbstractController
             $entityManager->remove($airplaneType);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            $response->setStatusCode(500);
-            $response->setData($exception->getMessage());
+            $response->setStatusCode(409);
+            $response->setData(['errors'=>['orm'=>$exception->getMessage()]]);
             return $response;
         }
 

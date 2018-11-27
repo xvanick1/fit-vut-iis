@@ -31,7 +31,7 @@ class FlightController extends AbstractController
         try {
             $flights = $this->getDoctrine()->getRepository(Flight::class)->findFlighs($params);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $response = new JsonResponse();
@@ -51,7 +51,7 @@ class FlightController extends AbstractController
         try {
             $flight = $this->getDoctrine()->getRepository(Flight::class)->findById($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['error' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $response = new JsonResponse();

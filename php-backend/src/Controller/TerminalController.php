@@ -163,7 +163,7 @@ class TerminalController extends AbstractController
         try {
             $terminal = $entityManager->getRepository(Terminal::class)->find($id);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
         }
 
         $response = new JsonResponse('', 200);
@@ -173,12 +173,16 @@ class TerminalController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
+        if ($data === null) {
+            return new JsonResponse(null, 400);
+        }
+
         $params = new TerminalPostRequest($data, false);
         try {
             $this->setParams($params, $terminal);
         } catch (\Exception $exception) {
             $response->setStatusCode(409);
-            $response->setData(['errors'=>$exception->getMessage()]);
+            $response->setData(['errors'=>['request'=>$exception->getMessage()]]);
             return $response;
         }
 
@@ -224,11 +228,15 @@ class TerminalController extends AbstractController
         $terminal = new Terminal();
 
         $data = json_decode($request->getContent(), true);
+        if ($data === null) {
+            return new JsonResponse(null, 400);
+        }
+
         $params = new TerminalPostRequest($data, true);
         try {
             $this->setParams($params, $terminal);
         } catch (\Exception $exception) {
-            return new JsonResponse(['errors'=>$exception->getMessage()], 409);
+            return new JsonResponse(['errors'=>['request'=>$exception->getMessage()]], 409);
         }
 
         $errors = $validator->validate($terminal);
@@ -244,7 +252,7 @@ class TerminalController extends AbstractController
             $entityManager->persist($terminal);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            return new JsonResponse(['errors'=>$exception->getMessage()], 409);
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
         }
 
         $apiGates = [];
