@@ -89,20 +89,24 @@
 </form>
 <div class="reveal-overlay" style="display: none;">
   <div class="reveal" id="exampleModal1">
-    <h1>Gate</h1>
-    <label class="label-required">Terminál
-      <select required name="terminal" [formControl]="terminalNameInput">
-        <option *ngFor="let term of terminals" [value]="term.name">{{term.name}}</option>
-      </select>
-    </label>
-    <label class="label-required">Gate
-      <select required name="gate" [formControl]="gateNameInput">
-        <option *ngFor="let gate of gates" [value]="gate.name">{{gate.name}}</option>
-      </select>
-    </label>
-    <div class="button-group">
-      <a class="clear button text-right" (click)="closeModal('exampleModal1')">Zavřít</a>
-      <input type="submit" class="button" value="Uložit" [disabled]="!gateNameInput.valid || !terminalNameInput.valid" (click)="saveButton('exampleModal1', gate)">
-    </div>
+    <form [formGroup]="myForm">
+      <h1>Gate</h1>
+      <label class="label-required">Terminál
+        <select required name="terminal" formControlName="terminalNameInput">
+          <option [disabled]="true"></option>
+          <option *ngFor="let term of terminals" [value]="term.id">{{term.name}}</option>
+        </select>
+      </label>
+      <label class="label-required">Gate
+        <select required name="gate" formControlName="gateNameInput">
+          <option [disabled]="true"></option>
+          <option *ngFor="let gate of gates" [value]="gate.id">{{gate.name}}</option>
+        </select>
+      </label>
+      <div class="button-group">
+        <a class="clear button text-right" (click)="closeModal('exampleModal1')">Zavřít</a>
+        <input type="submit" class="button" value="Uložit" [disabled]="!myForm.valid" (click)="saveButton('exampleModal1', gate)">
+      </div>
+    </form>
   </div>
 </div>

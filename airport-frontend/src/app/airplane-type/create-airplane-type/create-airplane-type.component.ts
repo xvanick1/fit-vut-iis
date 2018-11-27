@@ -1,25 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import {AirplaneTypeService} from "../../_service/airplane-type.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Message} from "../../_model/message";
 import {AirplaneType} from "../../_model/airplane-type";
 import {AirTypeGate, Gate} from "../../_model/gate";
-import * as modal from "../../_helper/modal";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Terminal} from "../../_model/terminal";
+import {AirplaneTypeService} from "../../_service/airplane-type.service";
 import {TerminalService} from "../../_service/terminal.service";
-
+import {ActivatedRoute, Router} from "@angular/router";
+import * as modal from "../../_helper/modal";
 
 @Component({
-  selector: 'app-edit-airplane-type',
+  selector: 'app-create-airplane-type',
   templateUrl: '../form-airplane-type.component.html',
   styleUrls: ['../form-airplane-type.component.scss']
 })
-export class EditAirplaneTypeComponent implements OnInit {
+export class CreateAirplaneTypeComponent implements OnInit {
   myForm: FormGroup;
-  title = 'Upravit typ letadla';
+  title = 'Vytvořit typ letadla';
   submitted: boolean = false;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   created: boolean = false;
   message: Message;
   airplaneType: AirplaneType;
@@ -48,19 +47,8 @@ export class EditAirplaneTypeComponent implements OnInit {
     });
 
     this.airplaneType = new AirplaneType();
-    this.route.params.subscribe(params => {
-      this.airplaneType.id = +params['id']; //id should be name, right ?
-      // In a real app: dispatch action to load the details here.
-    });
-
-    this.airplaneTypeService.getAirplaneType(this.airplaneType.id).subscribe(resp => { //id should be name, right ?
-        this.airplaneType = resp.body;
-        this.airplaneType.deletedGates = [];
-        this.isLoading = false;
-      },
-      error1 => {
-        this.router.navigate(['404']);
-      });
+    this.airplaneType.gates = [];
+    this.airplaneType.deletedGates = [];
 
     this.onChanges();
 
@@ -71,35 +59,6 @@ export class EditAirplaneTypeComponent implements OnInit {
           this.terminals.push(gate.terminal);
         }
       }
-    });
-  }
-
-  onSubmit() {
-    this.submitted = true;
-    this.message = null;
-    this.airplaneTypeService.updateAirplaneType(this.airplaneType).subscribe(resp => { //WTF error ?
-      this.message = new Message();
-      this.message.type = 'success';
-      this.message.text = 'Typ letadla byl úspěšně uložen';
-      this.submitted = false;
-    }, error1 => {
-      this.message = new Message();
-      this.message.type = 'alert';
-      this.message.text = 'Při ukládání typu letadla nastala chyba';
-      this.submitted = false;
-    });
-  }
-
-  deleteAirplaneType() {
-    this.submitted = true;
-    this.message = null;
-    this.airplaneTypeService.deleteAirplaneType(this.airplaneType.id).subscribe(resp => {
-      this.router.navigate(['typyLetadel']);
-    }, error1 => {
-      this.message = new Message();
-      this.message.type = 'alert';
-      this.message.text = 'Při mazání typu letadla nastala chyba';
-      this.submitted = false;
     });
   }
 
@@ -151,4 +110,27 @@ export class EditAirplaneTypeComponent implements OnInit {
       }
     });
   }
+
+  onSubmit() {
+    if (this.created) {
+      this.router.navigate(['typyLetadel/vytvorit']);
+      return;
+    }
+
+    this.submitted = true;
+    this.message = null;
+    this.airplaneTypeService.createAirplaneType(this.airplaneType).subscribe(resp => {
+      this.message = new Message();
+      this.message.type = 'success';
+      this.message.text = 'Typ letadla byl úspěšně vytvořen';
+      this.submitted = false;
+      this.created = true;
+    }, error1 => {
+      this.message = new Message();
+      this.message.type = 'alert';
+      this.message.text = 'Při vytváření typu letadla nastala chyba';
+      this.submitted = false;
+    });
+  }
+
 }

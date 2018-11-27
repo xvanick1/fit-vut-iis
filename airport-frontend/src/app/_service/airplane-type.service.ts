@@ -44,8 +44,8 @@ export class AirplaneTypeService {
     return this.http.patch(this.airplaneTypesURL+'/'+airplaneType.id, airplaneType);
   }
 
-  createAirplaneType(id: number): Observable<any> {
-    return this.http.post(this.airplaneTypesURL, id);
+  createAirplaneType(airplaneType: AirplaneType): Observable<any> {
+    return this.http.post(this.airplaneTypesURL, airplaneType);
   }
 
   getGates(): Observable<Gate[]> {

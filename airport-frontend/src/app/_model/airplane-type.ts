@@ -7,4 +7,5 @@ export class AirplaneType {
   _submitted: boolean;
   countOfAirplanes: AirplaneType[];
   gates: AirTypeGate[];
+  deletedGates: AirTypeGate[];
 }
