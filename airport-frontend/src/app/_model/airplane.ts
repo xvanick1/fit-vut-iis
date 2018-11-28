@@ -9,6 +9,7 @@ export class Airplane {
   _dateOfProduction: Date;
   _dateOfRevision: Date;
   crewNumber: number;
+  countOfSeats: number;
   _submitted: boolean;
 }
 

@@ -21,6 +21,7 @@
           <th>ID</th>
           <th>Typ letadla</th>
           <th>Počet členů posádky</th>
+          <th>Počet sedadel</th>
           <th>Datum výroby</th>
           <th>Datum poslední revize</th>
           <th width="150"></th>
@@ -31,6 +32,7 @@
           <td><a routerLink="/letadla/{{airplane.id}}">{{airplane.id}}</a></td>
           <td>{{airplane?.type.manufacturer}} {{airplane?.type.name}}</td>
           <td>{{airplane?.crewNumber}}</td>
+          <td>{{airplane?.countOfSeats}}</td>
           <td>{{airplane?._dateOfProduction | date: 'yyyy-MM-dd'}}</td>
           <td>{{airplane?._dateOfRevision | date: 'yyyy-MM-dd'}}</td>
           <td class="table-right"><a class="alert button inline" (click)="deleteAirplane(airplane)">Smazat letadlo</a></td>
