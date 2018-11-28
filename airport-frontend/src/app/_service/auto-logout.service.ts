@@ -30,7 +30,7 @@ export class AutoLogoutService {
     setInterval(() => {
       const timeNow = moment().subtract(10,'minutes');
       const lastTime = moment(localStorage.getItem('lastAction'));
-      if ((timeNow > lastTime && AuthService.loggedIn) || AuthService === undefined) {
+      if ((timeNow > lastTime && AuthService.loggedIn) || AuthService === undefined || AuthService.loggedIn === undefined) {
         AuthService.logout();
         this.router.navigate(['/login'], {queryParams: { returnUrl: this.router.url }});
       }
