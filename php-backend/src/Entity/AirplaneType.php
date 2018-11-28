@@ -23,14 +23,14 @@ class AirplaneType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */
     private $manufacturer;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */

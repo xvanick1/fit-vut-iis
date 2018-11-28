@@ -23,7 +23,7 @@ class Gate
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */
