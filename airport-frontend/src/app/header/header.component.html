@@ -1,4 +1,4 @@
-<nav *ngIf="router.url.slice(0,6) !== '/login'">
+<nav *ngIf="isLogged()">
   <div class="top-bar">
     <div class="top-bar-left">
       <ul class="menu">

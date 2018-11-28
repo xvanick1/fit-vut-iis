@@ -13,7 +13,9 @@ import {AuthService} from "../_service/auth.service";
 export class HeaderComponent implements OnInit {
   public autoLogout: AutoLogoutService;
 
-  constructor(public router: Router) { }
+  constructor(
+    public router: Router
+  ) { }
 
   ngOnInit() {
     this.autoLogout = new AutoLogoutService(this.router);
@@ -26,5 +28,9 @@ export class HeaderComponent implements OnInit {
 
   isRole(role: string): boolean {
     return AuthService.hasRole(role);
+  }
+
+  isLogged(): Boolean {
+    return AuthService.loggedIn;
   }
 }
