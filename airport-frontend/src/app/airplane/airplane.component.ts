@@ -27,7 +27,7 @@ export class AirplaneComponent implements OnInit {
         Validators.pattern('[1-9][0-9]*')
       ]),
       'countOfSeats': new FormControl('', [
-        Validators.pattern('[1-9][0-9]*')
+        Validators.pattern('[0-9][0-9]*')
       ])
     });
 
