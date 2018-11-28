@@ -22,6 +22,9 @@ export class AirplaneTypeComponent implements OnInit {
         Validators.pattern('[1-9][0-9]*')
       ]),
       'manufacturerInput': new FormControl(),
+      'countOfAirplaneTypeInput': new FormControl('', [
+        Validators.pattern('[1-9][0-9]*')
+      ]),
     });
 
     this.onChanges();
@@ -42,6 +45,7 @@ export class AirplaneTypeComponent implements OnInit {
 
     params.set('name', this.myForm.get('nameInput').value);
     params.set('manufacturer', this.myForm.get('manufacturerInput').value);
+    params.set('countOfAirplaneType', this.myForm.get('countOfAirplaneTypeInput').value);
 
     this.airplaneTypes = [];
     this.airplaneTypeService.getAirplaneTypes(params).subscribe(airplaneTypes => {
@@ -59,7 +63,7 @@ export class AirplaneTypeComponent implements OnInit {
       resp => {
         let airplaneTypes = [];
         for (let tmp of this.airplaneTypes) {
-          if (tmp != airplaneType) {
+          if (tmp !== airplaneType) {
             airplaneTypes.push(tmp);
           }
         }

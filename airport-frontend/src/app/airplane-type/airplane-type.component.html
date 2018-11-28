@@ -31,10 +31,10 @@
                 <input type="text" formControlName="manufacturerInput">
               </label>
             </th>
-            <th class="{{(myForm.get('countOfAirplaneTypesInput').valid || myForm.get('countOfAirplaneTypesInput').untouched) ? '' : 'is-invalid-label'}}">
+            <th class="{{(myForm.get('countOfAirplaneTypeInput').valid || myForm.get('countOfAirplaneTypeInput').untouched) ? '' : 'is-invalid-label'}}">
               Počet letadel
               <label>
-                <input type="text" formControlName="countOfAirplaneTypesInput">
+                <input type="text" formControlName="countOfAirplaneTypeInput">
               </label>
             </th>
             <th width="175"></th>
@@ -42,9 +42,9 @@
           </thead>
           <tbody>
           <tr *ngFor="let airplaneType of airplaneTypes">
-            <td><a routerLink="/typyLetadel/{{airplaneType.name}}">{{airplaneType.name}}</a></td>
+            <td><a routerLink="/typyLetadel/{{airplaneType.id}}">{{airplaneType.name}}</a></td>
             <td>{{airplaneType.manufacturer}}</td>
-            <td>{{airplaneType.countOfAirplaneTypes}}</td>
+            <td>{{airplaneType.countOfAirplanes}}</td>
             <td class="table-right"><a class="alert button inline {{airplaneType._submitted ? 'disabled':''}}" (click)="deleteAirplaneType(airplaneType)">Smazat typ letadla</a></td>
           </tr>
           </tbody>
