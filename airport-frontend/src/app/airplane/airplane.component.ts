@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AirplaneService} from '../_service/airplane.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Airplane} from '../_model/airplane';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-airplane',
@@ -38,7 +39,12 @@ export class AirplaneComponent implements OnInit {
   }
 
   getAirplanes() {
-    this.airplaneService.getAirplanes().subscribe(airplanes => {
+    this.airplaneService.getAirplanes().subscribe(apiAirplanes => {
+      let airplanes = apiAirplanes;
+      for (let airplane of airplanes) {
+        airplane._dateOfProduction = moment(airplane.dateOfProduction.date).toDate();
+        airplane._dateOfRevision = moment(airplane.dateOfRevision.date).toDate();
+      }
       this.airplanes = airplanes;
     });
   }

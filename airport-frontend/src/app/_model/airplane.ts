@@ -6,6 +6,8 @@ export class Airplane {
   type: AirplaneType;
   dateOfProduction: ApiDate;
   dateOfRevision: ApiDate;
+  _dateOfProduction: Date;
+  _dateOfRevision: Date;
   crewNumber: number;
   _submitted: boolean;
 }

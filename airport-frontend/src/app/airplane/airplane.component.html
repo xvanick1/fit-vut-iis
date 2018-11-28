@@ -31,8 +31,8 @@
           <td><a routerLink="/letadla/{{airplane.id}}">{{airplane.id}}</a></td>
           <td>{{airplane?.type.manufacturer}} {{airplane?.type.name}}</td>
           <td>{{airplane?.crewNumber}}</td>
-          <td>{{airplane?.dateOfProduction.date}}</td>
-          <td>{{airplane?.dateOfRevision.date}}</td>
+          <td>{{airplane?._dateOfProduction | date: 'yyyy-MM-dd'}}</td>
+          <td>{{airplane?._dateOfRevision | date: 'yyyy-MM-dd'}}</td>
           <td class="table-right"><a class="alert button inline" (click)="deleteAirplane(airplane)">Smazat letadlo</a></td>
         </tr>
         </tbody>
