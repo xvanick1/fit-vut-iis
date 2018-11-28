@@ -17,7 +17,7 @@ class AirplaneController extends AbstractController
      *
      * @Route("/api/airplanes", name="get_airplanes", methods={"GET"})
      */
-    public function getAirplaneTypes(Request $request)
+    public function getAirplanes(Request $request)
     {
         //$params = new AirplaneTypesRequest($request->query->all());
 
@@ -36,7 +36,8 @@ class AirplaneController extends AbstractController
                 'dateOfRevision' => $airplane['dateOfRevision'],
                 'type' => [
                     'id' => $airplane['atID'],
-                    'name' => $airplane['atName']
+                    'name' => $airplane['atName'],
+                    'manufacturer' => $airplane['atManufacturer']
                 ]
             ];
         }
