@@ -53,9 +53,15 @@ class Airplane
      */
     private $flights;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Seat", mappedBy="airplane", orphanRemoval=true)
+     */
+    private $seats;
+
     public function __construct()
     {
         $this->flights = new ArrayCollection();
+        $this->seats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,6 +142,37 @@ class Airplane
             // set the owning side to null (unless already changed)
             if ($flight->getAirplane() === $this) {
                 $flight->setAirplane(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Seat[]
+     */
+    public function getSeats(): Collection
+    {
+        return $this->seats;
+    }
+
+    public function addSeat(Seat $seat): self
+    {
+        if (!$this->seats->contains($seat)) {
+            $this->seats[] = $seat;
+            $seat->setAirplane($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeat(Seat $seat): self
+    {
+        if ($this->seats->contains($seat)) {
+            $this->seats->removeElement($seat);
+            // set the owning side to null (unless already changed)
+            if ($seat->getAirplane() === $this) {
+                $seat->setAirplane(null);
             }
         }
 

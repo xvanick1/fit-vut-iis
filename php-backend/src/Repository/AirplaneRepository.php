@@ -26,9 +26,10 @@ class AirplaneRepository extends ServiceEntityRepository
     {
 
         $query = $this->createQueryBuilder('a')
-            ->select('a.id, a.crewNumber, a.dateOfProduction, a.dateOfRevision, at.id as atID, at.name as atName, at.manufacturer as atManufacturer')
+            ->select('a.id, a.crewNumber, a.dateOfProduction, a.dateOfRevision, at.id as atID, at.name as atName, at.manufacturer as atManufacturer, count(s.id) as countOfSeats')
             ->orderBy('a.id', 'ASC')
             ->innerJoin('a.airplaneType', 'at')
+            ->leftJoin('a.seats', 's')
             ->setMaxResults(100)
             ->groupBy('a.id');
 
