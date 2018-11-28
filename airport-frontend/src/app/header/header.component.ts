@@ -31,6 +31,6 @@ export class HeaderComponent implements OnInit {
   }
 
   isLogged(): Boolean {
-    return AuthService.loggedIn;
+    return AuthService.isLoggedIn();
   }
 }

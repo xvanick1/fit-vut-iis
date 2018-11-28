@@ -6,11 +6,8 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class AuthService {
-  static loggedIn: Boolean;
 
-  constructor(private http: HttpClient) {
-    AuthService.loggedIn = false;
-  }
+  constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
     return this.http.get<any>(environment.apiUrl+'/api/auth', {
@@ -21,7 +18,6 @@ export class AuthService {
 
   static setBasiAuth(username: string, password: string) {
     localStorage.setItem('loggedUser', window.btoa(username + ':' + password));
-    AuthService.loggedIn = true;
   }
 
   static setRole(role: string) {
@@ -31,7 +27,6 @@ export class AuthService {
   static logout() {
     localStorage.removeItem('loggedUser')
     localStorage.removeItem('role')
-    AuthService.loggedIn = false;
   }
 
   static hasRole(role: string): boolean {
@@ -41,6 +36,14 @@ export class AuthService {
     } else if (currentRole == 'ROLE_MANAGER' && role == 'ROLE_USER') {
       return true;
     } else if (currentRole == 'ROLE_ADMIN' && (role == 'ROLE_USER' || role == 'ROLE_MANAGER')) {
+      return true;
+    }
+
+    return false;
+  }
+
+  static isLoggedIn(): Boolean {
+    if(localStorage.getItem('loggedUser')) {
       return true;
     }
 
