@@ -29,10 +29,10 @@
         <tbody>
         <tr *ngFor="let airplane of airplanes">
           <td><a routerLink="/letadla/{{airplane.id}}">{{airplane.id}}</a></td>
-          <td>{{airplane?.type}}</td>
+          <td>{{airplane?.type.manufacturer}} {{airplane?.type.name}}</td>
           <td>{{airplane?.crewNumber}}</td>
-          <td>{{airplane?.dateOfProduction}}</td>
-          <td>{{airplane?.dateOfRevision}}</td>
+          <td>{{airplane?.dateOfProduction.date}}</td>
+          <td>{{airplane?.dateOfRevision.date}}</td>
           <td class="table-right"><a class="alert button inline" (click)="deleteAirplane(airplane)">Smazat letadlo</a></td>
         </tr>
         </tbody>

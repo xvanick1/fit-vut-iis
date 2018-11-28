@@ -23,7 +23,7 @@ export class AirplaneComponent implements OnInit {
       ]),
       'nameInput': new FormControl(),
       'crewNumber': new FormControl('', [
-        Validators.pattern('[2-9][0-9]*')
+        Validators.pattern('[1-9][0-9]*')
       ])
     });
 
