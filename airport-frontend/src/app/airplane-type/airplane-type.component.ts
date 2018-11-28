@@ -18,12 +18,10 @@ export class AirplaneTypeComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = new FormGroup({
-      'nameInput': new FormControl('', [
-        Validators.pattern('[1-9][0-9]*')
-      ]),
+      'nameInput': new FormControl(),
       'manufacturerInput': new FormControl(),
       'countOfAirplaneTypeInput': new FormControl('', [
-        Validators.pattern('[1-9][0-9]*')
+        Validators.pattern('[0-9]*')
       ]),
     });
 
@@ -45,7 +43,7 @@ export class AirplaneTypeComponent implements OnInit {
 
     params.set('name', this.myForm.get('nameInput').value);
     params.set('manufacturer', this.myForm.get('manufacturerInput').value);
-    params.set('countOfAirplaneType', this.myForm.get('countOfAirplaneTypeInput').value);
+    params.set('countOfAirplanes', this.myForm.get('countOfAirplaneTypeInput').value);
 
     this.airplaneTypes = [];
     this.airplaneTypeService.getAirplaneTypes(params).subscribe(airplaneTypes => {
@@ -59,7 +57,7 @@ export class AirplaneTypeComponent implements OnInit {
     }
     airplaneType._submitted = true;
 
-    this.airplaneTypeService.deleteAirplaneType(airplaneType.id).subscribe( //deleting by ID or name? not sure, but ID is unique so given ID
+    this.airplaneTypeService.deleteAirplaneType(airplaneType.id).subscribe(
       resp => {
         let airplaneTypes = [];
         for (let tmp of this.airplaneTypes) {
