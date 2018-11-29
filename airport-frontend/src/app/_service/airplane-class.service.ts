@@ -28,4 +28,7 @@ export class AirplaneClassService {
     }
     return this.http.get<AirplaneClass[]>(this.airplaneClassesURL+urlParams);
   }
-}
+
+  deleteAirplaneClass(id: number): Observable<any> {
+    return this.http.delete(this.airplaneClassesURL+'/'+id);
+  }}

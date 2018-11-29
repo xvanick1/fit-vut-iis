@@ -65,7 +65,6 @@ class AirplaneController extends AbstractController
             return new JsonResponse(null, 404);
         }
 
-        $response = new JsonResponse(null, 204);
         try {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($airplane);
@@ -75,6 +74,6 @@ class AirplaneController extends AbstractController
 
         }
 
-        return $response;
+        return new JsonResponse(null, 204);
     }
 }

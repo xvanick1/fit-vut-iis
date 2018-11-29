@@ -45,7 +45,7 @@
             <td><a routerLink="/tridy/{{airplaneClass.id}}">{{airplaneClass.name}}</a></td>
             <td>{{airplaneClass.countOfAirplanes}}</td>
             <td>{{airplaneClass.countOfSeats}}</td>
-            <td class="table-right"><a class="alert button inline {{airplaneClass._submitted ? 'disabled':''}}" (click)="deleteAirplaneClass(airplaneClass)">Smazat třídu</a></td>
+            <td class="table-right"><a class="alert button inline {{(airplaneClass._submitted || airplaneClass.countOfSeats > 0) ? 'disabled':''}}" (click)="deleteAirplaneClass(airplaneClass)">Smazat třídu</a></td>
           </tr>
           </tbody>
         </table>

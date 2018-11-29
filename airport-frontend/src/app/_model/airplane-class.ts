@@ -3,4 +3,5 @@ export class AirplaneClass {
   name: string;
   countOfAirplanes: number;
   countOfSeats: number;
+  _submitted: boolean;
 }

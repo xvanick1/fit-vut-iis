@@ -206,17 +206,14 @@ class AirplaneTypeController extends AbstractController
             return new JsonResponse(null, 404);
         }
 
-        $response = new JsonResponse(null, 204);
         try {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($airplaneType);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            $response->setStatusCode(409);
-            $response->setData(['errors'=>['orm'=>$exception->getMessage()]]);
-            return $response;
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
         }
 
-        return $response;
+        return new JsonResponse(null, 204);
     }
 }

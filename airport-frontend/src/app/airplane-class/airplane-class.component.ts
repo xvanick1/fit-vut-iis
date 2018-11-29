@@ -34,7 +34,24 @@ export class AirplaneClassComponent implements OnInit {
   }
 
   deleteAirplaneClass(airplaneClass: AirplaneClass) {
+    if (airplaneClass._submitted) {
+      return;
+    }
+    airplaneClass._submitted = true;
 
+    this.airplaneClassService.deleteAirplaneClass(airplaneClass.id).subscribe(
+      resp => {
+        let airplaneClasses = [];
+        for (let airClass of this.airplaneClasses) {
+          if (airClass !== airplaneClass) {
+            airplaneClasses.push(airClass);
+          }
+        }
+        this.airplaneClasses = airplaneClasses;
+      },
+      error1 => {
+        airplaneClass._submitted = false;
+      });
   }
 
   getAirplaneClasses() {
