@@ -28,26 +28,26 @@
         </div>
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
           <div class="cell medium-3 small-5">
-            <label class="label-required {{(type.valid || type.untouched) ? '' : 'is-invalid-label'}}">Typ
-              <select required name="type" [(ngModel)]="airplane.type" #type="ngModel">
+            <label class="label-required {{(airplaneTypeInput.valid || airplaneTypeInput.untouched) ? '' : 'is-invalid-label'}}">Typ
+              <select required [formControl]="airplaneTypeInput">
                 <option [disabled]="true"></option>
-                <option *ngFor="let airplaneType of airplaneTypes" [value]="airplaneType.id">{{airplaneType.manufacturer}}-{{airplaneType.name}}</option>
+                <option *ngFor="let airplaneType of airplaneTypes" [value]="airplaneType.id">{{airplaneType.manufacturer}} {{airplaneType.name}}</option>
               </select>
             </label>
           </div>
           <div class="cell medium-3 small-5">
             <label class="label-required {{(crewNumber.valid || crewNumber.untouched) ? '' : 'is-invalid-label'}}">Počet členů posádky
-              <input type="text" required name="crewNumber" [(ngModel)]="airplane.crewNumber" #crewNumber="ngModel" pattern="^\S.*$">
+              <input type="text" required name="crewNumber" [(ngModel)]="airplane.crewNumber" #crewNumber="ngModel" pattern="^[1-9][0-9]*$">
             </label>
           </div>
           <div class="cell medium-3 small-5">
             <label class="label-required {{(dateOfProduction.valid || dateOfProduction.untouched) ? '' : 'is-invalid-label'}}">Datum výroby
-              <input type="text" required name="dateOfProduction" [(ngModel)]="airplane._dateOfProduction" #dateOfProduction="ngModel" pattern="^\S.*$">
+              <input type="text" required name="dateOfProduction" [(ngModel)]="airplane._dateOfProduction" #dateOfProduction="ngModel" pattern="^\S.*$" appDate placeholder="yyyy-mm-dd">
             </label>
           </div>
           <div class="cell medium-3 small-5">
             <label class="label-required {{(dateOfRevision.valid || dateOfRevision.untouched) ? '' : 'is-invalid-label'}}">Datum poslední revize
-              <input type="text" required name="dateOfRevision" [(ngModel)]="airplane._dateOfRevision" #dateOfRevision="ngModel" pattern="^\S.*$">
+              <input type="text" required name="dateOfRevision" [(ngModel)]="airplane._dateOfRevision" #dateOfRevision="ngModel" pattern="^\S.*$" appDate placeholder="yyyy-mm-dd">
             </label>
           </div>
         </div>
@@ -57,7 +57,7 @@
               <a class="clear button text-right" routerLink="/letadla">Zpět na letadla</a>
               <input type="submit" class="button" *ngIf="!created"
                      value="{{submitted ? 'Odesílání ...' : title}}"
-                     [disabled]="!myForm.form.valid || submitted || isLoading">
+                     [disabled]="!myForm.form.valid || submitted || isLoading || !airplaneTypeInput.valid">
             </div>
           </div>
         </div>

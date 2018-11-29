@@ -5,6 +5,7 @@ import {AirplaneService} from "../../_service/airplane.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AirplaneType} from "../../_model/airplane-type";
 import {AirplaneTypeService} from "../../_service/airplane-type.service";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-create-airplane',
@@ -16,6 +17,7 @@ export class CreateAirplaneComponent implements OnInit {
   submitted: boolean = false;
   isLoading: boolean = false;
   created: boolean = false;
+  airplaneTypeInput: FormControl;
   message: Message;
   airplane: Airplane;
   airplaneTypes: AirplaneType[];
@@ -28,7 +30,11 @@ export class CreateAirplaneComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.airplaneTypeInput = new FormControl('', [
+      Validators.required
+    ]);
     this.airplane = new Airplane();
+    this.airplane.type = new AirplaneType();
     this.airplaneTypeService.getAirplaneTypes(null).subscribe(resp => {
       this.airplaneTypes = resp;
     });

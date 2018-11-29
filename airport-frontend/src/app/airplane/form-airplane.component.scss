@@ -1,9 +1,26 @@
 @import "../../global";
-@import "~foundation-sites/scss/foundation";
+@import "../../../node_modules/foundation-sites/scss/foundation";
 
-@include foundation-table;
 @include foundation-button;
 @include foundation-button-group;
+@include foundation-callout;
+@include foundation-close-button;
+@include foundation-table;
+@include foundation-reveal;
+
+:host .cell-center {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+:host .margin-top-3 {
+  margin-top: 30px;
+}
+
+:host .margin-bottom-3 {
+  margin-bottom: 30px;
+}
 
 :host .button.inline {
   display: inline;
