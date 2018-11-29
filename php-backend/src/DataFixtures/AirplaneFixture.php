@@ -4,7 +4,9 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Airplane;
+use App\Entity\AirplaneClass;
 use App\Entity\AirplaneType;
+use App\Entity\Seat;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -33,6 +35,20 @@ class AirplaneFixture extends Fixture implements DependentFixtureInterface
         $manager->persist($airplane);
         $this->setReference("B747", $airplane);
 
+        $seat = new Seat();
+        $seat->setAirplane($airplane);
+        $seat->setAirplaneClass($this->getReference('businessClass'));
+        $seat->setLocation('ulička');
+        $seat->setSeatNumber(1);
+        $manager->persist($seat);
+
+        $seat2 = new Seat();
+        $seat2->setAirplane($airplane);
+        $seat2->setAirplaneClass($this->getReference('businessClass'));
+        $seat2->setLocation('ulička');
+        $seat2->setSeatNumber(2);
+        $manager->persist($seat2);
+
         $manager->flush();
     }
 
@@ -40,6 +56,7 @@ class AirplaneFixture extends Fixture implements DependentFixtureInterface
     {
         return array(
             GateFixture::class,
+            AirplaneClassFixture::class
         );
     }
 }

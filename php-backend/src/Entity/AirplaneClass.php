@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -26,6 +28,16 @@ class AirplaneClass
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Seat", mappedBy="airplaneClass")
+     */
+    private $seats;
+
+    public function __construct()
+    {
+        $this->seats = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +51,37 @@ class AirplaneClass
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Seat[]
+     */
+    public function getSeats(): Collection
+    {
+        return $this->seats;
+    }
+
+    public function addSeat(Seat $seat): self
+    {
+        if (!$this->seats->contains($seat)) {
+            $this->seats[] = $seat;
+            $seat->setTmp($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeat(Seat $seat): self
+    {
+        if ($this->seats->contains($seat)) {
+            $this->seats->removeElement($seat);
+            // set the owning side to null (unless already changed)
+            if ($seat->getTmp() === $this) {
+                $seat->setTmp(null);
+            }
+        }
 
         return $this;
     }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ApiFlight} from "../_model/flight";
 import {AirplaneClass} from "../_model/airplane-class";
 
 @Injectable({
@@ -29,4 +28,7 @@ export class AirplaneClassService {
     }
     return this.http.get<AirplaneClass[]>(this.airplaneClassesURL+urlParams);
   }
-}
+
+  deleteAirplaneClass(id: number): Observable<any> {
+    return this.http.delete(this.airplaneClassesURL+'/'+id);
+  }}

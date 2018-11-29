@@ -221,7 +221,7 @@ class UserController extends AbstractController
             $entityManager->remove($user);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 500);
+            return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
         }
 
         return new JsonResponse(null, 204);
