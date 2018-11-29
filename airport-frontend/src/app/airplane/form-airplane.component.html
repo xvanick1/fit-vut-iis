@@ -27,29 +27,32 @@
           </div>
         </div>
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
-          <div class="cell medium-4 small-6">
+          <div class="cell medium-3 small-5">
             <label class="label-required {{(type.valid || type.untouched) ? '' : 'is-invalid-label'}}">Typ
-              <input type="text" required name="type" [(ngModel)]="airplane.type" #type="ngModel" pattern="^\S.*$">
+              <select required name="type" [(ngModel)]="airplane.type" #type="ngModel">
+                <option [disabled]="true"></option>
+                <option *ngFor="let airplaneType of airplaneTypes" [value]="airplaneType.id">{{airplaneType.manufacturer}}-{{airplaneType.name}}</option>
+              </select>
             </label>
           </div>
-          <div class="cell medium-4 small-6">
+          <div class="cell medium-3 small-5">
             <label class="label-required {{(crewNumber.valid || crewNumber.untouched) ? '' : 'is-invalid-label'}}">Počet členů posádky
               <input type="text" required name="crewNumber" [(ngModel)]="airplane.crewNumber" #crewNumber="ngModel" pattern="^\S.*$">
             </label>
           </div>
-          <div class="cell medium-4 small-6">
+          <div class="cell medium-3 small-5">
             <label class="label-required {{(dateOfProduction.valid || dateOfProduction.untouched) ? '' : 'is-invalid-label'}}">Datum výroby
               <input type="text" required name="dateOfProduction" [(ngModel)]="airplane._dateOfProduction" #dateOfProduction="ngModel" pattern="^\S.*$">
             </label>
           </div>
-          <div class="cell medium-4 small-6">
+          <div class="cell medium-3 small-5">
             <label class="label-required {{(dateOfRevision.valid || dateOfRevision.untouched) ? '' : 'is-invalid-label'}}">Datum poslední revize
               <input type="text" required name="dateOfRevision" [(ngModel)]="airplane._dateOfRevision" #dateOfRevision="ngModel" pattern="^\S.*$">
             </label>
           </div>
         </div>
         <div class="grid-x grid-padding-x">
-          <div class="cell medium-8 cell-center">
+          <div class="cell medium-10 cell-center">
             <div class="button-group expanded">
               <a class="clear button text-right" routerLink="/letadla">Zpět na letadla</a>
               <input type="submit" class="button" *ngIf="!created"

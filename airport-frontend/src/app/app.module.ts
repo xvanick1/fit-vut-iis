@@ -31,6 +31,7 @@ import { EditAirplaneTypeComponent } from './airplane-type/edit-airplane-type/ed
 import { CreateAirplaneTypeComponent } from './airplane-type/create-airplane-type/create-airplane-type.component';
 import { AirplaneClassComponent } from './airplane-class/airplane-class.component';
 import { EditAirplaneComponent } from './airplane/edit-airplane/edit-airplane.component';
+import { CreateAirplaneComponent } from './airplane/create-airplane/create-airplane.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { EditAirplaneComponent } from './airplane/edit-airplane/edit-airplane.co
     EditAirplaneTypeComponent,
     CreateAirplaneTypeComponent,
     AirplaneClassComponent,
-    EditAirplaneComponent
+    EditAirplaneComponent,
+    CreateAirplaneComponent
   ],
   imports: [
     BrowserModule,

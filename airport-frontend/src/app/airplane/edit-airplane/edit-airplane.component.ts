@@ -3,6 +3,7 @@ import {Airplane} from "../../_model/airplane";
 import {Message} from "../../_model/message";
 import {AirplaneService} from "../../_service/airplane.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AirplaneTypeService} from "../../_service/airplane-type.service";
 
 @Component({
   selector: 'app-edit-airplane',
@@ -19,6 +20,7 @@ export class EditAirplaneComponent implements OnInit {
 
   constructor(
     private airplaneService: AirplaneService,
+    private airplaneTypeService: AirplaneTypeService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -31,11 +33,11 @@ export class EditAirplaneComponent implements OnInit {
     });
 
     this.airplaneService.getAirplane(this.airplane.id).subscribe(resp => {
-      this.airplane = resp.body;
-      this.isLoading = false;
-    },
+        this.airplane = resp.body;
+        this.isLoading = false;
+      },
       error1 => {
-      this.router.navigate(['404']);
+        this.router.navigate(['404']);
       });
   }
 
