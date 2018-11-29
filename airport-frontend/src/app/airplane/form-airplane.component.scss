@@ -19,6 +19,10 @@
   margin-bottom: 0;
 }
 
-:host input.ng-invalid.ng-touched {
+:host .label-required {
+  font-weight: bold;
+}
+
+:host input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
   @include form-input-error($alert-color, 0%);
 }
