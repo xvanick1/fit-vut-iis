@@ -31,10 +31,19 @@ export class TicketComponent implements OnInit {
       'flightInput': new FormControl('', [
         Validators.pattern('[1-9][0-9]*')
       ]),
-      'surnameInput': new FormControl(),
-      'nameInput': new FormControl(),
-      'classInput': new FormControl(),
-      'destinationInput': new FormControl(),
+      'surnameInput': new FormControl('', [
+        Validators.pattern('^\\S.*$')
+      ]),
+      'nameInput': new FormControl('', [
+        Validators.pattern('^\\S.*$')
+      ]),
+      'classInput': new FormControl('', [
+        Validators.maxLength(190),
+        Validators.pattern('^\\S.*$')
+      ]),
+      'destinationInput': new FormControl('', [
+        Validators.pattern('^\\S.*$')
+      ]),
       'checkoutInput': new FormControl()
     });
 

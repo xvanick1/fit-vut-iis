@@ -18,8 +18,13 @@ export class AirplaneTypeComponent implements OnInit {
 
   ngOnInit() {
     this.myForm = new FormGroup({
-      'nameInput': new FormControl(),
-      'manufacturerInput': new FormControl(),
+      'nameInput': new FormControl('', [
+        Validators.maxLength(190),
+        Validators.pattern('^\\S.*$')
+      ]),
+      'manufacturerInput': new FormControl('', [
+        Validators.pattern('^\\S.*$')
+      ]),
       'countOfAirplaneTypeInput': new FormControl('', [
         Validators.pattern('[0-9]*')
       ]),

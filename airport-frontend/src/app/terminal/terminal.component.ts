@@ -24,6 +24,7 @@ export class TerminalComponent implements OnInit {
         Validators.pattern('[1-9][0-9]*')
       ]),
       'nameInput': new FormControl('', [
+        Validators.maxLength(190),
         Validators.pattern('^\\S.*$')
       ]),
       'countOfGatesInput': new FormControl('', [

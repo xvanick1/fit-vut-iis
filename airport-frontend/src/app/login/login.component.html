@@ -16,7 +16,7 @@
             </div>
             <div class="cell text-left">
               <label class="{{(username.valid || username.untouched) ? '' : 'is-invalid-label'}}">Uživatelské jméno
-                <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel">
+                <input type="text" required name="username" [(ngModel)]="user.username" #username="ngModel" maxlength="190">
                 <div [hidden]="username.valid || username.untouched">
                   <span class="form-error is-visible">Uživatelské jméno je vyžadováno</span>
                 </div>

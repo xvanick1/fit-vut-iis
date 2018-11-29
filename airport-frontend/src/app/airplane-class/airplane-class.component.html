@@ -1,0 +1,55 @@
+<form [formGroup]="myForm" (ngSubmit)="false" >
+  <div class="grid-container fluid">
+    <div class="grid-x grid-margin-x">
+      <div class="cell">
+        <div class="grid-x">
+          <div class="large-12 medium-12 small-12 cell">
+            <h2>Seznam tříd</h2>
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="grid-x">
+          <div class="small-12 grid-margin-x cell">
+            <a routerLink="/tridy/vytvorit" class="button float-right">Přidat třídu</a>
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <table>
+          <thead>
+          <tr>
+            <th class="{{(myForm.get('nameInput').valid || myForm.get('nameInput').untouched) ? '' : 'is-invalid-label'}}">
+              Název třídy
+              <label>
+                <input type="text" formControlName="nameInput">
+              </label>
+            </th>
+            <th class="{{(myForm.get('countOfAirplanes').valid || myForm.get('countOfAirplanes').untouched) ? '' : 'is-invalid-label'}}">
+              Počet letadel
+              <label>
+                <input type="text" formControlName="countOfAirplanes">
+              </label>
+            </th>
+            <th class="{{(myForm.get('countOfSeats').valid || myForm.get('countOfSeats').untouched) ? '' : 'is-invalid-label'}}">
+              Počet míst
+              <label>
+                <input type="text" formControlName="countOfSeats">
+              </label>
+            </th>
+            <th width="175"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let airplaneClass of airplaneClasses">
+            <td><a routerLink="/tridy/{{airplaneClass.id}}">{{airplaneClass.id}}</a></td>
+            <td>{{airplaneClass.countOfAirplanes}}</td>
+            <td>{{airplaneClass.countOfSeats}}</td>
+            <td class="table-right"><a class="alert button inline {{airplaneClass._submitted ? 'disabled':''}}" (click)="deleteAirplaneClass(airplaneClass)">Smazat třídu</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>

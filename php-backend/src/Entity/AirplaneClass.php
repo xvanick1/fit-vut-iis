@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AirplaneClassRepository")
+ * @UniqueEntity("name")
  */
 class AirplaneClass
 {
@@ -18,7 +20,7 @@ class AirplaneClass
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank()
      * @Assert\Type(type="string")
      */

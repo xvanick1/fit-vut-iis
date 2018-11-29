@@ -26,11 +26,20 @@ export class FlightComponent implements OnInit {
       'dateInput': new FormControl(),
       'timeInput': new FormControl(),
       'flightInput': new FormControl('', [
-          Validators.pattern('[1-9][0-9]*')
+        Validators.pattern('[1-9][0-9]*')
         ]),
-      'terminalInput': new FormControl(),
-      'gateInput': new FormControl(),
-      'destinationInput': new FormControl()
+      'terminalInput': new FormControl('', [
+        Validators.maxLength(190),
+        Validators.pattern('^\\S.*$')
+      ]),
+      'gateInput': new FormControl('', [
+        Validators.maxLength(190),
+        Validators.pattern('^\\S.*$')
+      ]),
+      'destinationInput': new FormControl('', [
+        Validators.maxLength(190),
+        Validators.pattern('^\\S.*$')
+      ])
     });
 
     //this.myForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));

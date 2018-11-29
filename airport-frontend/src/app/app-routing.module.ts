@@ -17,6 +17,7 @@ import {EditTerminalComponent} from "./terminal/edit-terminal/edit-terminal.comp
 import {CreateTerminalComponent} from "./terminal/create-terminal/create-terminal.component";
 import {EditAirplaneTypeComponent} from "./airplane-type/edit-airplane-type/edit-airplane-type.component";
 import {CreateAirplaneTypeComponent} from "./airplane-type/create-airplane-type/create-airplane-type.component";
+import {AirplaneClassComponent} from "./airplane-class/airplane-class.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
@@ -34,6 +35,8 @@ const routes: Routes = [
   { path: 'typyLetadel/:id', component: EditAirplaneTypeComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
 
   { path: 'letadla', component: AirplaneComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+
+  { path: 'tridy', component: AirplaneClassComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
 
   { path: 'uzivatele', component: UserComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
   { path: 'uzivatele/vytvorit', component: CreateUserComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
