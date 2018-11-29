@@ -41,7 +41,7 @@ class Seat
     private $airplane;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AirplaneClass")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AirplaneClass", inversedBy="seats")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */

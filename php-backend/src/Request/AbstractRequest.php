@@ -21,6 +21,7 @@ abstract class AbstractRequest
      * AbstractRequest constructor.
      * @param array $options
      * @param bool $required
+     * @throws HttpException
      */
     public function __construct(array $options = [], bool $required = false)
     {

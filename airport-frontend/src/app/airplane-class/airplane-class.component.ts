@@ -44,12 +44,9 @@ export class AirplaneClassComponent implements OnInit {
 
     this.airplaneClasses = [];
     let params = new Map();
-    params.set('date', this.myForm.get('dateInput').value);
-    params.set('time', this.myForm.get('timeInput').value);
-    params.set('flight', this.myForm.get('flightInput').value);
-    params.set('gate', this.myForm.get('gateInput').value);
-    params.set('terminal', this.myForm.get('terminalInput').value);
-    params.set('destination', this.myForm.get('destinationInput').value);
+    params.set('name', this.myForm.get('nameInput').value);
+    params.set('countOfSeats', this.myForm.get('countOfSeats').value);
+    params.set('countOfAirplanes', this.myForm.get('countOfAirplanes').value);
 
     this.airplaneClassService.getAirplaneClasses(params).subscribe( airplaneClasses => this.airplaneClasses = airplaneClasses);
   }
