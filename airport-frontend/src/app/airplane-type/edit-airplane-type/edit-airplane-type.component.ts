@@ -49,11 +49,11 @@ export class EditAirplaneTypeComponent implements OnInit {
 
     this.airplaneType = new AirplaneType();
     this.route.params.subscribe(params => {
-      this.airplaneType.id = +params['id']; //id should be name, right ?
+      this.airplaneType.id = +params['id'];
       // In a real app: dispatch action to load the details here.
     });
 
-    this.airplaneTypeService.getAirplaneType(this.airplaneType.id).subscribe(resp => { //id should be name, right ?
+    this.airplaneTypeService.getAirplaneType(this.airplaneType.id).subscribe(resp => {
         this.airplaneType = resp.body;
         this.airplaneType.deletedGates = [];
         this.isLoading = false;

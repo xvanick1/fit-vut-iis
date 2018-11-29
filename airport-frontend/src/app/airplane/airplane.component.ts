@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AirplaneService} from '../_service/airplane.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Airplane} from '../_model/airplane';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-airplane',

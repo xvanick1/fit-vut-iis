@@ -8,8 +8,8 @@ import { AirplaneTypeComponent } from './airplane-type/airplane-type.component';
 import { AirplaneComponent } from './airplane/airplane.component';
 import { LoginComponent } from "./login/login.component";
 import { CreateFlightComponent } from './flight/create-flight/create-flight.component';
-import {NotFoundComponent} from "./not-found/not-found.component";
-import {EditFlightComponent} from "./flight/edit-flight/edit-flight.component";
+import {NotFoundComponent} from './not-found/not-found.component';
+import {EditFlightComponent} from './flight/edit-flight/edit-flight.component';
 import {EditUserComponent} from "./user/edit-user/edit-user.component";
 import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {UserComponent} from "./user/user.component";
@@ -18,6 +18,7 @@ import {CreateTerminalComponent} from "./terminal/create-terminal/create-termina
 import {EditAirplaneTypeComponent} from "./airplane-type/edit-airplane-type/edit-airplane-type.component";
 import {CreateAirplaneTypeComponent} from "./airplane-type/create-airplane-type/create-airplane-type.component";
 import {AirplaneClassComponent} from "./airplane-class/airplane-class.component";
+import {EditAirplaneComponent} from "./airplane/edit-airplane/edit-airplane.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'typyLetadel/:id', component: EditAirplaneTypeComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
 
   { path: 'letadla', component: AirplaneComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
+  { path: 'letadla/:id', component: EditAirplaneComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
 
   { path: 'tridy', component: AirplaneClassComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_ADMIN'] } },
 
