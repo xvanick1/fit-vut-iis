@@ -21,6 +21,10 @@ class AirplaneClassFixture extends Fixture
         $manager->persist($airClass);
         $this->setReference("businessClass", $airClass);
 
+        $airClass2 = new AirplaneClass();
+        $airClass2->setName('Economy');
+        $manager->persist($airClass2);
+
         $manager->flush();
     }
 
