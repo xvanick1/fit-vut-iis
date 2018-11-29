@@ -3,6 +3,7 @@
 
 @include foundation-table;
 @include foundation-button;
+@include foundation-reveal;
 
 :host .button.inline {
   display: inline;
@@ -20,4 +21,8 @@
 
 :host input.ng-invalid.ng-touched {
   @include form-input-error($alert-color, 0%);
+}
+
+:host .label-required {
+  font-weight: bold;
 }

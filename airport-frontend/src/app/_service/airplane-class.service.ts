@@ -31,4 +31,13 @@ export class AirplaneClassService {
 
   deleteAirplaneClass(id: number): Observable<any> {
     return this.http.delete(this.airplaneClassesURL+'/'+id);
-  }}
+  }
+
+  createAirplaneClass(name: string): Observable<AirplaneClass> {
+    return this.http.post<AirplaneClass>(this.airplaneClassesURL, {'name': name});
+  }
+
+  updateAirplaneClass(id: number, name: string): Observable<any> {
+    return this.http.patch(this.airplaneClassesURL+'/'+id, {'name': name});
+  }
+}
