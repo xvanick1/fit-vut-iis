@@ -1,0 +1,65 @@
+<form #myForm="ngForm" (submit)="onSubmit()">
+  <div class="grid-container fluid">
+    <div class="grid-x grid-margin-x">
+      <div class="cell medium-2"></div>
+      <div class="cell auto">
+        <div class="grid-x grid-padding-x">
+          <div class="small-8 cell">
+            <h2>{{title}}</h2>
+          </div>
+          <div class="small-4 cell">
+            <button class="float-right button hollow alert" (click)="deleteAirplane()" *ngIf="airplane.id && !isLoading" [disabled]="submitted">Smazat</button>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x margin-top-3 margin-bottom-3" *ngIf="isLoading">
+          <div class="cell text-center">
+            <h3>Načítání ...</h3>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x margin-top-3 margin-bottom-3" *ngIf="message">
+          <div class="cell text-center">
+            <div class="callout {{message.type}} text-left" data-closable>
+              <p>{{message.text}}</p>
+              <!--<button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+              </button>-->
+            </div>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
+          <div class="cell medium-4 small-6">
+            <label class="label-required {{(type.valid || type.untouched) ? '' : 'is-invalid-label'}}">Typ
+              <input type="text" required name="type" [(ngModel)]="airplane.type" #type="ngModel" pattern="^\S.*$">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="label-required {{(crewNumber.valid || crewNumber.untouched) ? '' : 'is-invalid-label'}}">Počet členů posádky
+              <input type="text" required name="crewNumber" [(ngModel)]="airplane.crewNumber" #crewNumber="ngModel" pattern="^\S.*$">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="label-required {{(dateOfProduction.valid || dateOfProduction.untouched) ? '' : 'is-invalid-label'}}">Datum výroby
+              <input type="text" required name="dateOfProduction" [(ngModel)]="airplane._dateOfProduction" #dateOfProduction="ngModel" pattern="^\S.*$">
+            </label>
+          </div>
+          <div class="cell medium-4 small-6">
+            <label class="label-required {{(dateOfRevision.valid || dateOfRevision.untouched) ? '' : 'is-invalid-label'}}">Datum poslední revize
+              <input type="text" required name="dateOfRevision" [(ngModel)]="airplane._dateOfRevision" #dateOfRevision="ngModel" pattern="^\S.*$">
+            </label>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+          <div class="cell medium-8 cell-center">
+            <div class="button-group expanded">
+              <a class="clear button text-right" routerLink="/letadla">Zpět na letadla</a>
+              <input type="submit" class="button" *ngIf="!created"
+                     value="{{submitted ? 'Odesílání ...' : title}}"
+                     [disabled]="!myForm.form.valid || submitted || isLoading">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cell medium-2"></div>
+    </div>
+  </div>
+</form>

@@ -17,7 +17,6 @@ export class EditAirplaneComponent implements OnInit {
   message: Message;
   airplane: Airplane;
 
-
   constructor(
     private airplaneService: AirplaneService,
     private router: Router,
