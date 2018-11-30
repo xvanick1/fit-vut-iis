@@ -23,6 +23,7 @@ export class CreateAirplaneComponent extends AirplaneFormComponent implements On
     protected route: ActivatedRoute
   ) {
     super(airplaneService, airplaneTypeService, router, route);
+    this.isLoading = false;
   }
 
   ngOnInit() {
