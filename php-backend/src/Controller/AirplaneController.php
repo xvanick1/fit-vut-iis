@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Airplane;
 use App\Entity\AirplaneType;
+use App\Entity\Seat;
 use App\Request\AirplanePostRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -64,10 +65,26 @@ class AirplaneController extends AbstractController
             return new JsonResponse(null, 404);
         }
 
+        try {
+            $seats = $this->getDoctrine()->getRepository(Seat::class)->findByAirplane($id);
+        } catch (\Exception $e) {
+            return new JsonResponse(['errors' => ['orm'=>$e->getMessage()]], 500);
+        }
+
+        $changedSeats = [];
+        foreach ($seats as $seat) {
+            $seat['airplaneClass'] = [
+                'id' => $seat['acId'],
+                'name' => $seat['acName']
+            ];
+            $changedSeats[] = $seat;
+        }
+
+        $airplane['seats'] = $changedSeats;
         $airplane['type'] = [
             'id' => $airplane['atID'],
             'name' => $airplane['atName'],
-            'manufacturer' => $airplane['atManufacturer']
+            'manufacturer' => $airplane['atManufacturer'],
         ];
 
         return new JsonResponse($airplane);

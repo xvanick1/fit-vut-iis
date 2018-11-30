@@ -22,7 +22,7 @@ class TerminalRepository extends ServiceEntityRepository
 
     /**
      * @param TerminalsRequest $params
-     * @return Flight[] Returns an array of Flight objects
+     * @return Terminal[] Returns an array of Flight objects
      */
     public function findTerminals(TerminalsRequest $params)
     {

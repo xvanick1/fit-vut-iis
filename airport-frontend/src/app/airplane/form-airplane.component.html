@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="grid-x grid-padding-x margin-top-3" *ngIf="!isLoading && !created">
-          <div class="cell medium-3 small-5">
+          <div class="cell medium-3 small-6">
             <label class="label-required {{(airplaneTypeInput.valid || airplaneTypeInput.untouched) ? '' : 'is-invalid-label'}}">Typ
               <select required [formControl]="airplaneTypeInput">
                 <option [disabled]="true"></option>
@@ -35,20 +35,53 @@
               </select>
             </label>
           </div>
-          <div class="cell medium-3 small-5">
+          <div class="cell medium-3 small-6">
             <label class="label-required {{(crewNumber.valid || crewNumber.untouched) ? '' : 'is-invalid-label'}}">Počet členů posádky
               <input type="number" required name="crewNumber" [(ngModel)]="airplane.crewNumber" #crewNumber="ngModel" pattern="^[1-9][0-9]*$">
             </label>
           </div>
-          <div class="cell medium-3 small-5">
+          <div class="cell medium-3 small-6">
             <label class="label-required {{(dateOfProduction.valid || dateOfProduction.untouched) ? '' : 'is-invalid-label'}}">Datum výroby
               <input type="text" required name="dateOfProduction" [ngModel]="airplane._dateOfProduction | date:'yyyy-MM-dd'" (ngModelChange)="changeProductionDate(dateOfProduction)" #dateOfProduction="ngModel" pattern="^\S.*$" appDate placeholder="yyyy-mm-dd">
             </label>
           </div>
-          <div class="cell medium-3 small-5">
+          <div class="cell medium-3 small-6">
             <label class="label-required {{(dateOfRevision.valid || dateOfRevision.untouched) ? '' : 'is-invalid-label'}}">Datum poslední revize
               <input type="text" required name="dateOfRevision" [ngModel]="airplane._dateOfRevision | date:'yyyy-MM-dd'" (ngModelChange)="changeRevisionDate(dateOfRevision)" #dateOfRevision="ngModel" pattern="^\S.*$" appDate placeholder="yyyy-mm-dd">
             </label>
+          </div>
+          <div class="cell small-12"><br></div>
+          <div class="cell small-12">
+            <div class="cell">
+              <div class="grid-x">
+                <div class="small-6 cell">
+                  <h3>Seznam míst</h3>
+                </div>
+                <div class="small-6 cell">
+                  <a (click)="false" class="button float-right">Vytvořit místo</a>
+                </div>
+              </div>
+            </div>
+            <div class="cell small-12">
+              <table>
+                <thead>
+                <tr>
+                  <th>Číslo místa</th>
+                  <th>Umístění</th>
+                  <th>Třída</th>
+                  <th width="150"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let seat of airplane.seats">
+                  <td><a (click)="false">{{seat.seatNumber}}</a></td>
+                  <td>{{seat.location}}</td>
+                  <td>{{seat.airplaneClass.name}}</td>
+                  <td class="table-right"><a class="alert button inline" (click)="false">Smazat místo</a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div class="grid-x grid-padding-x">

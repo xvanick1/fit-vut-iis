@@ -1,5 +1,6 @@
 import {AirplaneType} from './airplane-type';
 import {ApiDate} from "./api-date";
+import {Seat} from "./seat";
 
 export class Airplane {
   id: number;
@@ -11,5 +12,6 @@ export class Airplane {
   crewNumber: number;
   countOfSeats: number;
   _submitted: boolean;
+  seats: Seat[];
 }
 

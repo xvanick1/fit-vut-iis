@@ -50,43 +50,43 @@
                 </div>
               </div>
             </div>
-          <div class="cell small-12">
-            <table>
-              <thead>
-              <tr>
-                <th>
-                  #
-                </th>
-                <th>
-                  Název
-                </th>
-                <th width="150"></th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let gate of terminal.gates">
-                <td><a (click)="updateGate('exampleModal1', gate)">{{gate.id}}</a></td>
-                <td>{{gate.name}}</td>
-                <td class="table-right"><a class="alert button inline" (click)="deleteGate(gate)">Smazat gate</a></td>
-              </tr>
-              </tbody>
-            </table>
+            <div class="cell small-12">
+              <table>
+                <thead>
+                <tr>
+                  <th>
+                    #
+                  </th>
+                  <th>
+                    Název
+                  </th>
+                  <th width="150"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let gate of terminal.gates">
+                  <td><a (click)="updateGate('exampleModal1', gate)">{{gate.id}}</a></td>
+                  <td>{{gate.name}}</td>
+                  <td class="table-right"><a class="alert button inline" (click)="deleteGate(gate)">Smazat gate</a></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+          <div class="cell medium-8 cell-center">
+            <div class="button-group expanded">
+              <a class="clear button text-right" routerLink="/terminaly">Zpět na terminály</a>
+              <input type="submit" class="button" *ngIf="!created"
+                     value="{{submitted ? 'Odesílání ...' : title}}"
+                     [disabled]="!terminalForm.form.valid || submitted || isLoading">
+            </div>
           </div>
         </div>
       </div>
-      <div class="grid-x grid-padding-x">
-        <div class="cell medium-8 cell-center">
-          <div class="button-group expanded">
-            <a class="clear button text-right" routerLink="/terminaly">Zpět na terminály</a>
-            <input type="submit" class="button" *ngIf="!created"
-                   value="{{submitted ? 'Odesílání ...' : title}}"
-                   [disabled]="!terminalForm.form.valid || submitted || isLoading">
-          </div>
-        </div>
-      </div>
+      <div class="cell medium-2"></div>
     </div>
-    <div class="cell medium-2"></div>
-  </div>
   </div>
 </form>
 <div class="reveal-overlay" style="display: none;">
