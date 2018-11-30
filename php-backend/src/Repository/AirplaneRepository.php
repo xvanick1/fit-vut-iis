@@ -36,6 +36,19 @@ class AirplaneRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
+
+    public function findById($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a.id, a.crewNumber, a.dateOfRevision, a.dateOfProduction, at.id as atID, at.name as atName, at.manufacturer as atManufacturer')
+            ->andWhere('a.id = :val')
+            ->setParameter('val', $id)
+            ->innerJoin('a.airplaneType', 'at')
+            ->getQuery()
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
+            ;
+    }
+
 //    /**
 //     * @return Airplane[] Returns an array of Airplane objects
 //     */

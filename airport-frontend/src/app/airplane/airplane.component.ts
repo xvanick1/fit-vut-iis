@@ -59,8 +59,16 @@ export class AirplaneComponent implements OnInit {
     airplane._submitted = true;
 
     this.airplaneService.deleteAirplane(airplane.id).subscribe(
-      resp => {},
-      error1 => {
+      () => {
+        let airplanes = [];
+        for (let tmp of this.airplanes) {
+          if (tmp != airplane) {
+            airplanes.push(tmp);
+          }
+        }
+        this.airplanes = airplanes;
+      },
+      () => {
         airplane._submitted = false;
       });
   }

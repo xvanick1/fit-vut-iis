@@ -37,7 +37,7 @@ class Airplane
      * @ORM\Column(type="date")
      * @Assert\NotBlank()
      * @Assert\Date()
-     * @Assert\GreaterThanOrEqual(propertyPath="$dateOfProduction")
+     * @Assert\GreaterThanOrEqual(propertyPath="dateOfProduction")
      */
     private $dateOfRevision;
 

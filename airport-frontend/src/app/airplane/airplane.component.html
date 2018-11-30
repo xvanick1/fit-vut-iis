@@ -35,7 +35,7 @@
           <td>{{airplane?.countOfSeats}}</td>
           <td>{{airplane?._dateOfProduction | date: 'yyyy-MM-dd'}}</td>
           <td>{{airplane?._dateOfRevision | date: 'yyyy-MM-dd'}}</td>
-          <td class="table-right"><a class="alert button inline" (click)="deleteAirplane(airplane)">Smazat letadlo</a></td>
+          <td class="table-right"><a class="alert button inline {{airplane._submitted ? 'disabled':''}}" (click)="deleteAirplane(airplane)">Smazat letadlo</a></td>
         </tr>
         </tbody>
       </table>
