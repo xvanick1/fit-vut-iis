@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from "./_guard/auth.guard";
+import { AuthGuard } from './_guard/auth.guard';
 import { TicketComponent } from './ticket/ticket.component';
 import { FlightComponent } from './flight/flight.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { AirplaneTypeComponent } from './airplane-type/airplane-type.component';
 import { AirplaneComponent } from './airplane/airplane.component';
-import { LoginComponent } from "./login/login.component";
+import { LoginComponent } from './login/login.component';
 import { CreateFlightComponent } from './flight/create-flight/create-flight.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {EditFlightComponent} from './flight/edit-flight/edit-flight.component';
-import {EditUserComponent} from "./user/edit-user/edit-user.component";
-import {CreateUserComponent} from "./user/create-user/create-user.component";
-import {UserComponent} from "./user/user.component";
-import {EditTerminalComponent} from "./terminal/edit-terminal/edit-terminal.component";
-import {CreateTerminalComponent} from "./terminal/create-terminal/create-terminal.component";
-import {EditAirplaneTypeComponent} from "./airplane-type/edit-airplane-type/edit-airplane-type.component";
-import {CreateAirplaneTypeComponent} from "./airplane-type/create-airplane-type/create-airplane-type.component";
-import {AirplaneClassComponent} from "./airplane-class/airplane-class.component";
-import {EditAirplaneComponent} from "./airplane/edit-airplane/edit-airplane.component";
-import {CreateAirplaneComponent} from "./airplane/create-airplane/create-airplane.component";
+import {EditUserComponent} from './user/edit-user/edit-user.component';
+import {CreateUserComponent} from './user/create-user/create-user.component';
+import {UserComponent} from './user/user.component';
+import {EditTerminalComponent} from './terminal/edit-terminal/edit-terminal.component';
+import {CreateTerminalComponent} from './terminal/create-terminal/create-terminal.component';
+import {EditAirplaneTypeComponent} from './airplane-type/edit-airplane-type/edit-airplane-type.component';
+import {CreateAirplaneTypeComponent} from './airplane-type/create-airplane-type/create-airplane-type.component';
+import {AirplaneClassComponent} from './airplane-class/airplane-class.component';
+import {EditAirplaneComponent} from './airplane/edit-airplane/edit-airplane.component';
+import {CreateAirplaneComponent} from './airplane/create-airplane/create-airplane.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
