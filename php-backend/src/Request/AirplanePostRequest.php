@@ -13,6 +13,9 @@ class AirplanePostRequest extends AbstractRequest
     public $crewNumber;
     public $dateOfProduction;
     public $dateOfRevision;
+    public $seats;
+    public $updatedSeats;
+    public $deletedSeats;
 
     /**
      * @param OptionsResolver $resolver
@@ -24,7 +27,10 @@ class AirplanePostRequest extends AbstractRequest
             'type',
             'crewNumber',
             'dateOfProduction',
-            'dateOfRevision'
+            'dateOfRevision',
+            'seats',
+            'updatedSeats',
+            'deletedSeats'
         ]);
 
         $resolver->addAllowedTypes('id', 'numeric');
@@ -37,6 +43,9 @@ class AirplanePostRequest extends AbstractRequest
         $resolver->addAllowedValues('dateOfProduction', $this->isDate);
         $resolver->addAllowedTypes('dateOfRevision', 'string');
         $resolver->addAllowedValues('dateOfRevision', $this->isDate);
+        $resolver->addAllowedTypes('seats', 'array');
+        $resolver->addAllowedTypes('deletedSeats', 'array');
+        $resolver->addAllowedTypes('updatedSeats', 'array');
     }
 
     /**

@@ -7,6 +7,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SeatRepository")
+ * @ORM\Table(
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="airplane_seat_unique_number", columns={"seatNumber", "airplane_id"})}
+ * )
  */
 class Seat
 {

@@ -51,10 +51,11 @@ export class EditAirplaneComponent extends AirplaneFormComponent implements OnIn
   onSubmit() {
     this.submitted = true;
     this.message = null;
-    this.airplaneService.updateAirplane(this.airplane).subscribe(() => {
+    this.airplaneService.updateAirplane(this.airplane).subscribe(resp => {
       this.message = new Message();
       this.message.type = 'success';
       this.message.text = 'Letadlo bylo úspěšně uloženo';
+      this.airplane.seats = resp.seats;
       this.submitted = false;
     }, () => {
       this.message = new Message();

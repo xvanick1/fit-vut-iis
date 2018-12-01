@@ -54,7 +54,7 @@ class Airplane
     private $flights;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Seat", mappedBy="airplane", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Seat", mappedBy="airplane", orphanRemoval=true, cascade={"persist"})
      */
     private $seats;
 
