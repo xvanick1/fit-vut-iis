@@ -30,6 +30,9 @@ export class AirplaneService {
       'dateOfProduction':this.datepipe.transform(airplane._dateOfProduction, 'yyyy-MM-dd'),
       'dateOfRevision': this.datepipe.transform(airplane._dateOfRevision, 'yyyy-MM-dd'),
       'type': airplane.type.id,
+      'seats': airplane.seats,
+      'updatedSeats': airplane.updatedSeats,
+      'deletedSeats': airplane.deletedSeats,
     });
   }
 
@@ -43,6 +46,9 @@ export class AirplaneService {
       'dateOfProduction':this.datepipe.transform(airplane._dateOfProduction, 'yyyy-MM-dd'),
       'dateOfRevision': this.datepipe.transform(airplane._dateOfRevision, 'yyyy-MM-dd'),
       'type': airplane.type.id,
+      'seats': airplane.seats,
+      'updatedSeats': airplane.updatedSeats,
+      'deletedSeats': airplane.deletedSeats,
     });
   }
 }

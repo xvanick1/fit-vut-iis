@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Airplane;
+use App\Entity\AirplaneClass;
 use App\Entity\AirplaneType;
 use App\Entity\Seat;
 use App\Request\AirplanePostRequest;
@@ -138,12 +139,51 @@ class AirplaneController extends AbstractController
         if ($params->dateOfRevision !== null) {
             $airplane->setDateOfRevision(\DateTime::createFromFormat('Y-m-d', $params->dateOfRevision));
         }
+
+        if ($params->deletedSeats !== null && !empty($params->deletedSeats)) { // seats to delete
+            $deletedIDs = [];
+            foreach ($params->deletedSeats as $seat) {
+                $deletedIDs[$seat['id']] = $seat;
+            }
+            $seats = $this->getDoctrine()->getRepository(Seat::class)->findByIds($params->deletedSeats);
+            foreach ($seats as $seat) {
+                $airplane->removeSeat($seat);
+            }
+        }
+
+        if ($params->seats !== null && !empty($params->seats)) { // add new seats
+            foreach ($params->seats as $seat) {
+                if (!key_exists('id', $seat)) {
+                    $tmp = new Seat();
+                    $tmp->setSeatNumber($seat['seatNumber']);
+                    $tmp->setLocation($seat['location']);
+                    $ac = $this->getDoctrine()->getRepository(AirplaneClass::class)->findById($seat['airplaneClass']['id']);
+                    $tmp->setAirplaneClass($ac);
+                    $airplane->addSeat($tmp);
+                }
+            }
+        }
+
+        if ($params->updatedSeats !== null && !empty($params->updatedSeats)) { // update existing seats
+            $updatedSeatsArray = [];
+            foreach ($params->updatedSeats as $seat) {
+                $updatedSeatsArray[$seat['id']] = $seat;
+            }
+            $seats = $this->getDoctrine()->getRepository(Seat::class)->findByIds($params->updatedSeats);
+            foreach ($seats as $seat) {
+                $seat->setLocation($updatedSeatsArray[$seat->getId()]['location']);
+                $seat->setSeatNumber($updatedSeatsArray[$seat->getId()]['seatNumber']);
+                $ac = $this->getDoctrine()->getRepository(AirplaneClass::class)->findById($updatedSeatsArray[$seat->getId()]['airplaneClass']['id']);
+                $seat->setAirplaneClass($ac);
+            }
+        }
     }
 
     /**
      * @param Request $request
      * @param ValidatorInterface $validator
      * @return JsonResponse
+     * @throws \Exception
      *
      * @Route("/api/airplanes", name="create_airplane", methods={"POST"})
      */
@@ -184,6 +224,7 @@ class AirplaneController extends AbstractController
      * @param Request $request
      * @param ValidatorInterface $validator
      * @return JsonResponse
+     * @throws \Exception
      *
      * @Route("/api/airplanes/{id}", name="update_airplane", methods={"PATCH"}, requirements={"id"="\d+"})
      */
@@ -224,6 +265,20 @@ class AirplaneController extends AbstractController
             return new JsonResponse(['errors'=>['orm'=>$exception->getMessage()]], 409);
         }
 
-        return new JsonResponse(null, 204);
+        $apiSeats = [];
+        $seats = $airplane->getSeats();
+        foreach ($seats as $seat) {
+            $apiSeats[] = [
+                'id' => $seat->getId(),
+                'seatNumber' => $seat->getSeatNumber(),
+                'location' => $seat->getLocation(),
+                'airplaneClass' => [
+                    'id' => $seat->getAirplaneClass()->getId(),
+                    'name' => $seat->getAirplaneClass()->getName(),
+                ]
+            ];
+        }
+
+        return new JsonResponse(['seats'=>$apiSeats], 200);
     }
 }

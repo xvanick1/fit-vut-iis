@@ -64,4 +64,19 @@ class AirplaneClassRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getArrayResult();
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findById($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_SIMPLEOBJECT)
+            ;
+    }
 }
