@@ -16,6 +16,11 @@ class AirplaneClassFixture extends Fixture
      */
     public function load(ObjectManager $manager)
     {
+        $airClassMillionaire = new AirplaneClass();
+        $airClassMillionaire->setName('Millionaire');
+        $manager->persist($airClassMillionaire);
+        $this->setReference("millionaireClass", $airClassMillionaire);
+
         $airClassBusiness = new AirplaneClass();
         $airClassBusiness->setName('Business');
         $manager->persist($airClassBusiness);
