@@ -17,18 +17,12 @@ class TerminalFixture extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        // TODO: Implement load() method.
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $terminal = new Terminal();
             $terminal->setName("T".$i);
             $manager->persist($terminal);
             $this->addReference("T".$i, $terminal);
         }
-
-        $terminal = new Terminal();
-        $terminal->setName("T6");
-        $manager->persist($terminal);
-        $this->addReference("T6", $terminal);
 
         $manager->flush();
     }
