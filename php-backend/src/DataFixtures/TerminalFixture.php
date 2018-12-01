@@ -17,7 +17,7 @@ class TerminalFixture extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             $terminal = new Terminal();
             $terminal->setName("T".$i);
             $manager->persist($terminal);

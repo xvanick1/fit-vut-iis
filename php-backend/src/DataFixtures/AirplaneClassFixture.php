@@ -16,14 +16,20 @@ class AirplaneClassFixture extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $airClass = new AirplaneClass();
-        $airClass->setName('Business');
-        $manager->persist($airClass);
-        $this->setReference("businessClass", $airClass);
+        $airClassBusiness = new AirplaneClass();
+        $airClassBusiness->setName('Business');
+        $manager->persist($airClassBusiness);
+        $this->setReference("businessClass", $airClassBusiness);
 
-        $airClass2 = new AirplaneClass();
-        $airClass2->setName('Economy');
-        $manager->persist($airClass2);
+        $airClassRelax = new AirplaneClass();
+        $airClassRelax->setName('Relax');
+        $manager->persist($airClassRelax);
+        $this->setReference("RelaxClass", $airClassRelax);
+
+        $airClassEconomy = new AirplaneClass();
+        $airClassEconomy->setName('Economy');
+        $manager->persist($airClassEconomy);
+        $this->setReference("EconomyClass", $airClassEconomy);
 
         $manager->flush();
     }
