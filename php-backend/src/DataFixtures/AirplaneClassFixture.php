@@ -24,12 +24,12 @@ class AirplaneClassFixture extends Fixture
         $airClassRelax = new AirplaneClass();
         $airClassRelax->setName('Relax');
         $manager->persist($airClassRelax);
-        $this->setReference("RelaxClass", $airClassRelax);
+        $this->setReference("relaxClass", $airClassRelax);
 
         $airClassEconomy = new AirplaneClass();
         $airClassEconomy->setName('Economy');
         $manager->persist($airClassEconomy);
-        $this->setReference("EconomyClass", $airClassEconomy);
+        $this->setReference("economyClass", $airClassEconomy);
 
         $manager->flush();
     }
