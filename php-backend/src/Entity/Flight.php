@@ -7,6 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FlightRepository")
+ * @ORM\Table(
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="flight_airplane_date_time", columns={"date_of_departure", "time_of_departure", "airplane_id"}),
+ *          @ORM\UniqueConstraint(name="flight_gate_date_time", columns={"date_of_departure", "time_of_departure", "gate_id"})
+ *     }
+ * )
  */
 class Flight
 {
@@ -44,8 +50,6 @@ class Flight
      * @Assert\Type(type="string")
      */
     private $destination;
-
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Gate", inversedBy="flights")

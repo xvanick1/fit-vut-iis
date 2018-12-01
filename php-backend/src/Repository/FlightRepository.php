@@ -70,11 +70,12 @@ class FlightRepository extends ServiceEntityRepository
     public function findById($id)
     {
         return $this->createQueryBuilder('f')
-            ->select('f, g, t')
+            ->select('f, g, t, a')
             ->andWhere('f.id = :val')
             ->setParameter('val', $id)
             ->innerJoin('f.gate', 'g')
             ->innerJoin('g.terminal', 't')
+            ->innerJoin('f.airplane', 'a')
             ->getQuery()
             ->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
         ;

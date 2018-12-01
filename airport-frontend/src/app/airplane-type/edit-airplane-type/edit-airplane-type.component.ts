@@ -16,7 +16,7 @@ import {TerminalService} from "../../_service/terminal.service";
   styleUrls: ['../form-airplane-type.component.scss']
 })
 export class EditAirplaneTypeComponent implements OnInit {
-  myForm: FormGroup;
+  seatForm: FormGroup;
   title = 'Upravit typ letadla';
   submitted: boolean = false;
   isLoading: boolean = true;
@@ -38,7 +38,7 @@ export class EditAirplaneTypeComponent implements OnInit {
   ngOnInit() {
     this.terminals = [];
 
-    this.myForm = new FormGroup({
+    this.seatForm = new FormGroup({
       'gateNameInput': new FormControl('', [
         Validators.required
       ]),
@@ -124,7 +124,7 @@ export class EditAirplaneTypeComponent implements OnInit {
   saveButton(id: string) {
     modal.closeModal(id);
     for (let gate of this.apiGates) {
-      if (gate.id == this.myForm.get('gateNameInput').value) {
+      if (gate.id == this.seatForm.get('gateNameInput').value) {
         this.tmpGate.id = gate.id;
         this.tmpGate.name = gate.name;
         this.tmpGate.terminalName = gate.terminal.name;
@@ -133,8 +133,8 @@ export class EditAirplaneTypeComponent implements OnInit {
         }
       }
     }
-    this.myForm.get('gateNameInput').setValue('');
-    this.myForm.get('terminalNameInput').setValue('');
+    this.seatForm.get('gateNameInput').setValue('');
+    this.seatForm.get('terminalNameInput').setValue('');
   }
 
   closeModal(id: string) {
@@ -142,7 +142,7 @@ export class EditAirplaneTypeComponent implements OnInit {
   }
 
   onChanges(): void {
-    this.myForm.get('terminalNameInput').valueChanges.subscribe(value => {
+    this.seatForm.get('terminalNameInput').valueChanges.subscribe(value => {
       this.gates = [];
       for (let gate of this.apiGates) {
         if (gate.terminal.id == value) {

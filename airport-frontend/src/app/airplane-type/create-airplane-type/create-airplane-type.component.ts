@@ -15,7 +15,7 @@ import * as modal from "../../_helper/modal";
   styleUrls: ['../form-airplane-type.component.scss']
 })
 export class CreateAirplaneTypeComponent implements OnInit {
-  myForm: FormGroup;
+  seatForm: FormGroup;
   title = 'Vytvořit typ letadla';
   submitted: boolean = false;
   isLoading: boolean = false;
@@ -37,7 +37,7 @@ export class CreateAirplaneTypeComponent implements OnInit {
   ngOnInit() {
     this.terminals = [];
 
-    this.myForm = new FormGroup({
+    this.seatForm = new FormGroup({
       'gateNameInput': new FormControl('', [
         Validators.required
       ]),
@@ -83,7 +83,7 @@ export class CreateAirplaneTypeComponent implements OnInit {
   saveButton(id: string) {
     modal.closeModal(id);
     for (let gate of this.apiGates) {
-      if (gate.id == this.myForm.get('gateNameInput').value) {
+      if (gate.id == this.seatForm.get('gateNameInput').value) {
         this.tmpGate.id = gate.id;
         this.tmpGate.name = gate.name;
         this.tmpGate.terminalName = gate.terminal.name;
@@ -92,8 +92,8 @@ export class CreateAirplaneTypeComponent implements OnInit {
         }
       }
     }
-    this.myForm.get('gateNameInput').setValue('');
-    this.myForm.get('terminalNameInput').setValue('');
+    this.seatForm.get('gateNameInput').setValue('');
+    this.seatForm.get('terminalNameInput').setValue('');
   }
 
   closeModal(id: string) {
@@ -101,7 +101,7 @@ export class CreateAirplaneTypeComponent implements OnInit {
   }
 
   onChanges(): void {
-    this.myForm.get('terminalNameInput').valueChanges.subscribe(value => {
+    this.seatForm.get('terminalNameInput').valueChanges.subscribe(value => {
       this.gates = [];
       for (let gate of this.apiGates) {
         if (gate.terminal.id == value) {

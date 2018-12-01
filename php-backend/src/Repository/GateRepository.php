@@ -19,6 +19,20 @@ class GateRepository extends ServiceEntityRepository
         parent::__construct($registry, Gate::class);
     }
 
+    public function findByAirplaneType($id)
+    {
+        return $this->createQueryBuilder('g')
+            ->select('g.id, g.name, t.id as terminalId, t.name as terminalName')
+            ->andWhere('at.id = :val')
+            ->setParameter('val', $id)
+            ->innerJoin('g.airplaneTypes', 'at')
+            ->innerJoin('g.terminal', 't')
+            ->groupBy('g.id, g.name')
+            ->getQuery()
+            ->getArrayResult()
+            ;
+    }
+
     public function findByTerminal($id)
     {
         return $this->createQueryBuilder('g')

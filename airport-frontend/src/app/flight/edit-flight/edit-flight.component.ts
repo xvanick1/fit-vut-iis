@@ -1,32 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiFlight, Flight, formFlight} from "../../_model/flight";
-import {Airplane} from "../../_model/airplane";
-import {Terminal} from "../../_model/terminal";
-import {Gate} from "../../_model/gate";
 import {FlightService} from "../../_service/flight.service";
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormFlightComponent} from "../form-flight.component";
+import * as moment from "moment";
+import {AirplaneService} from "../../_service/airplane.service";
+import {Message} from "../../_model/message";
 
 @Component({
   selector: 'app-edit-flight',
   templateUrl: '../form-flight.component.html',
   styleUrls: ['../form-flight.component.scss']
 })
-export class EditFlightComponent implements OnInit {
-  title: string = 'Upravit let';
-  flight: formFlight;
-  apiFlight: ApiFlight;
-  submitted: boolean = false;
-  airplanes: Airplane[];
-  terminals: Terminal[];
-  gates: Gate[];
+export class EditFlightComponent extends FormFlightComponent implements OnInit {
 
   constructor(
-    private flightService: FlightService,
-    private route: ActivatedRoute
-  ) { }
+    protected flightService: FlightService,
+    protected airplaneService: AirplaneService,
+    protected route: ActivatedRoute,
+    protected router: Router
+  ) {
+    super(flightService, airplaneService, route, router);
+  }
 
   ngOnInit() {
-    this.flight = new formFlight();
+    this.title = 'Upravit let';
     this.route.params.subscribe(params => {
       this.flight.id = +params['id']; // (+) converts string 'id' to a number
       // In a real app: dispatch action to load the details here.
@@ -34,34 +31,38 @@ export class EditFlightComponent implements OnInit {
 
     this.flightService.getFlight(this.flight.id).subscribe(resp => {
       if (resp.status == 200) {
-        this.apiFlight = resp.body;
-        this.flight.id = this.apiFlight.id;
-        this.flight.destination = this.apiFlight.destination;
+        let flight = resp.body;
+        this.flight.id = flight.id;
+        this.flight.destination = flight.destination;
+        let time = moment(flight.timeOfDeparture.date);
+        this.flight._timeOfDeparture = {hours: time.hours(), minutes: time.minutes()};
+        time = moment(flight.flightLength.date);
+        this.flight._flightLength = {hours: time.hours(), minutes: time.minutes()};
+        this.flight._dateOfDeparture = moment(flight.dateOfDeparture.date).toDate();
+        this.flight.airplane = flight.airplane;
+        this.flight.gate = flight.gate;
+        this.getAirplanes();
+        this.airplaneInput.setValue(this.flight.airplane.id);
+        this.gateInput.setValue(this.flight.gate.id);
       } else {
-        //redirect
+        this.router.navigate(['404']);
       }
     });
-
-    this.airplanes = [];
-    this.terminals = [];
-    this.gates = [];
-    this.getAirplanes();
   }
 
   onSubmit() {
     this.submitted = true;
+    this.message = null;
+    this.flightService.updateFlight(this.flight).subscribe(resp => {
+      this.message = new Message();
+      this.message.type = 'success';
+      this.message.text = 'Let bylo úspěšně uloženo';
+      this.submitted = false;
+    }, () => {
+      this.message = new Message();
+      this.message.type = 'alert';
+      this.message.text = 'Při ukládání letu nastala chyba';
+      this.submitted = false;
+    });
   }
-
-  getAirplanes() {
-
-  }
-
-  getTerminals() {
-
-  }
-
-  getGates() {
-
-  }
-
 }

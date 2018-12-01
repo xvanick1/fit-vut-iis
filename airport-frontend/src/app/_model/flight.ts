@@ -4,31 +4,17 @@ import {Airplane} from "./airplane";
 import {Terminal} from "./terminal";
 import {Gate} from "./gate";
 
-export class ApiFlight {
-  id: number;
-  destination: string;
-  timeOfDeparture: ApiDate;
-  dateOfDeparture: ApiDate;
-  terminal: string;
-  gate: string;
-}
-
 export class Flight {
   id: number;
   destination: string;
-  time: Time;
-  date: Date;
-  terminal: string;
-  gate: string;
-}
-
-export class formFlight {
-  id: number;
-  destination: string;
-  time: Time;
-  date: Date;
-  flightLength: Time;
-  airplaineID: number;
-  gateID: number;
-  terminalID: number;
+  _dateOfDeparture: Date;
+  _timeOfDeparture: Time;
+  _flightLength: Time;
+  terminal: Terminal;
+  gate: Gate;
+  airplane: Airplane;
+  //api
+  timeOfDeparture: ApiDate;
+  dateOfDeparture: ApiDate;
+  flightLength: ApiDate;
 }

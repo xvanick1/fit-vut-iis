@@ -34,7 +34,7 @@
           </div>
           <div class="cell medium-4 small-6">
             <label class="{{!user.id ? 'label-required' : ''}} {{(password.valid || password.untouched) ? '' : 'is-invalid-label'}}">Heslo
-              <input type="password" name="password" [required]="!user.id" [(ngModel)]="user.password" #password="ngModel">
+              <input type="password" name="password" [required]="!user.id" [(ngModel)]="user.password" #password="ngModel" pattern="^\S*$">
             </label>
           </div>
           <div class="cell medium-4 small-6">

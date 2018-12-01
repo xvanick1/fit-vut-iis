@@ -49,7 +49,7 @@ export class FlightComponent implements OnInit {
   }
 
   onChanges(): void {
-    this.myForm.valueChanges.subscribe(value => {
+    this.myForm.valueChanges.subscribe(() => {
       this.getFlights();
     });
   }
@@ -77,7 +77,7 @@ export class FlightComponent implements OnInit {
         flight.destination = apiFlight.destination;
         flight.id = apiFlight.id;
         let time = moment(apiFlight.timeOfDeparture.date);
-        flight.time = {hours: time.hours(), minutes: time.minutes()};
+        flight._timeOfDeparture = {hours: time.hours(), minutes: time.minutes()};
         this.flights.push(flight);
       }
     });
