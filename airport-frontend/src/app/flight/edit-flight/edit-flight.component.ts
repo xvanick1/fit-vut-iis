@@ -65,4 +65,17 @@ export class EditFlightComponent extends FormFlightComponent implements OnInit {
       this.submitted = false;
     });
   }
+
+  deleteFlight() {
+    this.submitted = true;
+    this.message = null;
+    this.flightService.deleteFlight(this.flight.id).subscribe(() => {
+      this.router.navigate(['lety']);
+    }, () => {
+      this.message = new Message();
+      this.message.type = 'alert';
+      this.message.text = 'Při mazání letu nastala chyba';
+      this.submitted = false;
+    });
+  }
 }

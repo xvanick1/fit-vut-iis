@@ -58,4 +58,7 @@ export class CreateFlightComponent extends FormFlightComponent implements OnInit
     });
   }
 
+  deleteFlight() {
+    return;
+  }
 }

@@ -8,7 +8,7 @@
             <h2>{{title}}</h2>
           </div>
           <div class="small-4 cell">
-            <button class="float-right button hollow alert" (click)="null" *ngIf="flight.id && !isLoading" [disabled]="submitted">Smazat</button>
+            <button class="float-right button hollow alert" (click)="deleteFlight()" *ngIf="flight.id && !isLoading" [disabled]="submitted">Smazat</button>
           </div>
         </div>
         <div class="grid-x grid-padding-x margin-top-3 margin-bottom-3" *ngIf="isLoading">

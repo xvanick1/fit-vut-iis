@@ -78,4 +78,8 @@ export class FlightService {
       'flightLength': length
     });
   }
+
+  deleteFlight(id: number): Observable<any> {
+    return this.http.delete(this.flightsURL+'/'+id);
+  }
 }
