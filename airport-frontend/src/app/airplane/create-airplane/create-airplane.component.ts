@@ -6,6 +6,7 @@ import {AirplaneFormComponent} from "../airplane-form.component";
 import {AirplaneService} from "../../_service/airplane.service";
 import {AirplaneTypeService} from "../../_service/airplane-type.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AirplaneClassService} from "../../_service/airplane-class.service";
 
 @Component({
   selector: 'app-create-airplane',
@@ -19,10 +20,11 @@ export class CreateAirplaneComponent extends AirplaneFormComponent implements On
   constructor(
     protected airplaneService: AirplaneService,
     protected airplaneTypeService: AirplaneTypeService,
+    protected airplaneClassService: AirplaneClassService,
     protected router: Router,
     protected route: ActivatedRoute
   ) {
-    super(airplaneService, airplaneTypeService, router, route);
+    super(airplaneService, airplaneTypeService, airplaneClassService, router, route);
     this.isLoading = false;
   }
 
@@ -31,6 +33,9 @@ export class CreateAirplaneComponent extends AirplaneFormComponent implements On
     this.airplane._dateOfProduction = new Date();
     this.airplane._dateOfRevision = new Date();
     this.airplane.type = new AirplaneType();
+    this.airplane.updatedSeats = [];
+    this.airplane.deletedSeats = [];
+    this.airplane.seats = [];
   }
 
   onSubmit() {

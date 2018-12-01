@@ -58,7 +58,7 @@
                   <h3>Seznam míst</h3>
                 </div>
                 <div class="small-6 cell">
-                  <a (click)="false" class="button float-right">Vytvořit místo</a>
+                  <a (click)="createSeat('seatModal')" class="button float-right">Vytvořit místo</a>
                 </div>
               </div>
             </div>
@@ -74,10 +74,10 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let seat of airplane.seats">
-                  <td><a (click)="false">{{seat.seatNumber}}</a></td>
+                  <td><a (click)="updateSeat('seatModal', seat)">{{seat.seatNumber}}</a></td>
                   <td>{{seat.location}}</td>
                   <td>{{seat.airplaneClass.name}}</td>
-                  <td class="table-right"><a class="alert button inline" (click)="false">Smazat místo</a></td>
+                  <td class="table-right"><a class="alert button inline" (click)="deleteSeat(seat)">Smazat místo</a></td>
                 </tr>
                 </tbody>
               </table>
@@ -99,3 +99,33 @@
     </div>
   </div>
 </form>
+<div class="reveal-overlay" style="display: none;">
+  <div class="reveal" id="seatModal">
+    <h1>Místo</h1>
+    <form [formGroup]="seatForm">
+      <label class="label-required {{(seatForm.get('seatNumber').valid || seatForm.get('seatNumber').untouched) ? '' : 'is-invalid-label'}}">
+        Číslo místa
+        <input type="number" formControlName="seatNumber">
+      </label>
+      <label class="label-required {{(seatForm.get('location').valid || seatForm.get('location').untouched) ? '' : 'is-invalid-label'}}">
+        Umístění
+        <select formControlName="location">
+          <option value="ulička">ulička</option>
+          <option value="okno">okno</option>
+          <option value="střed">střed</option>
+        </select>
+      </label>
+      <label class="label-required {{(seatForm.get('airplaneClass').valid || seatForm.get('airplaneClass').untouched) ? '' : 'is-invalid-label'}}">
+        Třída
+        <select formControlName="airplaneClass">
+          <option [disabled]="true"></option>
+          <option *ngFor="let airClass of airplaneClasses" [value]="airClass.id">{{airClass.name}}</option>
+        </select>
+      </label>
+      <div class="button-group">
+        <a class="clear button text-right" (click)="closeModal('seatModal')">Zavřít</a>
+        <input type="submit" class="button" value="Uložit" [disabled]="!seatForm.valid" (click)="saveButton('seatModal')">
+      </div>
+    </form>
+  </div>
+</div>

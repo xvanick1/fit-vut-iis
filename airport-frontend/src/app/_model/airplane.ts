@@ -13,5 +13,7 @@ export class Airplane {
   countOfSeats: number;
   _submitted: boolean;
   seats: Seat[];
+  deletedSeats: Seat[];
+  updatedSeats: Seat[];
 }
 

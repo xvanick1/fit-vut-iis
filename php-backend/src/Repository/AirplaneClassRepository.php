@@ -51,32 +51,17 @@ class AirplaneClassRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
-//    /**
-//     * @return AirplaneClass[] Returns an array of AirplaneClass objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return AirplaneClass[] Returns an array
+     */
+    public function findAllAirplaneClasses()
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this->createQueryBuilder('t')
+            ->select('t.id, t.name')
+            ->orderBy('t.id', 'ASC')
+            ->setMaxResults(100)
+            ->groupBy('t.id');
 
-    /*
-    public function findOneBySomeField($value): ?AirplaneClass
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $query->getQuery()->getArrayResult();
     }
-    */
 }

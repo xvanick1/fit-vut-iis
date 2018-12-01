@@ -6,6 +6,7 @@ import {AirplaneFormComponent} from "../airplane-form.component";
 import {AirplaneService} from "../../_service/airplane.service";
 import {AirplaneTypeService} from "../../_service/airplane-type.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AirplaneClassService} from "../../_service/airplane-class.service";
 
 @Component({
   selector: 'app-edit-airplane',
@@ -18,10 +19,11 @@ export class EditAirplaneComponent extends AirplaneFormComponent implements OnIn
   constructor(
     protected airplaneService: AirplaneService,
     protected airplaneTypeService: AirplaneTypeService,
+    protected airplaneClassService: AirplaneClassService,
     protected router: Router,
     protected route: ActivatedRoute
   ) {
-    super(airplaneService, airplaneTypeService, router, route);
+    super(airplaneService, airplaneTypeService, airplaneClassService, router, route);
     this.isLoading = true;
   }
 
@@ -38,6 +40,8 @@ export class EditAirplaneComponent extends AirplaneFormComponent implements OnIn
         this.airplane._dateOfProduction = moment(this.airplane.dateOfProduction.date).toDate();
         this.airplane._dateOfRevision = moment(this.airplane.dateOfRevision.date).toDate();
         this.isLoading = false;
+        this.airplane.deletedSeats = [];
+        this.airplane.updatedSeats = [];
       },
       () => {
         this.router.navigate(['404']);

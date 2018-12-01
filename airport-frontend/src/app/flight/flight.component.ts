@@ -42,7 +42,7 @@ export class FlightComponent implements OnInit {
       ])
     });
 
-    //this.myForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    //this.seatForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
 
     this.onChanges();
     this.getFlights();

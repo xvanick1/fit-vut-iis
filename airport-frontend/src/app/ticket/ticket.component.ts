@@ -47,7 +47,7 @@ export class TicketComponent implements OnInit {
       'checkoutInput': new FormControl()
     });
 
-    //this.myForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
+    //this.seatForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
 
     this.onChanges();
     this.getTickets();

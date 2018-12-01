@@ -40,4 +40,8 @@ export class AirplaneClassService {
   updateAirplaneClass(id: number, name: string): Observable<any> {
     return this.http.patch(this.airplaneClassesURL+'/'+id, {'name': name});
   }
+
+  getAllAirplaneClasses() {
+    return this.http.get<AirplaneClass[]>(this.airplaneClassesURL+'/all');
+  }
 }

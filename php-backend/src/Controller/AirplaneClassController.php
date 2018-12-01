@@ -15,6 +15,22 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class AirplaneClassController extends AbstractController
 {
     /**
+     * @return JsonResponse
+     *
+     * @Route("/api/airplanes/classes/all", name="get_all_airplane_classes", methods={"GET"})
+     */
+    public function getAllAirplaneClasses()
+    {
+        try {
+            $airplaneClasses = $this->getDoctrine()->getRepository(AirplaneClass::class)->findAllAirplaneClasses();
+        } catch (Exception $exception) {
+            return new JsonResponse(['errors'=>['request'=>$exception->getMessage()]],500);
+        }
+
+        return new JsonResponse($airplaneClasses, 200);
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      *
