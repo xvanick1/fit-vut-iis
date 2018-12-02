@@ -13,6 +13,36 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AirplaneFixture extends Fixture implements DependentFixtureInterface
 {
+    private $batchSize = 20;
+    private $actualSeat = 0;
+    private $em;
+
+    private function generateSeats($numberOfSeats, $airplane, AirplaneClass $airClass) {
+        for ($i = 1; $i <= $numberOfSeats; $i++) {
+            $seat = new Seat();
+            $seat->setAirplane($this->getReference($airplane));
+            $seat->setAirplaneClass($airClass);
+            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
+                $seat->setLocation('okno');
+            }
+            if(($i % 6 == 2) || ($i % 6 == 5)){
+                $seat->setLocation('střed');
+            }
+            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
+                $seat->setLocation('ulička');
+            }
+            $seat->setSeatNumber($i+$this->actualSeat);
+            $this->em->persist($seat);
+            unset($seat);
+
+            if (($i % $this->batchSize) === 0) {
+                $this->em->flush();
+            }
+        }
+
+        $this->actualSeat += $numberOfSeats;
+        $this->em->flush();
+    }
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -21,27 +51,9 @@ class AirplaneFixture extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        /* Testing fixture */
-        /*
-        $airType = new AirplaneType();
-        $airType->setName("747");
-        $airType->setManufacturer("Boeing");
-        $airType->addGate($this->getReference('G1'));
-        $airType->addGate($this->getReference('G2'));
-        $airType->addGate($this->getReference('G3'));
-        $airType->addGate($this->getReference('G4'));
-        $manager->persist($airType);
+        $this->em = $manager;
 
-        $airplane = new Airplane();
-        $airplane->setCrewNumber(5);
-        $airplane->setDateOfProduction(new \DateTime());
-        $airplane->setDateOfRevision(new \DateTime());
-        $airplane->setAirplaneType($airTypeB747);
-        $manager->persist($airplane);
-        $this->setReference("B747", $airplane);
-        */
-
-        /* Boeing */
+        /* Boeing 737 */
         $airTypeB737 = new AirplaneType();
         $airTypeB737->setName("737");
         $airTypeB737->setManufacturer("Boeing");
@@ -49,7 +61,7 @@ class AirplaneFixture extends Fixture implements DependentFixtureInterface
         $airTypeB737->addGate($this->getReference('G2'));
         $airTypeB737->addGate($this->getReference('G3'));
         $airTypeB737->addGate($this->getReference('G4'));
-        $manager->persist($airTypeB737);
+        $this->em->persist($airTypeB737);
 
         for ($i = 0; $i < 2; $i++) {
             $airplane = new Airplane();
@@ -57,288 +69,51 @@ class AirplaneFixture extends Fixture implements DependentFixtureInterface
             $airplane->setDateOfProduction(new \DateTime());
             $airplane->setDateOfRevision(new \DateTime());
             $airplane->setAirplaneType($airTypeB737);
-            $manager->persist($airplane);
-            $this->setReference("B737", $airplane);
+            $this->addReference('B737-'.$i, $airplane);
+            $this->em->persist($airplane);
+            if ($i == 0) {
+                $this->generateSeats(12, "B737-" . $i, $this->getReference('businessClass'));
+            }
+            $this->generateSeats(18, "B737-".$i, $this->getReference('relaxClass'));
+            $this->generateSeats(30, "B737-".$i, $this->getReference('economyClass'));
+            $this->actualSeat = 0;
         }
+        $this->em->flush();
+        $this->em->clear();
 
-        $numberOfSeats = 0;
-        $maxClassSeats = 12;
-        for ($i = 1; $i <= $maxClassSeats; $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('businessClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 24;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('relaxClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 48;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('economyClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-
-
-
+        /* Boeing 747 */
         $airTypeB747 = new AirplaneType();
         $airTypeB747->setName("747");
         $airTypeB747->setManufacturer("Boeing");
         $airTypeB747->addGate($this->getReference('G1'));
-        $airTypeB747->addGate($this->getReference('G2'));
         $airTypeB747->addGate($this->getReference('G3'));
-        $airTypeB747->addGate($this->getReference('G4'));
-        $manager->persist($airTypeB747);
-
+        $this->em->persist($airTypeB747);
         for ($i = 0; $i < 3; $i++) {
             $airplane = new Airplane();
-            $airplane->setCrewNumber(rand(1, 7));
+            $airplane->setCrewNumber(rand(3, 7));
             $airplane->setDateOfProduction(new \DateTime());
             $airplane->setDateOfRevision(new \DateTime());
             $airplane->setAirplaneType($airTypeB747);
-            $manager->persist($airplane);
-            $this->setReference("B747", $airplane);
+            $this->em->persist($airplane);
+            $this->addReference("B747-".$i, $airplane);
+            $this->generateSeats(12, "B747-".$i, $this->getReference('businessClass'));
+            if ($i == 2) {
+                $this->generateSeats(24, "B747-" . $i, $this->getReference('relaxClass'));
+            }
+            $this->generateSeats(42, "B747-".$i, $this->getReference('economyClass'));
+            $this->actualSeat = 0;
         }
+        $this->em->flush();
+        $this->em->clear();
 
-        $numberOfSeats = 0;
-        $maxClassSeats = 6;
-        for ($i = 1; $i <= $maxClassSeats; $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('businessClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 18;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('relaxClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 30;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('economyClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-
-
-
-        $airTypeB767 = new AirplaneType();
-        $airTypeB767->setName("767");
-        $airTypeB767->setManufacturer("Boeing");
-        $airTypeB767->addGate($this->getReference('G3'));
-        $airTypeB767->addGate($this->getReference('G4'));
-        $airTypeB767->addGate($this->getReference('G5'));
-        $manager->persist($airTypeB767);
-
-        for ($i = 0; $i < 2; $i++) {
-            $airplane = new Airplane();
-            $airplane->setCrewNumber(rand(1, 7));
-            $airplane->setDateOfProduction(new \DateTime());
-            $airplane->setDateOfRevision(new \DateTime());
-            $airplane->setAirplaneType($airTypeB767);
-            $manager->persist($airplane);
-            $this->setReference("B767", $airplane);
-        }
-
-        $numberOfSeats = 0;
-        $maxClassSeats = 6;
-        for ($i = 1; $i <= $maxClassSeats; $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('businessClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 12;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('relaxClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 24;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('economyClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-
-
-
-        $airTypeB777 = new AirplaneType();
-        $airTypeB777->setName("777");
-        $airTypeB777->setManufacturer("Boeing");
-        $airTypeB777->addGate($this->getReference('G5'));
-        $airTypeB777->addGate($this->getReference('G6'));
-        $airTypeB777->addGate($this->getReference('G7'));
-        $airTypeB777->addGate($this->getReference('G8'));
-        $manager->persist($airTypeB777);
-
-        for ($i = 0; $i < 3; $i++) {
-            $airplane = new Airplane();
-            $airplane->setCrewNumber(rand(1, 7));
-            $airplane->setDateOfProduction(new \DateTime());
-            $airplane->setDateOfRevision(new \DateTime());
-            $airplane->setAirplaneType($airTypeB777);
-            $manager->persist($airplane);
-            $this->setReference("B777", $airplane);
-        }
-
-        $numberOfSeats = 0;
-        $maxClassSeats = 24;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('relaxClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 54;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('economyClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-
-
-
+        /* Boeing 787 */
         $airTypeB787 = new AirplaneType();
         $airTypeB787->setName("787");
         $airTypeB787->setManufacturer("Boeing");
         $airTypeB787->addGate($this->getReference('G1'));
-        $airTypeB787->addGate($this->getReference('G2'));
+        $airTypeB787->addGate($this->getReference('G4'));
         $airTypeB787->addGate($this->getReference('G5'));
         $manager->persist($airTypeB787);
-
         for ($i = 0; $i < 1; $i++) {
             $airplane = new Airplane();
             $airplane->setCrewNumber(rand(1, 7));
@@ -346,30 +121,16 @@ class AirplaneFixture extends Fixture implements DependentFixtureInterface
             $airplane->setDateOfRevision(new \DateTime());
             $airplane->setAirplaneType($airTypeB787);
             $manager->persist($airplane);
-            $this->setReference("B787", $airplane);
+            $this->addReference("B787-".$i, $airplane);
+            $this->generateSeats(18, "B787-".$i, $this->getReference('businessClass'));
+            $this->generateSeats(24, "B787-" . $i, $this->getReference('relaxClass'));
+            $this->generateSeats(36, "B787-".$i, $this->getReference('economyClass'));
+            $this->actualSeat = 0;
         }
+        $this->em->flush();
+        $this->em->clear();
 
-        $numberOfSeats = 0;
-        $maxClassSeats = 90;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('economyClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-
-        /* Airbus */
+        /* Airbus A320 */
         $airTypeA320 = new AirplaneType();
         $airTypeA320->setName("320");
         $airTypeA320->setManufacturer("Airbus");
@@ -378,114 +139,47 @@ class AirplaneFixture extends Fixture implements DependentFixtureInterface
         $airTypeA320->addGate($this->getReference('G5'));
         $manager->persist($airTypeA320);
 
-        for ($i = 0; $i < 1; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $airplane = new Airplane();
-            $airplane->setCrewNumber(rand(1, 7));
-            $airplane->setDateOfProduction(new \DateTime());
+            $airplane->setCrewNumber(rand(2, 7));
+            $airplane->setDateOfProduction(new \DateTime('last day of last month'));
             $airplane->setDateOfRevision(new \DateTime());
             $airplane->setAirplaneType($airTypeA320);
             $manager->persist($airplane);
-            $this->setReference("A320", $airplane);
+            $this->addReference("A320-".$i, $airplane);
+            $this->generateSeats(6, "A320-".$i, $this->getReference('businessClass'));
+            $this->generateSeats(12, "A320-" . $i, $this->getReference('relaxClass'));
+            $this->generateSeats(36, "A320-".$i, $this->getReference('economyClass'));
+            $this->actualSeat = 0;
         }
+        $this->em->flush();
+        $this->em->clear();
 
-        $numberOfSeats = 0;
-        $maxClassSeats = 72;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('economyClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-
-
-
-        $airTypeA330 = new AirplaneType();
-        $airTypeA330->setName("330");
-        $airTypeA330->setManufacturer("Airbus");
-        $airTypeA330->addGate($this->getReference('G1'));
-        $airTypeA330->addGate($this->getReference('G2'));
-        $airTypeA330->addGate($this->getReference('G3'));
-        $airTypeA330->addGate($this->getReference('G4'));
-        $manager->persist($airTypeA330);
+        /* Airbus A380 */
+        $airTypeA380 = new AirplaneType();
+        $airTypeA380->setName("380");
+        $airTypeA380->setManufacturer("Airbus");
+        $airTypeA380->addGate($this->getReference('G1'));
+        $airTypeA380->addGate($this->getReference('G2'));
+        $airTypeA380->addGate($this->getReference('G5'));
+        $manager->persist($airTypeA380);
 
         for ($i = 0; $i < 2; $i++) {
             $airplane = new Airplane();
             $airplane->setCrewNumber(rand(2, 7));
-            $airplane->setDateOfProduction(new \DateTime());
+            $airplane->setDateOfProduction(new \DateTime('last day of last month'));
             $airplane->setDateOfRevision(new \DateTime());
-            $airplane->setAirplaneType($airTypeA330);
+            $airplane->setAirplaneType($airTypeA380);
             $manager->persist($airplane);
-            $this->setReference("A330", $airplane);
+            $this->addReference("A380-".$i, $airplane);
+            $this->generateSeats(6, "A380-".$i, $this->getReference('millionaireClass'));
+            $this->generateSeats(12, "A380-".$i, $this->getReference('businessClass'));
+            $this->generateSeats(24, "A380-" . $i, $this->getReference('relaxClass'));
+            $this->generateSeats(48, "A380-".$i, $this->getReference('economyClass'));
+            $this->actualSeat = 0;
         }
-
-        $numberOfSeats = 0;
-        $maxClassSeats = 12;
-        for ($i = 1; $i <= $maxClassSeats; $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('businessClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 24;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('relaxClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-        $maxClassSeats = 60;
-        for ($i = 1; $i <= ($maxClassSeats + $numberOfSeats); $i++) {
-            $seat = new Seat();
-            $seat->setAirplane($airplane);
-            $seat->setAirplaneClass($this->getReference('economyClass'));
-            if($i % 6 == 1 || (($i % 6 == 0) && ($i % 3 == 0))) {
-                $seat->setLocation('okno');
-            }
-            if(($i % 6 == 2) || ($i % 6 == 5)){
-                $seat->setLocation('střed');
-            }
-            if(($i % 3 == 0) && ($i % 6 != 0) || ($i % 6 == 4)){
-                $seat->setLocation('ulička');
-            }
-            $seat->setSeatNumber($i);
-            $manager->persist($seat);
-            $numberOfSeats = $i;
-        }
-
-        $manager->flush();
+        $this->em->flush();
+        $this->em->clear();
     }
 
     public function getDependencies()

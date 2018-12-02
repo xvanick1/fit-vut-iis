@@ -25,9 +25,11 @@ class GateFixture extends Fixture implements DependentFixtureInterface
             $gate->setTerminal($this->getReference("T".random_int(0,4)));
             $manager->persist($gate);
             $this->setReference("G".$i, $gate);
+            unset($gate);
         }
 
         $manager->flush();
+        $manager->clear();
     }
 
     public function getDependencies()

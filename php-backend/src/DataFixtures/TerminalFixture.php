@@ -22,8 +22,10 @@ class TerminalFixture extends Fixture
             $terminal->setName("T".$i);
             $manager->persist($terminal);
             $this->addReference("T".$i, $terminal);
+            unset($terminal);
         }
 
         $manager->flush();
+        $manager->clear();
     }
 }

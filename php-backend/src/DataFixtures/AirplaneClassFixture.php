@@ -36,7 +36,18 @@ class AirplaneClassFixture extends Fixture
         $manager->persist($airClassEconomy);
         $this->setReference("economyClass", $airClassEconomy);
 
+        $airClassLuxus = new AirplaneClass();
+        $airClassLuxus->setName('Luxus');
+        $manager->persist($airClassLuxus);
+
+        unset($airClassMillionaire);
+        unset($airClassBusiness);
+        unset($airClassRelax);
+        unset($airClassEconomy);
+        unset($airClassLuxus);
+
         $manager->flush();
+        $manager->clear();
     }
 
 }

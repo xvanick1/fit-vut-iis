@@ -19,7 +19,7 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $flight = new Flight();
-        $flight->setAirplane($this->getReference("B747"));
+        $flight->setAirplane($this->getReference("B747-1"));
         $flight->setDateOfDeparture(new \DateTime());
         $flight->setDestination("Prague");
         $flight->setFlightLength(new \DateTime("11:30:00"));
@@ -28,7 +28,6 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $manager->persist($flight);
 
         $manager->flush();
-
     }
 
     /**

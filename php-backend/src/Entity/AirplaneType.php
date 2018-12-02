@@ -46,6 +46,11 @@ class AirplaneType
      */
     private $airplanes;
 
+    public function __toString()
+    {
+        return $this->getManufacturer()." ".$this->getName();
+    }
+
     public function __construct()
     {
         $this->gates = new ArrayCollection();
