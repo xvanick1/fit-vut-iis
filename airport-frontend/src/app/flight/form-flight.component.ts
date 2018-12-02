@@ -110,7 +110,11 @@ export class FormFlightComponent {
         this.gateInput.enable();
         let gate = this.gates.pop();
         this.gates.push(gate);
-        this.gateInput.setValue(gate.id);
+        if (!this.flight.id) {
+          this.gateInput.setValue(gate.id);
+        } else {
+          this.gateInput.setValue(this.flight.gate.id);
+        }
       }
     });
   }

@@ -84,6 +84,23 @@ export class FlightComponent implements OnInit {
   }
 
   cancelFlight(flight: Flight): void {
+    if (flight._submitted) {
+      return;
+    }
+    flight._submitted = true;
 
+    this.flightService.deleteFlight(flight.id).subscribe(
+      () => {
+        let flights = [];
+        for (let tmp of this.flights) {
+          if (tmp != flight) {
+            flights.push(tmp);
+          }
+        }
+        this.flights = flights;
+      },
+      () => {
+        flight._submitted = false;
+      });
   }
 }

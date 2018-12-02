@@ -17,4 +17,5 @@ export class Flight {
   timeOfDeparture: ApiDate;
   dateOfDeparture: ApiDate;
   flightLength: ApiDate;
+  _submitted: boolean;
 }

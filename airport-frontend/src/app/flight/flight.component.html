@@ -57,7 +57,7 @@
           <td>{{flight.terminal}}</td>
           <td>{{flight.gate}}</td>
           <td>{{flight.destination}}</td>
-          <td class="table-right"><a class="alert button inline" (click)="cancelFlight(flight)">Smazat let</a></td>
+          <td class="table-right"><a class="alert button inline {{flight._submitted ? 'disabled':''}}" (click)="cancelFlight(flight)">Smazat let</a></td>
         </tr>
         </tbody>
       </table>
