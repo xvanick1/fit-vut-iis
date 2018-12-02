@@ -41,6 +41,7 @@ class FlightTicketController extends AbstractController
                 'flight' => $ticket['flight'],
                 'airplaneClass' => $ticket['airplaneClass'],
                 'destination' => $ticket['destination'],
+                'boardingPass' => $ticket['bid'],
                 'seat' => [
                     'id' => $ticket['sid'],
                     'seatNumber' => $ticket['seatNumber']

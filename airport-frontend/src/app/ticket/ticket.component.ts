@@ -87,9 +87,11 @@ export class TicketComponent implements OnInit {
     });
   }
 
-  printBoardingPass(ticket: Ticket) {
-
+  printBoardingPass(ticket: Ticket, id: string) {
+    this.currentTicket = ticket;
+    openModal(id);
   }
+
 
   checkoutTicket(ticket: Ticket, id: string): void {
     this.currentTicket = ticket;

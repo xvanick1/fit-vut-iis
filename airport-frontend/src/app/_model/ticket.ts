@@ -8,4 +8,5 @@ export class Ticket {
   airplaneClass: string;
   destination: string;
   seat: Seat;
+  boardingPass: number;
 }

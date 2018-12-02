@@ -27,7 +27,7 @@ class FlightTicketRepository extends ServiceEntityRepository
     public function findTickets(FlightTicketsRequest $params)
     {
         $query = $this->createQueryBuilder('ft')
-            ->select('ft.id, f.id as flight, ft.surname, ft.name, c.name as airplaneClass, f.destination, s.id as sid, s.seatNumber, s.location')
+            ->select('ft.id, f.id as flight, ft.surname, ft.name, c.name as airplaneClass, f.destination, b.id as bid, s.id as sid, s.seatNumber, s.location')
             ->orderBy('ft.id', 'ASC')
             ->setMaxResults(100)
             ->innerJoin('ft.flight', 'f')

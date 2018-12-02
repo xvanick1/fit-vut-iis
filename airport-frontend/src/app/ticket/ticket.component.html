@@ -75,7 +75,7 @@
             <td>{{ticket.destination}}</td>
             <td class="table-right">
               <a class="button inline" (click)="checkoutTicket(ticket, 'exampleModal1')" *ngIf="!ticket.seat">Odbavit</a>
-              <a class="button inline" (click)="printBoardingPass(ticket)" *ngIf="ticket.seat">Vytisknout</a>
+              <a class="button inline" (click)="printBoardingPass(ticket, 'boardingpass')" *ngIf="ticket.seat">Vytisknout</a>
             </td>
           </tr>
           </tbody>
@@ -102,6 +102,19 @@
     <div class="button-group">
       <a class="clear button text-right" (click)="closeModal('exampleModal1')">Zavřít</a>
       <input type="submit" class="button" value="Uložit" [disabled]="!boardingForm.valid || send" (click)="saveButton('exampleModal1')">
+    </div>
+  </div>
+</div>
+<div class="reveal-overlay" style="display: none;">
+  <div class="reveal" id="boardingpass" >
+    <h1>Palubní vstupenka</h1>
+    <p>Číslo vstupenky: {{currentTicket.boardingPass}}</p>
+    <p>Destinace: {{currentTicket.destination}}</p>
+    <p>Sedadlo: {{currentTicket.seat.seatNumber}} {{currentTicket.seat.location}}</p>
+    <p>Přijmení: {{currentTicket.surname}}</p>
+    <p>Jméno: {{currentTicket.name}}</p>
+    <div class="button-group">
+      <a class="clear button text-right" (click)="closeModal('boardingpass')">Zavřít</a>
     </div>
   </div>
 </div>
