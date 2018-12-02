@@ -56,7 +56,7 @@ export class EditFlightComponent extends FormFlightComponent implements OnInit {
     this.flightService.updateFlight(this.flight).subscribe(resp => {
       this.message = new Message();
       this.message.type = 'success';
-      this.message.text = 'Let bylo úspěšně uloženo';
+      this.message.text = 'Let byl úspěšně uložen';
       this.submitted = false;
     }, () => {
       this.message = new Message();
