@@ -46,15 +46,20 @@
 <h2>Instalace</h2>
 <h4>Frontend</h4>
 <ul>
-    <li>Struènì popi¹te postup instalace na server</li>
-    <li>Softwarové po¾adavky (verze PHP apod.)</li>
-    <li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+    <li>Je po¾adován Angular ve verzi 7.0</li>
+    <li>Zkompilovat zdrojové soubory pomocí: ng build</li>
+    <li>V .htaccess nastavit pøesmìrování po¾adavkù kromì /api/* na index.index, který je ve slo¾ce airport-frontend</li>
+    <li>Nastavit oprávnìní na js a css soubory, aby k nim mohl pøistupovat webserver</li>
 </ul>
 <h4>Backend</h4>
 <ul>
-    <li>Struènì popi¹te postup instalace na server</li>
-    <li>Softwarové po¾adavky (verze PHP apod.)</li>
-    <li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+    <li>Je po¾adováno PHP 7.1.3 a vy¹¹í</li>
+    <li>Nastavit v souboru .env pøipojení k databázi a CORS</li>
+    <li>Nainstalovat závislosti pomocí: composer install --no-dev --optimize-autoloader</li>
+    <li>V .htaccess nastavit pøesmìrování po¾adavkù /api/* na index.php, který je ve slo¾ce php-backend</li>
+    <li>Vytvoøit schéma databáze: php bin/console d:s:u --force</li>
+    <li>Nahrát ukázková data pomocí: php bin/console d:f:l</li>
+    <li>Nastavit oprávnìní na index.php</li>
 </ul>
 
 <h2>Známé problémy</h2>

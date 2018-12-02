@@ -19,10 +19,11 @@
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "*",
         "symfony/validator": "*",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "sensiolabs/security-checker": "^4.1",
+        "symfony/twig-bundle": "*"
     },
     "require-dev": {
-        "sensiolabs/security-checker": "^4.1",
         "symfony/maker-bundle": "^1.7",
         "symfony/profiler-pack": "^1.0",
         "symfony/web-server-bundle": "*"
@@ -71,6 +72,7 @@
         "symfony": {
             "allow-contrib": false,
             "require": "4.1.*"
-        }
+        },
+        "public-dir": "./"
     }
 }
