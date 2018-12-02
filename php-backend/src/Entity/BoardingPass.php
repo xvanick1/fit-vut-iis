@@ -40,6 +40,7 @@ class BoardingPass
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\FlightTicket", mappedBy="boardingPass")
+     * @ORM\JoinColumn(nullable=false, unique=true)
      * @Assert\NotBlank()
      */
     private $flightTicket;

@@ -83,15 +83,19 @@ class FlightTicketRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?FlightTicket
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countTicketsOnFlightByClass($flightId, $ticketClass) {
+        return $this->createQueryBuilder('t')
+            ->select('count(t.id)')
+            ->andWhere('t.flight = :tid')
+            ->setParameter('tid', $flightId)
+            ->andWhere('t.airplaneClass = :tclass')
+            ->setParameter('tclass', $ticketClass)
+            ->getQuery()->getSingleScalarResult();
     }
-    */
 }

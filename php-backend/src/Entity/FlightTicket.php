@@ -49,7 +49,7 @@ class FlightTicket
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\BoardingPass", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false, unique=true)
+     * @ORM\JoinColumn(nullable=true, unique=true)
      */
     private $boardingPass;
 

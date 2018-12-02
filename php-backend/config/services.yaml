@@ -42,3 +42,7 @@ services:
     App\EventListener\AirplaneListener:
         tags:
         - { name: doctrine.event_listener, event: preUpdate }
+
+    App\EventListener\FlightTicketListener:
+        tags:
+        - { name: doctrine.event_listener, event: prePersist }
