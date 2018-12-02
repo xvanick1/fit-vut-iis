@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { Ticket } from "../_model/ticket";
 import {TicketService} from "../_service/ticket.service";
+import {closeModal, openModal} from "../_helper/modal";
+import {Seat} from "../_model/seat";
 
 @Component({
   selector: 'app-ticket',
@@ -11,7 +13,12 @@ import {TicketService} from "../_service/ticket.service";
 })
 export class TicketComponent implements OnInit {
   myForm: FormGroup;
+  boardingForm: FormGroup;
   tickets: Ticket[];
+  seats: Seat[];
+  send: boolean = false;
+  currentTicket: Ticket;
+
   constructor(
     private ticketService: TicketService,
     private datepipe: DatePipe,
@@ -47,6 +54,18 @@ export class TicketComponent implements OnInit {
       'checkoutInput': new FormControl()
     });
 
+    this.boardingForm = new FormGroup({
+      'nameInput': new FormControl('', [
+        Validators.pattern('^\\S.*$')
+      ]),
+      'surnameInput': new FormControl('', [
+        Validators.pattern('^\\S.*$')
+      ]),
+      'seat': new FormControl('', [
+
+      ])
+    });
+
     //this.seatForm.get('dateInput').setValue(this.datepipe.transform(new Date(), 'yyyy-MM-dd'));
 
     this.onChanges();
@@ -59,8 +78,62 @@ export class TicketComponent implements OnInit {
     });
   }
 
-  checkoutTicket(ticket: any): void {
+  getSeats(ticket: Ticket){
+    this.seats = [];
+    this.boardingForm.get('seat').disable();
+    this.ticketService.getSeats(ticket.id).subscribe(seats => {
+      this.seats = seats;
+      this.boardingForm.get('seat').enable();
+    });
+  }
 
+  printBoardingPass(ticket: Ticket) {
+
+  }
+
+  checkoutTicket(ticket: Ticket, id: string): void {
+    this.currentTicket = ticket;
+    this.getSeats(ticket);
+    openModal(id);
+    this.boardingForm.get('nameInput').setValue(ticket.name);
+    this.boardingForm.get('surnameInput').setValue(ticket.surname);
+  }
+
+  closeModal(id: string) {
+    if (this.send) {
+      return;
+    }
+    this.currentTicket = null;
+    closeModal(id);
+    this.boardingForm.reset();
+  }
+
+  saveButton(id: string) {
+    if (!this.boardingForm.valid) {
+      return;
+    }
+
+    this.send = true;
+    let name = this.boardingForm.get('nameInput').value;
+    let surname = this.boardingForm.get('surnameInput').value;
+    let seat = parseInt(this.boardingForm.get('seat').value);
+
+    this.ticketService.checkout(this.currentTicket.id, name, surname, seat).subscribe(
+      () => {
+
+        let tickets = [];
+        for (let ticket of this.tickets) {
+          if (ticket !== this.currentTicket) {
+            tickets.push(ticket);
+          }
+        }
+        this.tickets = tickets;
+
+        this.send = false;
+        this.closeModal(id);
+      },() => {
+        this.send = false;
+      });
   }
 
   getTickets(): void {

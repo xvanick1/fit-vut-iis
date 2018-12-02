@@ -57,7 +57,7 @@ import { CreateAirplaneComponent } from './airplane/create-airplane/create-airpl
     CreateAirplaneTypeComponent,
     AirplaneClassComponent,
     EditAirplaneComponent,
-    CreateAirplaneComponent
+    CreateAirplaneComponent,
   ],
   imports: [
     BrowserModule,

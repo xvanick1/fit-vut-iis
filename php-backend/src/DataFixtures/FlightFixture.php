@@ -26,6 +26,7 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $flight1->setGate($this->getReference("G1"));
         $flight1->setTimeOfDeparture(new \DateTime('12:00:00'));
         $manager->persist($flight1);
+        $this->addReference('PRG', $flight1);
 
         $flight2 = new Flight();
         $flight2->setAirplane($this->getReference("B747-2"));

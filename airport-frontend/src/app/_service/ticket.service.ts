@@ -3,6 +3,7 @@ import { environment} from "../../environments/environment";
 import { HttpClient} from "@angular/common/http";
 import { Observable} from "rxjs";
 import { Ticket } from "../_model/ticket";
+import {Seat} from "../_model/seat";
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,21 @@ export class TicketService {
       }));
     }
     return this.http.get<Ticket[]>(this.ticketsURL+urlParams);
+  }
+
+  getTicket(id: number): Observable<Ticket> {
+    return this.http.get<Ticket>(this.ticketsURL+'/'+id);
+  }
+
+  getSeats(id: number): Observable<Seat[]> {
+    return this.http.get<Seat[]>(this.ticketsURL+'/'+id+'/gates');
+  }
+
+  checkout(id: number, name: string, surname: string, seat: number): Observable<Ticket> {
+    return this.http.patch<Ticket>(this.ticketsURL+'/'+id, {
+      'name': name,
+      'surname': surname,
+      'seat': seat
+    });
   }
 }

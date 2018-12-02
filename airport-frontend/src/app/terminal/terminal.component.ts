@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Terminal} from '../_model/terminal';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {TerminalService} from '../_service/terminal.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-terminal',

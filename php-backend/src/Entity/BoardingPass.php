@@ -94,6 +94,11 @@ class BoardingPass
     public function setFlightTicket(?FlightTicket $flightTicket): self
     {
         $this->flightTicket = $flightTicket;
+        if ($flightTicket !== null) {
+            if ($flightTicket->getBoardingPass() !== null && $flightTicket->getBoardingPass() !== $this) {
+                throw new \Exception();
+            }
+        }
 
         // set (or unset) the owning side of the relation if necessary
         $newBoardingPass = $flightTicket === null ? null : $this;

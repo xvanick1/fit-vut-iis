@@ -73,7 +73,10 @@
             <td>{{ticket.name}}</td>
             <td>{{ticket.airplaneClass}}</td>
             <td>{{ticket.destination}}</td>
-            <td class="table-right"><a class="button inline" (click)="checkoutTicket(ticket)">Odbavit</a></td>
+            <td class="table-right">
+              <a class="button inline" (click)="checkoutTicket(ticket, 'exampleModal1')" *ngIf="!ticket.seat">Odbavit</a>
+              <a class="button inline" (click)="printBoardingPass(ticket)" *ngIf="ticket.seat">Vytisknout</a>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -81,3 +84,24 @@
     </div>
   </div>
 </form>
+<div class="reveal-overlay" style="display: none;">
+  <div class="reveal" id="exampleModal1" [formGroup]="boardingForm" >
+    <h1>Odbavení cestujícího</h1>
+    <label class="label-required {{(boardingForm.get('nameInput').valid || boardingForm.get('nameInput').untouched) ? '' : 'is-invalid-label'}}">Jméno
+      <input type="text" required name="name" formControlName="nameInput">
+    </label>
+    <label class="label-required {{(boardingForm.get('surnameInput').valid || boardingForm.get('surnameInput').untouched) ? '' : 'is-invalid-label'}}">Přijmení
+      <input type="text" required name="name" formControlName="surnameInput">
+    </label>
+    <label class="label-required {{(boardingForm.get('seat').valid || boardingForm.get('seat').untouched) ? '' : 'is-invalid-label'}}">Sedadlo
+      <select name="seat" formControlName="seat">
+        <option disabled></option>
+        <option *ngFor="let seat of seats" [value]="seat.id">{{seat.seatNumber}} {{seat.location}} {{seat.airplaneClass.name}}</option>
+      </select>
+    </label>
+    <div class="button-group">
+      <a class="clear button text-right" (click)="closeModal('exampleModal1')">Zavřít</a>
+      <input type="submit" class="button" value="Uložit" [disabled]="!boardingForm.valid || send" (click)="saveButton('exampleModal1')">
+    </div>
+  </div>
+</div>

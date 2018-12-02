@@ -19,32 +19,13 @@ class BoardingPassRepository extends ServiceEntityRepository
         parent::__construct($registry, BoardingPass::class);
     }
 
-//    /**
-//     * @return BoardingPass[] Returns an array of BoardingPass objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
+    public function getSeatsByFlight($flightId) {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->select('s.id')
+            ->andWhere('t.flight = :tid')
+            ->innerJoin('b.flightTicket', 't')
+            ->innerJoin('b.seat', 's')
+            ->setParameter('tid', $flightId)
+            ->getQuery()->getArrayResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?BoardingPass
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

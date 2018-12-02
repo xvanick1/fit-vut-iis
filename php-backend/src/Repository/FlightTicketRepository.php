@@ -27,11 +27,14 @@ class FlightTicketRepository extends ServiceEntityRepository
     public function findTickets(FlightTicketsRequest $params)
     {
         $query = $this->createQueryBuilder('ft')
-            ->select('ft.id, f.id as flight, ft.surname, ft.name, c.name as airplaneClass, f.destination')
+            ->select('ft.id, f.id as flight, ft.surname, ft.name, c.name as airplaneClass, f.destination, s.id as sid, s.seatNumber, s.location')
             ->orderBy('ft.id', 'ASC')
             ->setMaxResults(100)
             ->innerJoin('ft.flight', 'f')
-            ->innerJoin('ft.airplaneClass', 'c');
+            ->innerJoin('ft.airplaneClass', 'c')
+            ->leftJoin('ft.boardingPass', 'b')
+            ->leftJoin('b.seat', 's')
+            ->groupBy('ft.id');
 
         if ($params->flightID != null) {
             $query->andWhere('ft.flight = :fid')
@@ -83,9 +86,9 @@ class FlightTicketRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
-
     /**
-     * @param $id
+     * @param $flightId
+     * @param $ticketClass
      * @return mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -97,5 +100,19 @@ class FlightTicketRepository extends ServiceEntityRepository
             ->andWhere('t.airplaneClass = :tclass')
             ->setParameter('tclass', $ticketClass)
             ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getById($id) {
+        return $this->createQueryBuilder('t')
+            ->select('a.id as airplane, t.id, f.id as flight')
+            ->innerJoin('t.flight', 'f')
+            ->innerJoin('f.airplane', 'a')
+            ->andWhere('t.id = :tid')
+            ->setParameter('tid', $id)
+            ->getQuery()->getSingleResult();
     }
 }

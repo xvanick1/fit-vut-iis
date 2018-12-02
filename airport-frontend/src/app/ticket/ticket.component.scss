@@ -4,6 +4,7 @@
 @include foundation-table;
 @include foundation-button;
 @include foundation-switch;
+@include foundation-reveal;
 
 :host .button.inline {
   display: inline;
@@ -25,4 +26,8 @@
 
 :host table th div.switch {
   margin: 0.3rem 0 0 0;
+}
+
+:host .label-required {
+  font-weight: bold;
 }

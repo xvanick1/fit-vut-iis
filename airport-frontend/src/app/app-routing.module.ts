@@ -24,6 +24,7 @@ import {CreateAirplaneComponent} from './airplane/create-airplane/create-airplan
 const routes: Routes = [
   { path: '', redirectTo: '/letenky', pathMatch: 'full' },
   { path: 'letenky', component: TicketComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_USER','ROLE_MANAGER','ROLE_ADMIN'] } },
+
   { path: 'lety', component: FlightComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_MANAGER','ROLE_ADMIN'] } },
   { path: 'lety/vytvorit', component: CreateFlightComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_MANAGER','ROLE_ADMIN'] } },
   { path: 'lety/:id', component: EditFlightComponent, canActivate: [AuthGuard], data: { expectedRole: ['ROLE_MANAGER','ROLE_ADMIN'] } },
