@@ -56,7 +56,7 @@
               Letadlo
               <select required [formControl]="airplaneInput" (change)="changeAirplane()">
                 <option [disabled]="true"></option>
-                <option *ngFor="let air of airplanes" [value]="air.id">{{air.id+' ('+air.type.manufacturer+' '+air.type.name+')'}}</option>
+                <option *ngFor="let air of airplanes" [value]="air.id">{{air.id+' ('+air.type.manufacturer+' '+air.type.name+' - '+air.countOfSeats+' osob)'}}</option>
               </select>
             </label>
           </div>

@@ -24,6 +24,10 @@ class FlightListener
         if (empty($gates) || !in_array($entity->getGate(), $gates->toArray())) {
             throw new \Exception('This airplane could not exist on this gate!');
         }
+
+        if ($entity->getDateOfDeparture() < $entity->getAirplane()->getDateOfProduction()) {
+            throw new \Exception('This airplane could not use this airplane!');
+        }
     }
 
     /**
