@@ -24,14 +24,18 @@ class FlightTicketListener
         $seats = $entity->getFlight()->getAirplane()->getSeats();
         $airplaneClasses = [];
         foreach ($seats as $seat) {
-            if (!in_array($seat->getAirplaneClass()->getId(), $airplaneClasses)) {
+            if (!key_exists($seat->getAirplaneClass()->getId(), $airplaneClasses)) {
                 $airplaneClasses[$seat->getAirplaneClass()->getId()] = 0;
             }
             $airplaneClasses[$seat->getAirplaneClass()->getId()] += 1;
         }
 
-        if  (in_array($entity->getAirplaneClass()->getId(), $airplaneClasses) && $countOfTickets > count($airplaneClasses[$entity->getAirplaneClass()->getId()])) {
+        if  (key_exists($entity->getAirplaneClass()->getId(), $airplaneClasses)) {
+          if ($countOfTickets > count($airplaneClasses[$entity->getAirplaneClass()->getId()])) {
             throw new \Exception('This flight is full in this class!');
+          }
+        } else {
+            throw new \Exception('This flight has not this class!');
         }
     }
 }

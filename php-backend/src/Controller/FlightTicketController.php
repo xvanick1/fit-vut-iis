@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\BoardingPass;
 use App\Entity\FlightTicket;
 use App\Entity\Seat;
+use App\Form\FlightTicketType;
 use App\Request\FlightTicketPostRequest;
 use App\Request\FlightTicketsRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -101,7 +102,7 @@ class FlightTicketController extends AbstractController
      *
      * @Route("/api/tickets/{id}", name="post_pass", methods={"PATCH"}, requirements={"id"="\d+"})
      */
-    public function postTerminal($id, Request $request, ValidatorInterface $validator)
+    public function postTicket($id, Request $request, ValidatorInterface $validator)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -142,5 +143,34 @@ class FlightTicketController extends AbstractController
         }
 
         return new JsonResponse(null, 204);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/api/tickets/new", name="create_ticket", methods={"GET", "POST"})
+     */
+    public function new(Request $request)
+    {
+        $flightTicket = new FlightTicket();
+
+        $form = $this->createForm(FlightTicketType::class, $flightTicket);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $flightTicket = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($flightTicket);
+            $entityManager->flush();
+
+            //return $this->redirectToRoute('task_success');
+        }
+
+        return $this->render('form.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }

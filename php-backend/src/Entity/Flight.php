@@ -66,6 +66,11 @@ class Flight
     private $airplane;
 
 
+    public function __toString()
+    {
+        return 'ID: '.$this->getId().', '.$this->getDestination();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

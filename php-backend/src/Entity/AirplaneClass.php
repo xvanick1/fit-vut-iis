@@ -33,6 +33,11 @@ class AirplaneClass
      */
     private $seats;
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     public function __construct()
     {
         $this->seats = new ArrayCollection();
