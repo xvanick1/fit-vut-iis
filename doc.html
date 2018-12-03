@@ -41,14 +41,114 @@
 </table>
 
 <h2>Implementace</h2>
-<p>Struèná dokumentace k implementaci, která popisuje, které PHP skripty implementují jednotlivé pøípady pou¾ití uvedené v use-case diagramu z IDS. V pøípadì, ¾e bylo nutno pøi implementaci uèinit zmìny v návrhu, musí být v dokumentaci zdùvodnìny.</p>
+<h3>Use-case diagram</h3>
+<img src="readme_docs/ids_use_case_diagram.png" />
+
+<h3>Frontend</h3>
+<p>U¾ivatelské rozhraní je vytvoøeno pomocí JS frameworku Angular a CSS frameworku Foundation.
+    Ve slo¾ce src/app jsou podslo¾ky s jednotlivými komponentami, které realizují logiku jednotlivých pøípadù u¾ití.
+    Ka¾dá komponenta vyu¾ívá service pro komunikaci s API rozhraním.</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Název</th><th>Funkce</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>user/</td>
+        <td>implementace správy u¾ivatelù, jejich seznam, editace a vytváøení</td>
+    </tr>
+    <tr>
+        <td>terminal/</td>
+        <td>implementace správy terminálù, jejich seznam, editace a vytváøení, v rámci terminálu jsou spravovány i jejich gaty</td>
+    </tr>
+    <tr>
+        <td>ticket/</td>
+        <td>implementace letenek a palubních vstupenek, jejich odbavení</td>
+    </tr>
+    <tr>
+        <td>flight/</td>
+        <td>implementace správy letù, jejich seznam, editace a vytváøení</td>
+    </tr>
+    <tr>
+        <td>login/</td>
+        <td>implementace pøhla¹ování</td>
+    </tr>
+    <tr>
+        <td>ariplane-type/</td>
+        <td>implementace správy typù letadel, jejich seznam, editace a vytváøení, vèetnì povolení gatù</td>
+    </tr>
+    <tr>
+        <td>airplane/</td>
+        <td>implementace správy letadel, jejich seznam, editace a vytváøení, vèetnì seznamu míst v letadle</td>
+    </tr>
+    <tr>
+        <td>airplane-class/</td>
+        <td>implementace správy letových tøíd, jejich seznam, editace a vytváøení</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Backend</h3>
+<p>API bylo implementováno jako PHP aplikace, která je naprogramována ve frameworku Symfony verze 4, za vyu¾ití ORM Doctrine.</p>
+
+<p>Pøidávání letenek pøes externí systém je simulováno pøes formuláø na adrese: <a href="http://www.stud.fit.vutbr.cz/~xwitas00/php-backend/api/tickets/new">http://www.stud.fit.vutbr.cz/~xwitas00/php-backend/api/tickets/new</a></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Název</th><th>Funkce</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>UserController.php</td>
+            <td>implementace správy u¾ivatelù, jejich seznam, editace a vytváøení</td>
+        </tr>
+        <tr>
+            <td>TerminalController.php</td>
+            <td>implementace správy terminálù, jejich seznam, editace a vytváøení, v rámci terminálu jsou spravovány i jejich gaty</td>
+        </tr>
+        <tr>
+            <td>GateControler.php</td>
+            <td>seznam gatù</td>
+        </tr>
+        <tr>
+            <td>FlightTicketController.php</td>
+            <td>implementace letenek a palubních vstupenek, jejich odbavení</td>
+        </tr>
+        <tr>
+            <td>FlightController.php</td>
+            <td>implementace správy letù, jejich seznam, editace a vytváøení</td>
+        </tr>
+        <tr>
+            <td>AuthController.php</td>
+            <td>implementace pøhla¹ování na API (HTTP BASIC) z frontendu</td>
+        </tr>
+        <tr>
+            <td>AirplaneTypeController.php</td>
+            <td>implementace správy typù letadel, jejich seznam, editace a vytváøení, vèetnì povolení gatù</td>
+        </tr>
+        <tr>
+            <td>AirplaneController.php</td>
+            <td>implementace správy letadel, jejich seznam, editace a vytváøení, vèetnì seznamu míst v letadle</td>
+        </tr>
+        <tr>
+            <td>AirplaneClassController.php</td>
+            <td>implementace správy letových tøíd, jejich seznam, editace a vytváøení</td>
+        </tr>
+    </tbody>
+</table>
 
 <h2>Instalace</h2>
 <h4>Frontend</h4>
 <ul>
     <li>Je po¾adován Angular ve verzi 7.0</li>
+    <li>V souboru src/environments/environment.prod.ts nastavit správnou cestu k api a v souboru src//index.html nastavit správný base element</li>
     <li>Zkompilovat zdrojové soubory pomocí: ng build --prod</li>
-    <li>V .htaccess nastavit pøesmìrování po¾adavkù kromì /api/* na index.index, který je ve slo¾ce airport-frontend</li>
+    <li>V .htaccess nastavit pøesmìrování po¾adavkù kromì /api/* na index.html, který je ve slo¾ce airport-frontend</li>
     <li>Nastavit oprávnìní na js a css soubory, aby k nim mohl pøistupovat webserver</li>
 </ul>
 <h4>Backend</h4>
@@ -63,7 +163,7 @@
 </ul>
 
 <h2>Známé problémy</h2>
-<p>Zde popi¹te, které body zadání (IDS a IIS) nejsou implementovány a z jakého dùvodu. Napø. &bdquo;Z èasových dùvodù nebyla implementována správa u¾ivatelù.&rdquo; Pomù¾ete tím zrychlit opravování, kdy¾ neimplementované funkce nebudeme muset dlouze hledat.</p>
+<p>Po pøihlá¹ení se nezobrazí navigaèní li¹ta, musí se znovu naèíst zobrazená stránka po pøihlá¹ení, aby se li¹ta zobrazovala.</p>
 
 </body>
 </html>

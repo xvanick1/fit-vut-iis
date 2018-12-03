@@ -162,10 +162,13 @@ class FlightTicketController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $flightTicket = $form->getData();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($flightTicket);
-            $entityManager->flush();
-
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($flightTicket);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                var_dump($e->getMessage());
+            }
             //return $this->redirectToRoute('task_success');
         }
 

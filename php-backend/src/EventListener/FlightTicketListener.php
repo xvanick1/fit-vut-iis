@@ -31,7 +31,7 @@ class FlightTicketListener
         }
 
         if  (key_exists($entity->getAirplaneClass()->getId(), $airplaneClasses)) {
-          if ($countOfTickets > count($airplaneClasses[$entity->getAirplaneClass()->getId()])) {
+          if ($countOfTickets > $airplaneClasses[$entity->getAirplaneClass()->getId()]) {
             throw new \Exception('This flight is full in this class!');
           }
         } else {
