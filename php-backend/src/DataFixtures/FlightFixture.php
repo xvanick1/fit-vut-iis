@@ -36,6 +36,7 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $flight2->setGate($this->getReference("G3"));
         $flight2->setTimeOfDeparture(new \DateTime('12:10:00'));
         $manager->persist($flight2);
+        $this->addReference('SVO', $flight2);
 
         $flight3 = new Flight();
         $flight3->setAirplane($this->getReference("B737-1"));
@@ -45,6 +46,7 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $flight3->setGate($this->getReference("G4"));
         $flight3->setTimeOfDeparture(new \DateTime('13:53:00'));
         $manager->persist($flight3);
+        $this->addReference('BGY', $flight3);
 
         $flight4 = new Flight();
         $flight4->setAirplane($this->getReference("A320-3"));
@@ -54,6 +56,7 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $flight4->setGate($this->getReference("G5"));
         $flight4->setTimeOfDeparture(new \DateTime('15:08:00'));
         $manager->persist($flight4);
+        $this->addReference('KEF', $flight4);
 
         $flight5 = new Flight();
         $flight5->setAirplane($this->getReference("A380-1"));
@@ -63,6 +66,7 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $flight5->setGate($this->getReference("G2"));
         $flight5->setTimeOfDeparture(new \DateTime('15:15:00'));
         $manager->persist($flight5);
+        $this->addReference('JFK', $flight5);
 
         $flight6 = new Flight();
         $flight6->setAirplane($this->getReference("A320-1"));
@@ -72,6 +76,7 @@ class FlightFixture extends Fixture implements DependentFixtureInterface
         $flight6->setGate($this->getReference("G1"));
         $flight6->setTimeOfDeparture(new \DateTime('19:19:00'));
         $manager->persist($flight6);
+        $this->addReference('BUD', $flight6);
 
         $manager->flush();
     }
