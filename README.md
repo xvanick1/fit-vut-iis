@@ -8,3 +8,6 @@ Navrhněte informační systém pro letiště, který bude schopen evidovat lety
 ![UseCase Diagram](readme_docs/ids_use_case_diagram.png?raw=true)
 ![ER Diagram](readme_docs/ids_er_diagram.png?raw=true)
 ![Schéma relační databáze](readme_docs/ids_schema_rel_db.png?raw=true)
+
+# Hodnocení
+26/30b
